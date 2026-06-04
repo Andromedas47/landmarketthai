@@ -9,6 +9,9 @@ export const metadata: Metadata = {
 
 export default async function ProfilePage() {
   const supabase = await createSessionClient();
+  if (!supabase) {
+    redirect("/login?next=/profile");
+  }
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {

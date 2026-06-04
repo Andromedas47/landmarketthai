@@ -85,6 +85,18 @@
     @apply overflow-hidden rounded-xl border border-slate-100 bg-white shadow-[0_2px_8px_rgba(13,30,70,0.06)] transition-shadow hover:shadow-[0_8px_24px_rgba(13,30,70,0.10)];
   }
 
+  .hero-banner {
+    @apply relative isolate overflow-hidden bg-sky-100 shadow-[0_22px_58px_rgba(4,16,44,0.18)];
+    @apply h-70 sm:h-100 md:h-125 lg:h-[34rem] xl:h-[36rem];
+  }
+
+  .commission-digit {
+    @apply select-none bg-gradient-to-b from-[#fff8d0] via-[#ffc329] to-[#c98100] bg-clip-text font-black leading-none tracking-tighter text-transparent;
+    @apply text-[6.5rem] xl:text-[7.4rem];
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+    filter: drop-shadow(0 4px 8px rgba(255, 180, 0, 0.35));
+  }
+
   .commission-hero-badge {
     animation: commission-glow 3s ease-in-out infinite;
   }

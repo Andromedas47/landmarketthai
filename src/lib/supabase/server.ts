@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { createServerClient as createSSRServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { getSupabasePublicConfig } from "@/lib/supabase/env";
 
 // Service-role client for writes and private data — unchanged from before
 export function createServerClient() {
@@ -13,10 +14,13 @@ export function createServerClient() {
 
 // Session-aware client for reading the logged-in user in Server Components
 export async function createSessionClient() {
+  const config = getSupabasePublicConfig();
+  if (!config) return null;
+
   const cookieStore = await cookies();
   return createSSRServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    config.url,
+    config.anonKey,
     {
       cookies: {
         getAll() {

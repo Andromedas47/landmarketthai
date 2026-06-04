@@ -174,7 +174,7 @@ export default async function HomePage() {
       {/* ── 1. HERO ───────────────────────────────────────────────────────── */}
       <section className="bg-white pt-0 pb-0">
         {/* Banner — full viewport width, capped height */}
-        <div className="relative isolate h-70 overflow-hidden bg-sky-100 shadow-[0_22px_58px_rgba(4,16,44,0.18)] sm:h-100 md:h-125 lg:h-[34rem] xl:h-[36rem]">
+        <div className="hero-banner">
           <img
             src="/images/final-banner.png"
             alt="LandmarketThai referral income hero banner"
@@ -215,15 +215,7 @@ export default async function HomePage() {
                 <div className="relative">
                   <div className="grid grid-cols-[108px_1fr] items-stretch xl:grid-cols-[124px_1fr]">
                     <div className="flex items-center justify-center border-r border-white/10 bg-[#051a4a]/40 px-2">
-                      <span
-                        className="select-none bg-gradient-to-b from-[#fff8d0] via-[#ffc329] to-[#c98100] bg-clip-text text-[6.5rem] font-black leading-none tracking-tighter text-transparent xl:text-[7.4rem]"
-                        style={{
-                          WebkitTextStroke: "1px rgba(255,255,255,0.12)",
-                          filter: "drop-shadow(0 4px 8px rgba(255,180,0,0.35))",
-                        }}
-                      >
-                        4
-                      </span>
+                      <span className="commission-digit">4</span>
                     </div>
                     <div className="min-w-0 px-5 py-3.5 xl:px-6 xl:py-4">
                       <div className="text-[2rem] font-black leading-none text-gold-400 xl:text-[2.55rem]">
