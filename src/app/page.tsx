@@ -9,6 +9,8 @@ import {
 } from "lucide-react";
 import StatStrip from "@/components/ui/StatStrip";
 import ListingCard from "@/components/listings/ListingCard";
+import FacebookIcon from "@/components/ui/FacebookIcon";
+import LineIcon from "@/components/ui/LineIcon";
 import JsonLd from "@/components/seo/JsonLd";
 import { getFeaturedListings, getSiteStats, getActiveDemands } from "@/lib/supabase/queries";
 import { LAND_TYPE_LABELS } from "@/lib/utils";
@@ -22,6 +24,7 @@ export const metadata: Metadata = {
 };
 
 const LINE_OA = process.env.NEXT_PUBLIC_LINE_OA_URL ?? "https://lin.ee/8p064f7";
+const FACEBOOK_URL = process.env.NEXT_PUBLIC_FACEBOOK_URL ?? "https://www.facebook.com/Landmarketthai";
 
 const LINE_ICON = (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -187,107 +190,120 @@ export default async function HomePage() {
               <h1 className="mt-0 text-[4.4rem] font-black leading-[0.92] text-[#06377d] xl:text-[5.7rem]">
                 อาชีพเสริม
               </h1>
-              <div className="mt-2 inline-flex rounded-full bg-[#11934a] px-8 py-2.5 text-2xl font-black text-white shadow-[0_10px_24px_rgba(17,147,74,0.24)] xl:text-[2rem]">
+              <div className="mt-2 inline-flex rounded-lg bg-[#00A859] px-8 py-2.5 text-2xl font-black text-white shadow-[0_10px_24px_rgba(0,168,89,0.24)] xl:text-[2rem]">
                 สร้างรายได้ไปกับที่ดิน
               </div>
             </div>
 
-            <div className="relative mt-3 w-[390px] overflow-hidden rounded-[28px] bg-[#071f58]/95 p-2 text-white shadow-[0_22px_46px_rgba(4,16,44,0.38)] ring-1 ring-gold-400/55 xl:mt-4 xl:w-[440px]">
+            {/* 4 ล้านบาท — ref badge */}
+            <div className="commission-hero-badge relative mt-3 w-[390px] overflow-hidden rounded-[28px] xl:mt-4 xl:w-[440px]">
               <div
-                className="absolute inset-0 opacity-90"
+                className="absolute inset-0 rounded-[28px]"
                 style={{
                   background:
-                    "radial-gradient(circle at 16% 18%, rgba(255,211,84,0.28), transparent 28%), linear-gradient(140deg, rgba(22,64,137,0.88), rgba(5,20,62,0.98))",
+                    "linear-gradient(145deg, #ffd84d 0%, #ffc329 45%, #e6a800 100%)",
                 }}
               />
-              <div className="relative rounded-[22px] border border-white/10 bg-[#08255f]/65">
-                <div className="grid grid-cols-[112px_1fr] items-stretch xl:grid-cols-[128px_1fr]">
-                  <div className="flex items-center justify-center border-r border-white/10 bg-gradient-to-b from-[#143b83]/70 to-[#051a4b]/70 px-3">
-                    <div
-                      className="bg-gradient-to-b from-[#fff1a8] via-[#ffc329] to-[#c98100] bg-clip-text text-[6.7rem] font-black leading-none tracking-tight text-transparent xl:text-[7.6rem]"
-                      style={{ WebkitTextStroke: "1px rgba(255,255,255,0.18)" }}
-                    >
-                      4
-                    </div>
-                  </div>
-                  <div className="min-w-0 px-5 py-3.5 xl:px-6 xl:py-4">
-                    <div className="text-[2.15rem] font-black leading-none text-gold-400 xl:text-[2.65rem]">
-                      ล้านบาท*
-                    </div>
-                    <div className="mt-1 text-[1.35rem] font-black leading-tight text-white xl:text-[1.85rem]">
-                      ค่าคอมสูงสุด
-                    </div>
-                    <div className="mt-2.5 flex items-center gap-3">
-                      <span className="inline-flex rounded-full bg-gold-400 px-5 py-1.5 text-base font-black text-[#06235f] shadow-[0_12px_24px_rgba(255,199,38,0.24)]">
-                        จบดีล
+              <div className="relative m-[3px] overflow-hidden rounded-[25px] bg-[#071f58] text-white">
+                <div
+                  className="absolute inset-0 opacity-95"
+                  style={{
+                    background:
+                      "radial-gradient(circle at 18% 22%, rgba(255,211,84,0.35), transparent 34%), linear-gradient(145deg, #0f3478 0%, #071d4a 100%)",
+                  }}
+                />
+                <div className="relative">
+                  <div className="grid grid-cols-[108px_1fr] items-stretch xl:grid-cols-[124px_1fr]">
+                    <div className="flex items-center justify-center border-r border-white/10 bg-[#051a4a]/40 px-2">
+                      <span
+                        className="select-none bg-gradient-to-b from-[#fff8d0] via-[#ffc329] to-[#c98100] bg-clip-text text-[6.5rem] font-black leading-none tracking-tighter text-transparent xl:text-[7.4rem]"
+                        style={{
+                          WebkitTextStroke: "1px rgba(255,255,255,0.12)",
+                          filter: "drop-shadow(0 4px 8px rgba(255,180,0,0.35))",
+                        }}
+                      >
+                        4
                       </span>
-                      <span className="text-xs font-semibold text-blue-100/80">ต่อดีล</span>
+                    </div>
+                    <div className="min-w-0 px-5 py-3.5 xl:px-6 xl:py-4">
+                      <div className="text-[2rem] font-black leading-none text-gold-400 xl:text-[2.55rem]">
+                        ล้านบาท*
+                      </div>
+                      <div className="mt-1 text-[1.25rem] font-bold leading-tight text-white xl:text-[1.75rem]">
+                        ค่าคอมสูงสุด
+                      </div>
+                      <div className="mt-2.5 flex items-center gap-2.5">
+                        <span className="inline-flex rounded-md bg-gold-400 px-4 py-1 text-sm font-black text-[#001B48]">
+                          จบดีล
+                        </span>
+                        <span className="text-xs font-medium text-blue-100/75">ต่อดีล</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="border-t border-white/10 px-5 py-2 text-center text-sm font-bold text-blue-100">
-                  ตลาดที่ดินไทย.com
+                  <div className="border-t border-white/10 bg-[#051536]/60 px-4 py-2 text-center text-xs font-semibold text-blue-100/90">
+                    ตลาดที่ดินไทย.com
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* ── QR / LINE card — top-right (lg+) ── */}
-          <div className="absolute right-16 top-8 hidden w-[216px] overflow-hidden rounded-[30px] bg-[#06235f] p-2 text-center text-brand-900 shadow-[0_20px_58px_rgba(4,16,44,0.30)] ring-1 ring-white/80 backdrop-blur-md lg:block xl:right-28 xl:top-10 xl:w-[248px] 2xl:right-32">
-            {/* Header */}
+          <div className="absolute right-16 top-8 hidden w-[216px] overflow-hidden rounded-xl bg-[#06235f] p-2 text-center text-brand-900 shadow-[0_20px_58px_rgba(4,16,44,0.30)] ring-1 ring-white/80 backdrop-blur-md lg:block xl:right-28 xl:top-10 xl:w-[248px] 2xl:right-32">
             <div className="px-4 pb-3 pt-2 text-white">
               <p className="text-lg font-black leading-tight xl:text-xl">เริ่มวันนี้!</p>
               <p className="mt-1 text-sm font-black text-gold-400">สร้างรายได้ไม่จำกัด!</p>
             </div>
-            <div className="flex flex-col items-center gap-3.5 rounded-[24px] bg-white px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] xl:px-5">
+            <div className="flex flex-col items-center gap-3.5 rounded-xl bg-white px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] xl:px-5">
               <div>
                 <p className="text-sm font-black text-brand-800">สแกนเพิ่มเพื่อนใน LINE</p>
                 <p className="mt-0.5 text-[11px] font-medium text-slate-500">
                   รับข่าวสารและดีลพิเศษก่อนใคร
                 </p>
               </div>
-              {/* QR code */}
-              <div className="flex h-32 w-32 items-center justify-center rounded-[22px] bg-white p-2 shadow-[0_10px_26px_rgba(15,52,120,0.12)] ring-1 ring-slate-200 xl:h-36 xl:w-36">
+              <div className="flex h-32 w-32 items-center justify-center rounded-lg bg-white p-2 shadow-[0_10px_26px_rgba(15,52,120,0.12)] ring-1 ring-slate-200 xl:h-36 xl:w-36">
                 <img
                   src="/images/line-qr.png"
                   alt="LINE Official QR code"
-                  className="h-full w-full rounded-xl object-contain"
+                  className="h-full w-full rounded-lg object-contain"
                 />
               </div>
-              {/* LINE CTA */}
-              <Link
-                href={LINE_OA}
-                target="_blank"
-                rel="noopener"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#06C755] py-3 text-sm font-black text-white shadow-[0_12px_26px_rgba(6,199,85,0.30)] transition hover:bg-[#05b74d] active:scale-95"
-              >
-                {LINE_ICON}
-                ID : @Landthaimarket
-              </Link>
-              {/* Social proof */}
-              <div className="flex w-full items-center justify-center gap-2 border-t border-slate-100 pt-3 text-[11px] text-slate-500">
-                <div className="flex -space-x-1">
-                  <span className="h-5 w-5 rounded-full border-2 border-white bg-slate-300" />
-                  <span className="h-5 w-5 rounded-full border-2 border-white bg-gold-400" />
-                  <span className="h-5 w-5 rounded-full border-2 border-white bg-emerald-400" />
-                </div>
-                <div className="text-left leading-tight">
-                  <span className="font-black text-brand-900">{stats.total_partners.toLocaleString()} คน</span>
-                  <br />
-                  ไว้วางใจเรา
-                </div>
+              <div className="flex w-full flex-col gap-2">
+                <Link
+                  href={LINE_OA}
+                  target="_blank"
+                  rel="noopener"
+                  className="btn-line w-full justify-center gap-2.5 py-2.5 text-sm font-bold tracking-tight active:scale-[0.98]"
+                >
+                  <LineIcon size={22} />
+                  @landmarketthai
+                </Link>
+                <Link
+                  href={FACEBOOK_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="btn-facebook w-full justify-center py-2.5"
+                >
+                  <FacebookIcon size={22} />
+                </Link>
               </div>
             </div>
           </div>
         </div>
 
         {/* ── Mobile offer bar (< sm only) ── */}
-        <div className="sm:hidden flex items-center gap-3 bg-[#06235f] px-5 py-3">
-          <span className="shrink-0 rounded-full bg-gold-400 px-2.5 py-0.5 text-[10px] font-black text-[#06235f]">
+        <div className="commission-hero-badge flex items-center gap-3 bg-[#071f58] px-5 py-3 sm:hidden">
+          <span className="shrink-0 rounded-md bg-gold-400 px-2.5 py-0.5 text-[10px] font-black text-[#001B48]">
             จบดีล
           </span>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-black leading-none text-gold-400">4</span>
+            <span
+              className="text-2xl font-black leading-none text-gold-400"
+              style={{ filter: "drop-shadow(0 2px 4px rgba(255,180,0,0.3))" }}
+            >
+              4
+            </span>
             <span className="text-sm font-bold text-white">ล้านบาท*</span>
           </div>
           <span className="ml-auto shrink-0 text-[11px] font-medium text-blue-200">ค่าคอมสูงสุด</span>
@@ -295,8 +311,8 @@ export default async function HomePage() {
 
         {/* Benefit strip */}
         <div className="container-xl px-4 sm:px-6 lg:px-8">
-          <div className="relative z-20 mt-0 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_8px_32px_rgba(4,16,44,0.14)] sm:-mt-14 lg:-mt-16">
-            <div className="grid grid-cols-1 sm:grid-cols-5 divide-y sm:divide-x sm:divide-y-0 divide-slate-100/80">
+          <div className="relative z-20 mt-0 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-[0_8px_32px_rgba(4,16,44,0.14)] sm:-mt-14 lg:-mt-16">
+            <div className="grid grid-cols-1 divide-y divide-slate-100/80 sm:grid-cols-5 sm:divide-x sm:divide-y-0">
               {benefits.map((b, index) => {
                 const Icon = b.Icon;
                 const iconStyle = [
@@ -308,7 +324,7 @@ export default async function HomePage() {
                 ][index % 5];
                 return (
                   <div key={b.label} className="flex items-center gap-3 px-4 py-3 sm:flex-col sm:items-center sm:justify-center sm:gap-2 sm:px-3 sm:py-4 sm:text-center lg:flex-row lg:justify-start lg:text-left">
-                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${iconStyle}`}>
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border ${iconStyle}`}>
                       <Icon size={21} strokeWidth={2.15} />
                     </div>
                     <span className="text-xs font-semibold leading-snug text-brand-900 whitespace-pre-line">{b.label}</span>
@@ -347,33 +363,30 @@ export default async function HomePage() {
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {sampleListings.map((item) => (
-                <article
-                  key={item.title}
-                  className="bg-white rounded-[18px] overflow-hidden shadow-[0_2px_8px_rgba(13,30,70,0.06)] border border-slate-100 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(13,30,70,0.10)]"
-                >
-                  <div className="relative h-48">
-                    <span className="absolute top-3 left-3 z-10 rounded-full bg-[#2f9e44] text-white text-[13px] font-semibold px-3.5 py-1 shadow">
+                <article key={item.title} className="card-ref flex flex-col">
+                  <div className="relative h-48 overflow-hidden">
+                    <span className="absolute left-3 top-3 z-10 rounded-md bg-[#00A859] px-3 py-1 text-xs font-bold text-white shadow-sm">
                       {item.province}
                     </span>
                     <div
-                      className="w-full h-full flex items-center justify-center"
+                      className="flex h-full w-full items-center justify-center"
                       style={{
                         background:
                           "repeating-linear-gradient(45deg, #e3e9f2 0 11px, #edf1f7 11px 22px)",
                       }}
                     >
-                      <span className="text-[10px] font-mono text-slate-500 bg-white/90 rounded px-2 py-1">
+                      <span className="rounded bg-white/90 px-2 py-1 font-mono text-[10px] text-slate-500">
                         PLACEHOLDER_LISTING_IMAGE
                       </span>
                     </div>
-                  </div>
-                  <div className="p-4 pb-5">
-                    <div className="text-xs text-slate-400 mb-1">ค่าคอมสูงสุด</div>
-                    <div className="text-[28px] font-black text-[#2f9e44] leading-tight mb-2">
-                      {item.reward}
+                    <div className="absolute inset-x-0 bottom-0 z-10 bg-[#001B48]/92 px-4 py-2.5">
+                      <div className="text-[11px] font-medium text-white/85">ค่าคอมสูงสุด</div>
+                      <div className="text-xl font-black leading-tight text-gold-400">{item.reward}</div>
                     </div>
-                    <div className="text-[18px] font-semibold text-slate-800 mb-3">{item.title}</div>
-                    <div className="flex flex-wrap gap-3 text-xs text-slate-500 py-3 border-t border-b border-slate-100 mb-3">
+                  </div>
+                  <div className="flex flex-1 flex-col p-4 pb-5">
+                    <h3 className="mb-3 text-base font-semibold leading-snug text-slate-800">{item.title}</h3>
+                    <div className="mb-3 flex flex-wrap gap-3 border-y border-slate-100 py-3 text-xs text-slate-500">
                       <span className="flex items-center gap-1">
                         <Ruler size={13} />
                         {item.size}
@@ -384,12 +397,12 @@ export default async function HomePage() {
                       </span>
                       <span>{item.status}</span>
                     </div>
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="text-sm font-medium text-slate-500">{item.price}</div>
-                      <Link
-                        href="/land"
-                        className="btn-line text-xs px-3 py-1.5 rounded-lg shrink-0"
-                      >
+                    <div className="mt-auto flex items-center justify-between gap-2">
+                      <div>
+                        <div className="text-xs text-slate-400">ราคา/ไร่</div>
+                        <div className="text-sm font-bold text-gold-500">{item.price}</div>
+                      </div>
+                      <Link href="/land" className="btn-green shrink-0 px-3 py-2 text-xs">
                         ส่งต่อให้ลูกค้า
                       </Link>
                     </div>
@@ -433,7 +446,7 @@ export default async function HomePage() {
                 ))}
               </div>
               <div className="mt-7 flex gap-3 flex-wrap justify-center">
-                <Link href="/become-partner" className="btn-primary text-sm">
+                <Link href="/become-partner" className="btn-green text-sm">
                   สมัครฟรีทันที
                 </Link>
                 <Link href="/how-it-works" className="btn-outline text-sm">
@@ -461,7 +474,7 @@ export default async function HomePage() {
                 })}
               </div>
               <div className="mt-6">
-                <Link href="/become-partner" className="btn-line w-full justify-center text-sm">
+                <Link href="/become-partner" className="btn-green w-full justify-center text-sm">
                   เข้าร่วมฟรีทันที — ไม่มีค่าใช้จ่าย
                 </Link>
               </div>
@@ -538,14 +551,14 @@ export default async function HomePage() {
 
             {/* CTA card */}
             <div
-              className="rounded-[18px] p-5 flex flex-col justify-center items-center text-center text-white sm:col-span-2 lg:col-span-1"
+              className="flex flex-col items-center justify-center rounded-xl p-5 text-center text-white sm:col-span-2 lg:col-span-1"
               style={{ background: "linear-gradient(150deg, #0f3478, #071d4a)" }}
             >
-              <h3 className="font-bold text-[21px] mb-2">ส่งที่ดินของคุณ</h3>
-              <p className="text-sm text-white/80 leading-relaxed mb-4">
+              <h3 className="mb-2 text-[21px] font-bold">ส่งที่ดินของคุณ</h3>
+              <p className="mb-4 text-sm leading-relaxed text-white/80">
                 ให้ตรงกับความต้องการ<br />เพื่อโอกาสปิดดีล
               </p>
-              <Link href="/submit-land" className="btn-line text-sm justify-center">
+              <Link href="/submit-land" className="btn-white text-sm">
                 ส่งข้อมูลที่ดินเลย
               </Link>
             </div>
@@ -628,7 +641,7 @@ export default async function HomePage() {
                 href={LINE_OA}
                 target="_blank"
                 rel="noopener"
-                className="btn-line text-base px-8 py-4"
+                className="btn-green px-8 py-4 text-base ring-2 ring-[#33c477]/50"
               >
                 {LINE_ICON}
                 เข้าร่วมฟรีทันที

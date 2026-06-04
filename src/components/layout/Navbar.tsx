@@ -48,10 +48,7 @@ export default function Navbar() {
 
         {/* Desktop CTA buttons */}
         <div className="hidden lg:flex items-center gap-2 shrink-0">
-          <Link
-            href="/login"
-            className="px-4 py-2 text-sm font-medium text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
-          >
+          <Link href="/login" className="btn-ghost">
             เข้าสู่ระบบ
           </Link>
           <Link

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Ruler, Tag, Award } from "lucide-react";
+import { MapPin, Ruler, Tag } from "lucide-react";
 import type { Land } from "@/lib/types/database";
 import {
   LAND_TYPE_LABELS,
@@ -19,96 +19,86 @@ export default function ListingCard({ land }: Props) {
   const href = listingHref(land.public_ref, land.slug);
 
   return (
-    <Link href={href} className="card group flex flex-col hover:shadow-md transition-shadow">
-      {/* Image */}
-      <div className="relative h-48 bg-slate-100 overflow-hidden">
-        {coverImage ? (
-          <Image
-            src={coverImage.url_or_cdn_path}
-            alt={coverImage.alt_th ?? land.title_th}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-slate-300">
-            <Ruler size={40} />
-          </div>
-        )}
-
-        {/* Badges */}
-        <div className="absolute top-3 left-3 flex gap-1.5">
-          <span className="badge bg-white/90 text-slate-700">
-            {LAND_TYPE_LABELS[land.land_type]}
-          </span>
-          {land.is_eec && (
-            <span className="badge bg-brand-500 text-white">EEC</span>
+    <article className="card-ref group flex flex-col">
+      <Link href={href} className="block">
+        <div className="relative h-48 overflow-hidden bg-slate-100">
+          {coverImage ? (
+            <Image
+              src={coverImage.url_or_cdn_path}
+              alt={coverImage.alt_th ?? land.title_th}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-slate-300">
+              <Ruler size={40} />
+            </div>
           )}
-        </div>
 
-        {land.status === "reserved" && (
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-            <span className="text-white font-semibold text-sm bg-black/60 px-3 py-1 rounded-full">
-              จองแล้ว
+          {land.province?.name_th && (
+            <span className="absolute left-3 top-3 z-10 rounded-md bg-[#00A859] px-3 py-1 text-xs font-bold text-white shadow-sm">
+              {land.province.name_th}
             </span>
-          </div>
-        )}
-      </div>
+          )}
 
-      {/* Content */}
-      <div className="p-4 flex flex-col flex-1">
-        <h3 className="font-semibold text-slate-800 text-sm leading-snug line-clamp-2 mb-2">
-          {land.title_th}
-        </h3>
-
-        <div className="flex items-center gap-1 text-xs text-slate-500 mb-3">
-          <MapPin size={12} />
-          <span>{land.province?.name_th ?? ""}</span>
-          {land.district && <span>· {land.district}</span>}
-        </div>
-
-        {/* Key facts */}
-        <div className="grid grid-cols-2 gap-y-1.5 text-xs text-slate-600 mb-3">
-          <div className="flex items-center gap-1">
-            <Ruler size={11} className="text-slate-400" />
-            <span>{formatRai(land.size_rai)}</span>
-          </div>
-          {land.zoning && (
-            <div className="flex items-center gap-1">
-              <Tag size={11} className="text-slate-400" />
-              <span>{ZONING_LABELS[land.zoning]}</span>
+          {land.status === "reserved" && (
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40">
+              <span className="rounded-full bg-black/60 px-3 py-1 text-sm font-semibold text-white">
+                จองแล้ว
+              </span>
             </div>
           )}
-          {land.frontage_m && (
-            <div className="col-span-2 text-slate-500">
-              หน้ากว้าง {land.frontage_m.toLocaleString()} ม.
-            </div>
-          )}
-        </div>
 
-        {/* Price */}
-        <div className="mt-auto pt-3 border-t border-slate-100">
-          <div className="flex items-end justify-between">
-            <div>
-              <div className="text-xs text-slate-400">ราคา/ไร่</div>
-              <div className="font-bold text-brand-600">
-                {formatMoney(land.price_per_rai)} ฿
+          {land.referral_reward_max ? (
+            <div className="absolute inset-x-0 bottom-0 z-10 bg-[#001B48]/92 px-4 py-2.5">
+              <div className="text-[11px] font-medium text-white/85">ค่าคอมสูงสุด</div>
+              <div className="text-xl font-black leading-tight text-gold-400">
+                {formatMoney(land.referral_reward_max)} บาท
               </div>
             </div>
-            {land.referral_reward_max && (
-              <div className="text-right">
-                <div className="text-xs text-slate-400 flex items-center gap-1">
-                  <Award size={10} />
-                  ค่าแนะนำสูงสุด
-                </div>
-                <div className="text-xs font-semibold text-green-600">
-                  {formatMoney(land.referral_reward_max)} ฿
-                </div>
-              </div>
+          ) : null}
+        </div>
+      </Link>
+
+      <div className="flex flex-1 flex-col p-4 pb-5">
+        <Link href={href} className="flex-1">
+          <h3 className="mb-3 line-clamp-2 text-base font-semibold leading-snug text-slate-800">
+            {land.title_th}
+          </h3>
+
+          <div className="mb-3 flex flex-wrap gap-3 border-y border-slate-100 py-3 text-xs text-slate-500">
+            <span className="flex items-center gap-1">
+              <Ruler size={13} />
+              {formatRai(land.size_rai)}
+            </span>
+            <span className="flex items-center gap-1">
+              <MapPin size={13} />
+              {land.district ?? land.province?.name_th ?? ""}
+            </span>
+            {land.zoning ? (
+              <span className="flex items-center gap-1">
+                <Tag size={13} />
+                {ZONING_LABELS[land.zoning]}
+              </span>
+            ) : (
+              <span>{LAND_TYPE_LABELS[land.land_type]}</span>
             )}
           </div>
+        </Link>
+
+        <div className="mt-auto flex items-center justify-between gap-2">
+          <div>
+            <div className="text-xs text-slate-400">ราคา/ไร่</div>
+            <div className="text-sm font-bold text-gold-500">
+              {formatMoney(land.price_per_rai)} ฿
+            </div>
+          </div>
+          <Link href={href} className="btn-green shrink-0 px-3 py-2 text-xs">
+            ส่งต่อให้ลูกค้า
+          </Link>
         </div>
       </div>
-    </Link>
+    </article>
   );
 }

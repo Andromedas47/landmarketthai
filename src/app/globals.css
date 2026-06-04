@@ -45,19 +45,64 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-500 text-white font-semibold hover:bg-brand-600 active:bg-brand-700 transition-colors;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-brand-500 px-6 py-3 font-bold text-white transition-colors hover:bg-brand-600 active:bg-brand-700;
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-brand-500 text-brand-600 font-semibold hover:bg-brand-50 transition-colors;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border-2 border-brand-500 px-6 py-3 font-bold text-brand-600 transition-colors hover:bg-brand-50;
   }
 
+  /* Primary green CTA — ref style */
+  .btn-green {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-[#00A859] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#00924d];
+  }
+
+  /* LINE brand green */
   .btn-line {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#06C755] text-white font-semibold hover:bg-[#05a847] transition-colors;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-[#06C755] px-5 py-2.5 font-bold text-white transition-colors hover:bg-[#05a847];
+  }
+
+  /* Facebook brand blue */
+  .btn-facebook {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-[#1877F2] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#166FE5] active:scale-[0.98];
+  }
+
+  /* Secondary white button on dark bg — ref style */
+  .btn-white {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-bold text-[#001B48] transition-colors hover:bg-slate-50;
+  }
+
+  /* Ghost login button — ref style */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-brand-600 bg-white px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50;
   }
 
   .card {
-    @apply bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden;
+    @apply overflow-hidden rounded-xl border border-slate-100 bg-white shadow-[0_2px_8px_rgba(13,30,70,0.06)];
+  }
+
+  .card-ref {
+    @apply overflow-hidden rounded-xl border border-slate-100 bg-white shadow-[0_2px_8px_rgba(13,30,70,0.06)] transition-shadow hover:shadow-[0_8px_24px_rgba(13,30,70,0.10)];
+  }
+
+  .commission-hero-badge {
+    animation: commission-glow 3s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .commission-hero-badge {
+      animation: none;
+      box-shadow: 0 0 0 2px rgba(255, 199, 38, 0.45), 0 18px 40px rgba(4, 16, 44, 0.32);
+    }
+  }
+
+  @keyframes commission-glow {
+    0%, 100% {
+      box-shadow: 0 0 0 2px rgba(255, 199, 38, 0.45), 0 18px 40px rgba(4, 16, 44, 0.32);
+    }
+    50% {
+      box-shadow: 0 0 0 3px rgba(255, 211, 84, 0.65), 0 0 28px rgba(255, 199, 38, 0.35), 0 22px 46px rgba(4, 16, 44, 0.36);
+    }
   }
 
   .section {
