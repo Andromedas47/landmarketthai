@@ -14,7 +14,7 @@ const contactItems = [
     icon: <MessageCircle size={20} />,
     label: "LINE OA (หลัก)",
     value: "@landmarketthai",
-    href: process.env.NEXT_PUBLIC_LINE_OA_URL ?? "https://lin.ee/landmarketthai",
+    href: process.env.NEXT_PUBLIC_LINE_OA_URL ?? "https://lin.ee/8p064f7",
   },
   {
     icon: <Phone size={20} />,
