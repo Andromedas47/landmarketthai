@@ -87,14 +87,33 @@
 
   .hero-banner {
     @apply relative isolate overflow-hidden bg-sky-100 shadow-[0_22px_58px_rgba(4,16,44,0.18)];
-    @apply h-70 sm:h-100 md:h-125 lg:h-[34rem] xl:h-[36rem];
+    @apply h-70 sm:h-96 md:h-112 lg:h-136 xl:h-144;
+  }
+
+  .hero-mobile-scrim {
+    @apply pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-linear-to-t from-[#071f58]/92 via-[#071f58]/45 to-transparent sm:h-28 md:hidden;
+  }
+
+  .hero-mobile-commission {
+    @apply pointer-events-auto absolute bottom-2.5 left-2.5 z-20 w-[min(42vw,9.75rem)] overflow-hidden rounded-2xl sm:bottom-4 sm:left-4 sm:w-44 md:hidden;
+    animation: commission-glow 3s ease-in-out infinite;
+  }
+
+  .hero-mobile-qr {
+    @apply pointer-events-auto absolute right-2.5 bottom-2.5 z-20 w-[min(52vw,11.25rem)] overflow-hidden rounded-lg bg-[#06235f] p-1 shadow-[0_10px_28px_rgba(4,16,44,0.32)] ring-1 ring-white/70 sm:right-4 sm:bottom-4 sm:w-44 md:hidden;
   }
 
   .commission-digit {
-    @apply select-none bg-gradient-to-b from-[#fff8d0] via-[#ffc329] to-[#c98100] bg-clip-text font-black leading-none tracking-tighter text-transparent;
-    @apply text-[6.5rem] xl:text-[7.4rem];
+    @apply select-none bg-linear-to-b from-[#fff8d0] via-[#ffc329] to-[#c98100] bg-clip-text font-black leading-none tracking-tighter text-transparent;
+    @apply text-[4.8rem] lg:text-[6.5rem] xl:text-[7.4rem];
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
     filter: drop-shadow(0 4px 8px rgba(255, 180, 0, 0.35));
+  }
+
+  .commission-digit-sm {
+    @apply select-none bg-linear-to-b from-[#fff8d0] via-[#ffc329] to-[#c98100] bg-clip-text text-3xl font-black leading-none tracking-tighter text-transparent sm:text-4xl md:text-5xl;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+    filter: drop-shadow(0 2px 6px rgba(255, 180, 0, 0.35));
   }
 
   .commission-hero-badge {
@@ -102,7 +121,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .commission-hero-badge {
+    .commission-hero-badge,
+    .hero-mobile-commission {
       animation: none;
       box-shadow: 0 0 0 2px rgba(255, 199, 38, 0.45), 0 18px 40px rgba(4, 16, 44, 0.32);
     }

@@ -47,7 +47,7 @@ export default function StatStrip({ stats }: Props) {
   ];
 
   return (
-    <section className="relative z-10 bg-white pb-5 pt-3">
+    <section className="relative z-20 bg-white pb-5 pt-3 sm:pt-4 lg:pt-3">
       <div className="container-xl px-4 sm:px-6 lg:px-8">
         <div
           className="overflow-hidden rounded-[20px] shadow-[0_14px_36px_rgba(13,30,70,0.18)]"

@@ -181,30 +181,30 @@ export default async function HomePage() {
             className="block h-full w-full object-cover object-[center_43%]"
             fetchPriority="high"
           />
-          {/* ── Sales copy + offer — left overlay (lg+) ── */}
-          <div className="absolute left-8 top-7 hidden w-[520px] lg:block xl:left-16 xl:top-8 xl:w-[600px]">
+          {/* ── Sales copy + offer — left overlay (md+) ── */}
+          <div className="absolute left-5 top-5 hidden w-[360px] md:block lg:left-8 lg:top-7 lg:w-[520px] xl:left-16 xl:top-8 xl:w-[600px]">
             <div className="drop-shadow-[0_4px_12px_rgba(255,255,255,0.70)]">
-              <p className="text-[2rem] font-black leading-tight text-[#06235f] xl:text-[2.55rem]">
+              <p className="text-xl font-black leading-tight text-[#06235f] lg:text-[2rem] xl:text-[2.55rem]">
                 เปลี่ยนความรู้ เป็นรายได้
               </p>
-              <h1 className="mt-0 text-[4.4rem] font-black leading-[0.92] text-[#06377d] xl:text-[5.7rem]">
+              <h1 className="mt-0 text-[3.25rem] font-black leading-[0.92] text-[#06377d] lg:text-[4.4rem] xl:text-[5.7rem]">
                 อาชีพเสริม
               </h1>
-              <div className="mt-2 inline-flex rounded-lg bg-[#00A859] px-8 py-2.5 text-2xl font-black text-white shadow-[0_10px_24px_rgba(0,168,89,0.24)] xl:text-[2rem]">
+              <div className="mt-1.5 inline-flex rounded-lg bg-[#00A859] px-5 py-2 text-lg font-black text-white shadow-[0_10px_24px_rgba(0,168,89,0.24)] lg:mt-2 lg:px-8 lg:py-2.5 lg:text-2xl xl:text-[2rem]">
                 สร้างรายได้ไปกับที่ดิน
               </div>
             </div>
 
             {/* 4 ล้านบาท — ref badge */}
-            <div className="commission-hero-badge relative mt-3 w-[390px] overflow-hidden rounded-[28px] xl:mt-4 xl:w-[440px]">
+            <div className="commission-hero-badge relative mt-2.5 w-[300px] overflow-hidden rounded-[22px] lg:mt-3 lg:w-[390px] lg:rounded-[28px] xl:mt-4 xl:w-[440px]">
               <div
-                className="absolute inset-0 rounded-[28px]"
+                className="absolute inset-0 rounded-[22px] lg:rounded-[28px]"
                 style={{
                   background:
                     "linear-gradient(145deg, #ffd84d 0%, #ffc329 45%, #e6a800 100%)",
                 }}
               />
-              <div className="relative m-[3px] overflow-hidden rounded-[25px] bg-[#071f58] text-white">
+              <div className="relative m-[2px] overflow-hidden rounded-[20px] bg-[#071f58] text-white lg:m-[3px] lg:rounded-[25px]">
                 <div
                   className="absolute inset-0 opacity-95"
                   style={{
@@ -213,26 +213,26 @@ export default async function HomePage() {
                   }}
                 />
                 <div className="relative">
-                  <div className="grid grid-cols-[108px_1fr] items-stretch xl:grid-cols-[124px_1fr]">
+                  <div className="grid grid-cols-[82px_1fr] items-stretch lg:grid-cols-[108px_1fr] xl:grid-cols-[124px_1fr]">
                     <div className="flex items-center justify-center border-r border-white/10 bg-[#051a4a]/40 px-2">
                       <span className="commission-digit">4</span>
                     </div>
-                    <div className="min-w-0 px-5 py-3.5 xl:px-6 xl:py-4">
-                      <div className="text-[2rem] font-black leading-none text-gold-400 xl:text-[2.55rem]">
+                    <div className="min-w-0 px-3 py-2.5 lg:px-5 lg:py-3.5 xl:px-6 xl:py-4">
+                      <div className="text-2xl font-black leading-none text-gold-400 lg:text-[2rem] xl:text-[2.55rem]">
                         ล้านบาท*
                       </div>
-                      <div className="mt-1 text-[1.25rem] font-bold leading-tight text-white xl:text-[1.75rem]">
+                      <div className="mt-0.5 text-sm font-bold leading-tight text-white lg:mt-1 lg:text-[1.25rem] xl:text-[1.75rem]">
                         ค่าคอมสูงสุด
                       </div>
-                      <div className="mt-2.5 flex items-center gap-2.5">
-                        <span className="inline-flex rounded-md bg-gold-400 px-4 py-1 text-sm font-black text-[#001B48]">
+                      <div className="mt-1.5 flex items-center gap-2 lg:mt-2.5 lg:gap-2.5">
+                        <span className="inline-flex rounded-md bg-gold-400 px-2.5 py-0.5 text-xs font-black text-[#001B48] lg:px-4 lg:py-1 lg:text-sm">
                           จบดีล
                         </span>
-                        <span className="text-xs font-medium text-blue-100/75">ต่อดีล</span>
+                        <span className="text-[10px] font-medium text-blue-100/75 lg:text-xs">ต่อดีล</span>
                       </div>
                     </div>
                   </div>
-                  <div className="border-t border-white/10 bg-[#051536]/60 px-4 py-2 text-center text-xs font-semibold text-blue-100/90">
+                  <div className="border-t border-white/10 bg-[#051536]/60 px-3 py-1.5 text-center text-[10px] font-semibold text-blue-100/90 lg:px-4 lg:py-2 lg:text-xs">
                     ตลาดที่ดินไทย.com
                   </div>
                 </div>
@@ -240,34 +240,34 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* ── QR / LINE card — top-right (lg+) ── */}
-          <div className="absolute right-16 top-8 hidden w-[216px] overflow-hidden rounded-xl bg-[#06235f] p-2 text-center text-brand-900 shadow-[0_20px_58px_rgba(4,16,44,0.30)] ring-1 ring-white/80 backdrop-blur-md lg:block xl:right-28 xl:top-10 xl:w-[248px] 2xl:right-32">
-            <div className="px-4 pb-3 pt-2 text-white">
-              <p className="text-lg font-black leading-tight xl:text-xl">เริ่มวันนี้!</p>
-              <p className="mt-1 text-sm font-black text-gold-400">สร้างรายได้ไม่จำกัด!</p>
+          {/* ── QR / LINE card — top-right (md+) ── */}
+          <div className="absolute right-5 top-5 hidden w-[176px] overflow-hidden rounded-xl bg-[#06235f] p-1.5 text-center text-brand-900 shadow-[0_20px_58px_rgba(4,16,44,0.30)] ring-1 ring-white/80 backdrop-blur-md md:block lg:right-16 lg:top-8 lg:w-[216px] lg:p-2 xl:right-28 xl:top-10 xl:w-[248px] 2xl:right-32">
+            <div className="px-3 pb-2 pt-1.5 text-white lg:px-4 lg:pb-3 lg:pt-2">
+              <p className="text-sm font-black leading-tight lg:text-lg xl:text-xl">เริ่มวันนี้!</p>
+              <p className="mt-0.5 text-xs font-black text-gold-400 lg:mt-1 lg:text-sm">สร้างรายได้ไม่จำกัด!</p>
             </div>
-            <div className="flex flex-col items-center gap-3.5 rounded-xl bg-white px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] xl:px-5">
+            <div className="flex flex-col items-center gap-2 rounded-xl bg-white px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] lg:gap-3.5 lg:px-4 lg:py-4 xl:px-5">
               <div>
-                <p className="text-sm font-black text-brand-800">สแกนเพิ่มเพื่อนใน LINE</p>
-                <p className="mt-0.5 text-[11px] font-medium text-slate-500">
+                <p className="text-xs font-black text-brand-800 lg:text-sm">สแกนเพิ่มเพื่อนใน LINE</p>
+                <p className="mt-0.5 hidden text-[11px] font-medium text-slate-500 lg:block">
                   รับข่าวสารและดีลพิเศษก่อนใคร
                 </p>
               </div>
-              <div className="flex h-32 w-32 items-center justify-center rounded-lg bg-white p-2 shadow-[0_10px_26px_rgba(15,52,120,0.12)] ring-1 ring-slate-200 xl:h-36 xl:w-36">
+              <div className="flex h-24 w-24 items-center justify-center rounded-lg bg-white p-1.5 shadow-[0_10px_26px_rgba(15,52,120,0.12)] ring-1 ring-slate-200 lg:h-32 lg:w-32 lg:p-2 xl:h-36 xl:w-36">
                 <img
                   src="/images/line-qr.png"
                   alt="LINE Official QR code"
                   className="h-full w-full rounded-lg object-contain"
                 />
               </div>
-              <div className="flex w-full flex-col gap-2">
+              <div className="flex w-full flex-col gap-1.5 lg:gap-2">
                 <Link
                   href={LINE_OA}
                   target="_blank"
                   rel="noopener"
-                  className="btn-line w-full justify-center gap-2.5 py-2.5 text-sm font-bold tracking-tight active:scale-[0.98]"
+                  className="btn-line w-full justify-center gap-1.5 py-2 text-xs font-bold tracking-tight active:scale-[0.98] lg:gap-2.5 lg:py-2.5 lg:text-sm"
                 >
-                  <LineIcon size={22} />
+                  <LineIcon size={18} />
                   @landmarketthai
                 </Link>
                 <Link
@@ -275,35 +275,111 @@ export default async function HomePage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
-                  className="btn-facebook w-full justify-center py-2.5"
+                  className="btn-facebook w-full justify-center py-2 lg:py-2.5"
                 >
-                  <FacebookIcon size={22} />
+                  <FacebookIcon size={18} />
                 </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Tablet / mobile overlays on banner (< lg) ── */}
+          <div className="hero-mobile-scrim" aria-hidden />
+
+          <div className="hero-mobile-commission">
+            <div
+              className="absolute inset-0 rounded-2xl"
+              style={{
+                background:
+                  "linear-gradient(145deg, #ffd84d 0%, #ffc329 45%, #e6a800 100%)",
+              }}
+            />
+            <div className="relative m-[2px] overflow-hidden rounded-[14px] bg-[#071f58] text-white">
+              <div className="grid grid-cols-[2.75rem_1fr] items-stretch sm:grid-cols-[3.25rem_1fr]">
+                <div className="flex items-center justify-center border-r border-white/10 bg-[#051a4a]/40">
+                  <span className="commission-digit-sm">4</span>
+                </div>
+                <div className="min-w-0 px-2 py-1.5 sm:py-2">
+                  <div className="text-xs font-black leading-none text-gold-400 sm:text-sm">
+                    ล้านบาท*
+                  </div>
+                  <div className="mt-0.5 text-[9px] font-bold text-white sm:text-[10px]">
+                    ค่าคอมสูงสุด
+                  </div>
+                  <span className="mt-1 inline-flex rounded bg-gold-400 px-1.5 py-0.5 text-[8px] font-black text-[#001B48] sm:text-[9px]">
+                    จบดีล
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="hero-mobile-qr">
+            <div className="rounded-md bg-white p-1.5 sm:p-2">
+              {/* Phone: QR + buttons แนวนอน — ไม่ล้นความสูงแบนเนอร์ */}
+              <div className="flex items-center gap-2 md:hidden">
+                <img
+                  src="/images/line-qr.png"
+                  alt="LINE Official QR code"
+                  className="h-14 w-14 shrink-0 rounded object-contain sm:h-16 sm:w-16"
+                />
+                <div className="flex min-w-0 flex-1 flex-col gap-1">
+                  <Link
+                    href={LINE_OA}
+                    target="_blank"
+                    rel="noopener"
+                    className="btn-line w-full justify-center gap-1 py-1.5 text-[9px] font-bold sm:text-[10px]"
+                  >
+                    <LineIcon size={14} />
+                    <span className="truncate">@landmarketthai</span>
+                  </Link>
+                  <Link
+                    href={FACEBOOK_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                    className="btn-facebook w-full justify-center py-1.5"
+                  >
+                    <FacebookIcon size={14} />
+                  </Link>
+                </div>
+              </div>
+              {/* Tablet: การ์ดแนวตั้ง มุมบนขวา */}
+              <div className="hidden flex-col items-center gap-1.5 md:flex">
+                <p className="text-center text-[10px] font-black text-brand-800">สแกน LINE</p>
+                <img
+                  src="/images/line-qr.png"
+                  alt="LINE Official QR code"
+                  className="h-18 w-18 rounded object-contain"
+                />
+                <div className="flex w-full flex-col gap-1">
+                  <Link
+                    href={LINE_OA}
+                    target="_blank"
+                    rel="noopener"
+                    className="btn-line w-full justify-center gap-1.5 py-1.5 text-[10px] font-bold"
+                  >
+                    <LineIcon size={16} />
+                    <span className="truncate">@landmarketthai</span>
+                  </Link>
+                  <Link
+                    href={FACEBOOK_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                    className="btn-facebook w-full justify-center py-1.5"
+                  >
+                    <FacebookIcon size={16} />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ── Mobile offer bar (< sm only) ── */}
-        <div className="commission-hero-badge flex items-center gap-3 bg-[#071f58] px-5 py-3 sm:hidden">
-          <span className="shrink-0 rounded-md bg-gold-400 px-2.5 py-0.5 text-[10px] font-black text-[#001B48]">
-            จบดีล
-          </span>
-          <div className="flex items-baseline gap-1.5">
-            <span
-              className="text-2xl font-black leading-none text-gold-400"
-              style={{ filter: "drop-shadow(0 2px 4px rgba(255,180,0,0.3))" }}
-            >
-              4
-            </span>
-            <span className="text-sm font-bold text-white">ล้านบาท*</span>
-          </div>
-          <span className="ml-auto shrink-0 text-[11px] font-medium text-blue-200">ค่าคอมสูงสุด</span>
-        </div>
-
         {/* Benefit strip */}
         <div className="container-xl px-4 sm:px-6 lg:px-8">
-          <div className="relative z-20 mt-0 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-[0_8px_32px_rgba(4,16,44,0.14)] sm:-mt-14 lg:-mt-16">
+          <div className="relative z-30 -mt-8 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-[0_8px_32px_rgba(4,16,44,0.14)] sm:-mt-28 md:-mt-36 lg:-mt-16">
             <div className="grid grid-cols-1 divide-y divide-slate-100/80 sm:grid-cols-5 sm:divide-x sm:divide-y-0">
               {benefits.map((b, index) => {
                 const Icon = b.Icon;
