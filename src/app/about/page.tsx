@@ -1,0 +1,65 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import LineButton from "@/components/ui/LineButton";
+
+export const metadata: Metadata = {
+  title: "เกี่ยวกับเรา – LandmarketThai",
+  description:
+    "LandmarketThai เครือข่ายที่ดินอุตสาหกรรม EEC ที่ใหญ่ที่สุดในไทย เชื่อมเจ้าของที่ดิน นักลงทุน และพาร์ทเนอร์ผ่านระบบ Referral",
+  alternates: { canonical: "/about" },
+};
+
+export default function AboutPage() {
+  return (
+    <div>
+      <div className="bg-slate-900 text-white py-14 px-4 sm:px-6 lg:px-8">
+        <div className="container-xl max-w-2xl">
+          <h1 className="text-3xl font-bold mb-3">เกี่ยวกับ LandmarketThai</h1>
+          <p className="text-slate-400">
+            เครือข่ายที่ดินอุตสาหกรรมและ EEC ที่น่าเชื่อถือที่สุดในไทย
+          </p>
+        </div>
+      </div>
+
+      <div className="container-xl section max-w-2xl">
+        <div className="prose prose-slate max-w-none space-y-6 text-slate-600">
+          <h2 className="text-xl font-bold text-slate-900">พันธกิจของเรา</h2>
+          <p>
+            LandmarketThai ก่อตั้งขึ้นเพื่อเป็นแพลตฟอร์มที่ดินอุตสาหกรรมและ EEC ที่โปร่งใสและน่าเชื่อถือที่สุดในประเทศไทย
+            เราเชื่อมเจ้าของที่ดิน นักลงทุน โรงงาน และคลังสินค้า เข้าด้วยกันผ่านเครือข่ายพาร์ทเนอร์ทั่วประเทศ
+          </p>
+
+          <h2 className="text-xl font-bold text-slate-900">จุดแข็งของเรา</h2>
+          <ul className="space-y-2">
+            <li><strong>การคัดสรรและตรวจสอบ</strong> — ทุกที่ดินในระบบผ่านการตรวจสอบเอกสารสิทธิ์ก่อนลงประกาศ</li>
+            <li><strong>เครือข่าย Referral</strong> — พาร์ทเนอร์กว่า 200+ รายทั่วไทยช่วยเชื่อมโยงที่ดินกับผู้ซื้อที่ใช่</li>
+            <li><strong>ความเชี่ยวชาญ EEC</strong> — ทีมงานมีประสบการณ์เฉพาะด้านที่ดินอุตสาหกรรมและ EEC โดยตรง</li>
+            <li><strong>ความโปร่งใส</strong> — ราคาต่อไร่ชัดเจน ค่าแนะนำประกาศในที่สาธารณะ</li>
+          </ul>
+
+          <h2 className="text-xl font-bold text-slate-900">พื้นที่ให้บริการ</h2>
+          <p>
+            เราเชี่ยวชาญในพื้นที่ EEC (ระยอง ชลบุรี ฉะเชิงเทรา) และระเบียงสมุทรปราการ-บางนา พร้อมขยายไปอยุธยา
+            และจังหวัดอื่นๆ ตามความต้องการของตลาด
+          </p>
+
+          <h2 className="text-xl font-bold text-slate-900">ความเป็นส่วนตัวและ PDPA</h2>
+          <p>
+            เราให้ความสำคัญกับการคุ้มครองข้อมูลส่วนบุคคล เอกสารสิทธิ์และข้อมูลที่ดินที่ได้รับจากเจ้าของ
+            จัดเก็บในระบบ Private Storage ที่เข้ารหัส เข้าถึงได้เฉพาะทีมงานที่ได้รับสิทธิ์เท่านั้น
+          </p>
+        </div>
+
+        <div className="mt-10 flex flex-col sm:flex-row gap-3">
+          <Link href="/become-partner" className="btn-primary">
+            สมัครพาร์ทเนอร์
+            <ArrowRight size={16} />
+          </Link>
+          <Link href="/contact" className="btn-outline">ติดต่อเรา</Link>
+          <LineButton size="sm" />
+        </div>
+      </div>
+    </div>
+  );
+}
