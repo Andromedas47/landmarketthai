@@ -39,17 +39,18 @@ export default function LoginClient() {
   const authError = searchParams.get("error");
   const next = searchParams.get("next") ?? "/";
 
+  const authErrorMessage =
+    authError === "auth_failed"
+      ? "เกิดข้อผิดพลาดในการเข้าสู่ระบบ กรุณาลองใหม่อีกครั้ง"
+      : null;
+
+  const visibleError = error ?? authErrorMessage;
+
   useEffect(() => {
     if (!loading && user) {
       router.replace(next === "/login" ? "/" : next);
     }
   }, [user, loading, router, next]);
-
-  useEffect(() => {
-    if (authError === "auth_failed") {
-      setError("เกิดข้อผิดพลาดในการเข้าสู่ระบบ กรุณาลองใหม่อีกครั้ง");
-    }
-  }, [authError]);
 
   async function handleGoogleLogin() {
     if (!supabase) {
@@ -106,15 +107,23 @@ export default function LoginClient() {
             ใช้บัญชี Google ของคุณเพื่อเข้าสู่ระบบ
           </p>
 
-          {error && (
+          {!supabase && (
+            <div className="mb-5 rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-900">
+              ยังไม่ได้ตั้งค่า Supabase — คัดลอก{" "}
+              <code className="text-xs">.env.local.example</code> เป็น{" "}
+              <code className="text-xs">.env.local</code> แล้วใส่ URL และ Anon Key
+            </div>
+          )}
+
+          {visibleError && (
             <div className="mb-5 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
-              {error}
+              {visibleError}
             </div>
           )}
 
           <button
             onClick={handleGoogleLogin}
-            disabled={isSigningIn}
+            disabled={isSigningIn || !supabase}
             className="w-full flex items-center justify-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 shadow-sm transition-all hover:bg-slate-50 hover:border-slate-300 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {isSigningIn ? (
