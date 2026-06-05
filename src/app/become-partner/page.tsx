@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, TrendingUp, Users, Award } from "lucide-react";
-import LeadForm from "@/components/forms/LeadForm";
+import PartnerForm from "@/components/forms/PartnerForm";
 import LineButton from "@/components/ui/LineButton";
 import JsonLd from "@/components/seo/JsonLd";
 
@@ -135,7 +135,7 @@ export default function BecomePartnerPage() {
             <p className="text-sm text-slate-500 text-center mb-6">
               หรือเพิ่ม LINE OA ด้านล่าง เพื่อเริ่มทันที
             </p>
-            <LeadForm defaultType="partner" />
+            <PartnerForm />
             <div className="mt-4 text-center text-slate-400 text-xs">— หรือ —</div>
             <LineButton className="w-full justify-center mt-3" label="สมัครผ่าน LINE OA" />
           </div>

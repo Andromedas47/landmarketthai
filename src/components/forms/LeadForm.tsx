@@ -3,29 +3,41 @@
 import { useState } from "react";
 import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import LineButton from "@/components/ui/LineButton";
+import FieldError from "@/components/forms/FieldError";
 
 type LeadType = "buyer" | "partner" | "owner";
+type FieldErrors = Record<string, string[]>;
 
 interface Props {
   listingId?: string;
   defaultType?: LeadType;
   compact?: boolean;
   referralCode?: string;
+  heading?: string;
+  submitLabel?: string;
 }
 
-export default function LeadForm({ listingId, defaultType = "buyer", compact = false, referralCode }: Props) {
+export default function LeadForm({
+  listingId,
+  defaultType = "buyer",
+  compact = false,
+  referralCode,
+  heading,
+  submitLabel,
+}: Props) {
   const [state, setState] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setState("loading");
     setErrorMsg("");
+    setFieldErrors({});
 
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form));
 
-    // Honeypot check (client-side; also checked server-side)
     if (data._hp) { setState("success"); return; }
 
     const payload = {
@@ -45,12 +57,23 @@ export default function LeadForm({ listingId, defaultType = "buyer", compact = f
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) {
-        setErrorMsg("กรุณาตรวจสอบข้อมูลอีกครั้ง");
+
+      if (res.status === 422) {
+        const body = await res.json();
+        const errs: FieldErrors = body?.error?.fieldErrors ?? {};
+        setFieldErrors(errs);
+        setErrorMsg("กรุณาตรวจสอบข้อมูลให้ครบถ้วน");
         setState("error");
-      } else {
-        setState("success");
+        return;
       }
+
+      if (!res.ok) {
+        setErrorMsg("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
+        setState("error");
+        return;
+      }
+
+      setState("success");
     } catch {
       setErrorMsg("เกิดข้อผิดพลาด กรุณาลองใหม่");
       setState("error");
@@ -72,16 +95,19 @@ export default function LeadForm({ listingId, defaultType = "buyer", compact = f
     );
   }
 
+  const isLoading = state === "loading";
+
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3" noValidate>
       {/* Honeypot */}
       <input type="text" name="_hp" className="hidden" tabIndex={-1} autoComplete="off" />
 
       {!compact && (
         <h3 className="font-semibold text-slate-800 text-lg">
-          {defaultType === "buyer" ? "สนใจที่ดินนี้" :
-           defaultType === "partner" ? "สมัครพาร์ทเนอร์" :
-           "ส่งข้อมูลที่ดิน"}
+          {heading ??
+            (defaultType === "buyer" ? "สนใจที่ดินนี้" :
+             defaultType === "partner" ? "สมัครพาร์ทเนอร์" :
+             "ส่งข้อมูลที่ดิน")}
         </h3>
       )}
 
@@ -92,9 +118,11 @@ export default function LeadForm({ listingId, defaultType = "buyer", compact = f
           name="name"
           required
           className="input"
-          placeholder="สมชาย ใจดี"
-          disabled={state === "loading"}
+          placeholder="ชื่อ"
+          disabled={isLoading}
+          aria-describedby={fieldErrors.name?.length ? "err-lead-name" : undefined}
         />
+        <FieldError id="err-lead-name" errors={fieldErrors.name} />
       </div>
 
       <div>
@@ -104,11 +132,12 @@ export default function LeadForm({ listingId, defaultType = "buyer", compact = f
           name="phone"
           type="tel"
           required
-          pattern="0[0-9]{8,9}"
           className="input"
-          placeholder="0812345678"
-          disabled={state === "loading"}
+          placeholder="เบอร์โทร"
+          disabled={isLoading}
+          aria-describedby={fieldErrors.phone?.length ? "err-lead-phone" : undefined}
         />
+        <FieldError id="err-lead-phone" errors={fieldErrors.phone} />
       </div>
 
       <div>
@@ -117,44 +146,59 @@ export default function LeadForm({ listingId, defaultType = "buyer", compact = f
           id="lead-line"
           name="line_id"
           className="input"
-          placeholder="@yourline"
-          disabled={state === "loading"}
+          placeholder="LINE ID"
+          disabled={isLoading}
+          aria-describedby={fieldErrors.line_id?.length ? "err-lead-line" : undefined}
         />
+        <FieldError id="err-lead-line" errors={fieldErrors.line_id} />
       </div>
 
-      {/* PDPA */}
-      <label className="flex items-start gap-2 text-xs text-slate-600 cursor-pointer">
-        <input
-          type="checkbox"
-          name="consent_pdpa"
-          required
-          className="mt-0.5 accent-brand-500"
-          disabled={state === "loading"}
-        />
-        <span>
-          ยินยอมให้เก็บและใช้ข้อมูลส่วนบุคคล ตาม{" "}
-          <a href="/privacy" target="_blank" className="underline text-brand-600">
-            นโยบายความเป็นส่วนตัว
-          </a>
-        </span>
-      </label>
+      <div>
+        <label className="flex cursor-pointer items-start gap-3 rounded-lg py-1 text-xs leading-relaxed text-slate-600">
+          <input
+            type="checkbox"
+            name="consent_pdpa"
+            required
+            className="mt-0.5 h-4 w-4 shrink-0 accent-brand-500"
+            disabled={isLoading}
+            aria-describedby={fieldErrors.consent_pdpa?.length ? "err-lead-pdpa" : undefined}
+          />
+          <span>
+            ยินยอมให้เก็บและใช้ข้อมูลส่วนบุคคล ตาม{" "}
+            <a
+              href="/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-brand-600"
+            >
+              นโยบายความเป็นส่วนตัว
+            </a>
+          </span>
+        </label>
+        <FieldError id="err-lead-pdpa" errors={fieldErrors.consent_pdpa} />
+      </div>
 
       {state === "error" && (
-        <div className="flex items-center gap-2 text-red-600 text-sm">
-          <AlertCircle size={15} />
+        <div
+          role="alert"
+          className="flex items-center gap-2 text-red-700 text-sm bg-red-50 rounded-lg p-3 border border-red-100"
+        >
+          <AlertCircle size={16} aria-hidden />
           {errorMsg}
         </div>
       )}
 
       <button
         type="submit"
-        disabled={state === "loading"}
-        className="btn-primary w-full justify-center disabled:opacity-60"
+        disabled={isLoading}
+        className="btn-primary w-full justify-center text-base disabled:opacity-60"
       >
-        {state === "loading" ? <Loader2 size={16} className="animate-spin" /> : null}
-        {defaultType === "buyer" ? "สนใจที่ดินนี้" :
-         defaultType === "partner" ? "สมัครพาร์ทเนอร์" :
-         "ส่งข้อมูลที่ดิน"}
+        {isLoading && <Loader2 size={16} className="animate-spin" aria-hidden />}
+        {isLoading ? "กำลังส่ง..." :
+          submitLabel ??
+          (defaultType === "buyer" ? "สนใจที่ดินนี้" :
+           defaultType === "partner" ? "สมัครพาร์ทเนอร์" :
+           "ส่งข้อมูลที่ดิน")}
       </button>
     </form>
   );

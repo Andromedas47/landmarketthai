@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -13,6 +14,8 @@ import FacebookIcon from "@/components/ui/FacebookIcon";
 import LineIcon from "@/components/ui/LineIcon";
 import JsonLd from "@/components/seo/JsonLd";
 import { getFeaturedListings, getSiteStats, getActiveDemands } from "@/lib/supabase/queries";
+import type { Land } from "@/lib/types/database";
+import { propertyHref } from "@/lib/property-detail-data";
 import { LAND_TYPE_LABELS } from "@/lib/utils";
 
 export const revalidate = 3600;
@@ -107,35 +110,70 @@ const SEED_STATS = { total_partners: 4328, total_listings: 1290, total_deals: 84
 const sampleListings = [
   {
     province: "ระยอง",
-    badgeColor: "bg-orange-500",
-    title: "ที่ดินติดถนนใหญ่ 304",
-    size: "15 ไร่",
-    loc: "ติดถนนใหญ่",
-    status: "ผังสีม่วง",
-    price: "3.2 ล้านบาท/ไร่",
-    reward: "2.4 ล้านบาท",
-  },
-  {
-    province: "ชลบุรี",
-    badgeColor: "bg-blue-600",
-    title: "ที่ดินนิคมพัฒนา",
-    size: "20 ไร่",
-    loc: "ใกล้นิคม",
+    title: "ที่ดินอุตสาหกรรม EEC ระยอง",
+    size: "109 ไร่ 2 งาน 52 ตร.ว.",
+    loc: "ใกล้ WHA / BYD",
     status: "ผังสีม่วง",
     price: "2.75 ล้านบาท/ไร่",
-    reward: "850,000 บาท",
+    reward: "4,000,000 บาท",
+    highlights: ["หน้ากว้าง ~240 ม.", "ใกล้ WHA · BYD"],
+    image: "/images/listings/109-rai-home-thumbnail.png",
+    imageAlt: "ภาพโดรนที่ดินอุตสาหกรรม 109 ไร่ ระยอง",
+    href: propertyHref("109-rai-eec-rayong"),
+    comingSoon: false as const,
   },
   {
-    province: "สมุทรปราการ",
-    badgeColor: "bg-purple-600",
-    title: "ที่ดินใกล้โปรเจกต์ M6",
-    size: "50 ไร่",
-    loc: "ใกล้ทางด่วน/สุวรรณภูมิ",
+    province: "ระยอง",
+    title: "ที่ดินอุตสาหกรรม EEC ระยอง",
+    size: "37 ไร่",
+    loc: "ระยอง EEC",
     status: "ผังสีม่วง",
-    price: "1.8 ล้านบาท/ไร่",
-    reward: "4 ล้านบาท",
+    price: "2.3 ล้านบาท/ไร่",
+    reward: "1,200,000 บาท",
+    highlights: ["หน้ากว้าง ~240 ม.", "ถนนเข้าถึง ปี 2569"],
+    image: "/images/listings/37-rai-home-thumbnail.png",
+    imageAlt: "ภาพโดรนที่ดินอุตสาหกรรม 37 ไร่ ระยอง",
+    href: propertyHref("37-rai-eec-rayong"),
+    comingSoon: false as const,
+  },
+  {
+    province: "กบินทร์บุรี",
+    title: "ที่ดินอุตสาหกรรม 101 ไร่ กบินทร์บุรี",
+    size: "101 ไร่",
+    loc: "",
+    status: "",
+    price: "",
+    reward: "",
+    highlights: [] as string[],
+    image: "/images/listings/kabin-buri-101-rai-home-thumbnail.png",
+    imageAlt: "ภาพโดรนที่ดินอุตสาหกรรม 101 ไร่ กบินทร์บุรี",
+    href: "/become-partner",
+    comingSoon: true as const,
   },
 ];
+
+const homeListingImages = {
+  rayong109: {
+    src: "/images/listings/109-rai-home-thumbnail.png",
+    alt: "ภาพโดรนที่ดินอุตสาหกรรม 109 ไร่ ระยอง",
+  },
+  rayong37: {
+    src: "/images/listings/37-rai-home-thumbnail.png",
+    alt: "ภาพโดรนที่ดินอุตสาหกรรม 37 ไร่ ระยอง",
+  },
+};
+
+function getHomepageListingImage(land: Land) {
+  if (land.size_rai >= 100 && land.size_rai <= 120) return homeListingImages.rayong109;
+  if (land.size_rai >= 35 && land.size_rai <= 40) return homeListingImages.rayong37;
+  return undefined;
+}
+
+function getHomepageListingHref(land: Land) {
+  if (land.size_rai >= 100 && land.size_rai <= 120) return propertyHref("109-rai-eec-rayong");
+  if (land.size_rai >= 35 && land.size_rai <= 40) return propertyHref("37-rai-eec-rayong");
+  return undefined;
+}
 
 const fallbackDemands = [
   { province: "ระยอง",         type: "อุตสาหกรรม",  size: "50–100 ไร่", note: "ใกล้นิคมอุตสาหกรรม สำหรับโรงงานผลิต",         ago: "2 ชม. ที่แล้ว" },
@@ -240,8 +278,8 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* ── QR / LINE card — top-right (md+) ── */}
-          <div className="absolute right-5 top-5 hidden w-[176px] overflow-hidden rounded-xl bg-[#06235f] p-1.5 text-center text-brand-900 shadow-[0_20px_58px_rgba(4,16,44,0.30)] ring-1 ring-white/80 backdrop-blur-md md:block lg:right-16 lg:top-8 lg:w-[216px] lg:p-2 xl:right-28 xl:top-10 xl:w-[248px] 2xl:right-32">
+          {/* ── QR / LINE card — desktop only ── */}
+          <div className="absolute right-5 top-5 hidden w-[176px] overflow-hidden rounded-xl bg-[#06235f] p-1.5 text-center text-brand-900 shadow-[0_20px_58px_rgba(4,16,44,0.30)] ring-1 ring-white/80 backdrop-blur-md lg:right-16 lg:top-8 lg:block lg:w-[216px] lg:p-2 xl:right-28 xl:top-10 xl:w-[248px] 2xl:right-32">
             <div className="px-3 pb-2 pt-1.5 text-white lg:px-4 lg:pb-3 lg:pt-2">
               <p className="text-sm font-black leading-tight lg:text-lg xl:text-xl">เริ่มวันนี้!</p>
               <p className="mt-0.5 text-xs font-black text-gold-400 lg:mt-1 lg:text-sm">สร้างรายได้ไม่จำกัด!</p>
@@ -283,95 +321,41 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* ── Tablet / mobile overlays on banner (< lg) ── */}
+          {/* ── Mobile conversion copy — headline first, no QR ── */}
           <div className="hero-mobile-scrim" aria-hidden />
-
-          <div className="hero-mobile-commission">
-            <div
-              className="absolute inset-0 rounded-2xl"
-              style={{
-                background:
-                  "linear-gradient(145deg, #ffd84d 0%, #ffc329 45%, #e6a800 100%)",
-              }}
-            />
-            <div className="relative m-[2px] overflow-hidden rounded-[14px] bg-[#071f58] text-white">
-              <div className="grid grid-cols-[2.75rem_1fr] items-stretch sm:grid-cols-[3.25rem_1fr]">
-                <div className="flex items-center justify-center border-r border-white/10 bg-[#051a4a]/40">
-                  <span className="commission-digit-sm">4</span>
-                </div>
-                <div className="min-w-0 px-2 py-1.5 sm:py-2">
-                  <div className="text-xs font-black leading-none text-gold-400 sm:text-sm">
-                    ล้านบาท*
-                  </div>
-                  <div className="mt-0.5 text-[9px] font-bold text-white sm:text-[10px]">
-                    ค่าคอมสูงสุด
-                  </div>
-                  <span className="mt-1 inline-flex rounded bg-gold-400 px-1.5 py-0.5 text-[8px] font-black text-[#001B48] sm:text-[9px]">
-                    จบดีล
-                  </span>
-                </div>
+          <div className="absolute inset-x-0 bottom-0 z-20 px-4 pb-5 pt-16 md:hidden">
+            <div className="max-w-sm">
+              <p className="text-xs font-bold tracking-wide text-gold-400">
+                LandmarketThai · เครือข่ายที่ดินอุตสาหกรรม
+              </p>
+              <h1 className="mt-2 text-[2rem] font-black leading-[1.08] text-white drop-shadow-sm">
+                แนะนำที่ดิน
+                <br />
+                รับค่าแนะนำเมื่อปิดดีล
+              </h1>
+              <p className="mt-2 max-w-[20rem] text-sm leading-relaxed text-blue-50">
+                รวมดีลที่ดินอุตสาหกรรม EEC พร้อมทีมช่วยดูแลลูกค้าและปิดการขาย
+              </p>
+              <div className="mt-4 flex flex-col gap-2 min-[390px]:flex-row">
+                <Link
+                  href={LINE_OA}
+                  target="_blank"
+                  rel="noopener"
+                  className="btn-line justify-center px-4 text-sm"
+                >
+                  <LineIcon size={17} />
+                  เริ่มแนะนำที่ดิน
+                </Link>
+                <Link
+                  href="#featured-listings"
+                  className="btn-white justify-center px-4 text-sm"
+                >
+                  ดูที่ดินแนะนำ
+                </Link>
               </div>
-            </div>
-          </div>
-
-          <div className="hero-mobile-qr">
-            <div className="rounded-md bg-white p-1.5 sm:p-2">
-              {/* Phone: QR + buttons แนวนอน — ไม่ล้นความสูงแบนเนอร์ */}
-              <div className="flex items-center gap-2 md:hidden">
-                <img
-                  src="/images/line-qr.png"
-                  alt="LINE Official QR code"
-                  className="h-14 w-14 shrink-0 rounded object-contain sm:h-16 sm:w-16"
-                />
-                <div className="flex min-w-0 flex-1 flex-col gap-1">
-                  <Link
-                    href={LINE_OA}
-                    target="_blank"
-                    rel="noopener"
-                    className="btn-line w-full justify-center gap-1 py-1.5 text-[9px] font-bold sm:text-[10px]"
-                  >
-                    <LineIcon size={14} />
-                    <span className="truncate">@landmarketthai</span>
-                  </Link>
-                  <Link
-                    href={FACEBOOK_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Facebook"
-                    className="btn-facebook w-full justify-center py-1.5"
-                  >
-                    <FacebookIcon size={14} />
-                  </Link>
-                </div>
-              </div>
-              {/* Tablet: การ์ดแนวตั้ง มุมบนขวา */}
-              <div className="hidden flex-col items-center gap-1.5 md:flex">
-                <p className="text-center text-[10px] font-black text-brand-800">สแกน LINE</p>
-                <img
-                  src="/images/line-qr.png"
-                  alt="LINE Official QR code"
-                  className="h-18 w-18 rounded object-contain"
-                />
-                <div className="flex w-full flex-col gap-1">
-                  <Link
-                    href={LINE_OA}
-                    target="_blank"
-                    rel="noopener"
-                    className="btn-line w-full justify-center gap-1.5 py-1.5 text-[10px] font-bold"
-                  >
-                    <LineIcon size={16} />
-                    <span className="truncate">@landmarketthai</span>
-                  </Link>
-                  <Link
-                    href={FACEBOOK_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Facebook"
-                    className="btn-facebook w-full justify-center py-1.5"
-                  >
-                    <FacebookIcon size={16} />
-                  </Link>
-                </div>
+              <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#071f58]/90 px-3 py-1.5 text-xs font-bold text-white ring-1 ring-white/15">
+                <span className="text-gold-400">สูงสุด 4 ล้านบาท*</span>
+                <span className="text-blue-100/80">ต่อดีล</span>
               </div>
             </div>
           </div>
@@ -379,7 +363,7 @@ export default async function HomePage() {
 
         {/* Benefit strip */}
         <div className="container-xl px-4 sm:px-6 lg:px-8">
-          <div className="relative z-30 -mt-8 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-[0_8px_32px_rgba(4,16,44,0.14)] sm:-mt-28 md:-mt-36 lg:-mt-16">
+          <div className="relative z-30 mt-4 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-[0_8px_32px_rgba(4,16,44,0.14)] sm:-mt-28 md:-mt-36 lg:-mt-16">
             <div className="grid grid-cols-1 divide-y divide-slate-100/80 sm:grid-cols-5 sm:divide-x sm:divide-y-0">
               {benefits.map((b, index) => {
                 const Icon = b.Icon;
@@ -408,106 +392,166 @@ export default async function HomePage() {
       <StatStrip stats={stats} />
 
       {/* ── 3. FEATURED LISTINGS ─────────────────────────────────────────── */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8 bg-white">
+      <section id="featured-listings" className="bg-white px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
         <div className="container-xl">
-          <div className="relative flex justify-center mb-7">
-            <h2 className="text-[28px] font-bold text-[#0a2a63] text-center">
+          <div className="mb-7 flex flex-col items-center gap-3 text-center sm:relative sm:block">
+            <h2 className="text-2xl font-bold text-[#0a2a63] sm:text-[28px]">
               ที่ดินแนะนำ <b className="text-[#2f9e44]">อัปเดตทุกวัน</b>
             </h2>
             <Link
               href="/land"
-              className="absolute right-0 bottom-1 text-sm font-semibold text-blue-700 hover:underline"
+              className="text-sm font-semibold text-blue-700 hover:underline sm:absolute sm:right-0 sm:bottom-1"
             >
               ดูทั้งหมด ›
             </Link>
           </div>
 
           {featuredListings.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
               {featuredListings.map((land) => (
-                <ListingCard key={land.id} land={land} />
+                <ListingCard
+                  key={land.id}
+                  land={land}
+                  imageOverride={getHomepageListingImage(land)}
+                  hrefOverride={getHomepageListingHref(land)}
+                />
               ))}
             </div>
           ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {sampleListings.map((item) => (
-                <article key={item.title} className="card-ref flex flex-col">
-                  <div className="relative h-48 overflow-hidden">
-                    <span className="absolute left-3 top-3 z-10 rounded-md bg-[#00A859] px-3 py-1 text-xs font-bold text-white shadow-sm">
-                      {item.province}
-                    </span>
-                    <div
-                      className="flex h-full w-full items-center justify-center"
-                      style={{
-                        background:
-                          "repeating-linear-gradient(45deg, #e3e9f2 0 11px, #edf1f7 11px 22px)",
-                      }}
-                    >
-                      <span className="rounded bg-white/90 px-2 py-1 font-mono text-[10px] text-slate-500">
-                        PLACEHOLDER_LISTING_IMAGE
+            <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+              {sampleListings.map((item) =>
+                item.comingSoon ? (
+                  <article key={`${item.title}-${item.province}`} className="card-ref flex flex-col">
+                    <div className="relative h-44 overflow-hidden sm:h-48">
+                      <span className="absolute left-3 top-3 z-10 rounded-md bg-[#00A859] px-3 py-1 text-xs font-bold text-white shadow-sm">
+                        {item.province}
                       </span>
-                    </div>
-                    <div className="absolute inset-x-0 bottom-0 z-10 bg-[#001B48]/92 px-4 py-2.5">
-                      <div className="text-[11px] font-medium text-white/85">ค่าคอมสูงสุด</div>
-                      <div className="text-xl font-black leading-tight text-gold-400">{item.reward}</div>
-                    </div>
-                  </div>
-                  <div className="flex flex-1 flex-col p-4 pb-5">
-                    <h3 className="mb-3 text-base font-semibold leading-snug text-slate-800">{item.title}</h3>
-                    <div className="mb-3 flex flex-wrap gap-3 border-y border-slate-100 py-3 text-xs text-slate-500">
-                      <span className="flex items-center gap-1">
-                        <Ruler size={13} />
-                        {item.size}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <MapPin size={13} />
-                        {item.loc}
-                      </span>
-                      <span>{item.status}</span>
-                    </div>
-                    <div className="mt-auto flex items-center justify-between gap-2">
-                      <div>
-                        <div className="text-xs text-slate-400">ราคา/ไร่</div>
-                        <div className="text-sm font-bold text-gold-500">{item.price}</div>
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={item.imageAlt}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center bg-slate-100 text-slate-300">
+                          <Ruler size={40} />
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-slate-950/20" />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+                        <span className="rounded-full bg-gold-400 px-5 py-1.5 text-xs font-black text-[#001B48]">
+                          เร็วๆ นี้
+                        </span>
+                        <p className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">
+                          กำลังเตรียมรายละเอียด
+                        </p>
                       </div>
-                      <Link href="/land" className="btn-green shrink-0 px-3 py-2 text-xs">
-                        ส่งต่อให้ลูกค้า
-                      </Link>
                     </div>
-                  </div>
-                </article>
-              ))}
+                    <div className="flex flex-1 flex-col p-4 pb-5">
+                      <h3 className="mb-2 text-base font-semibold leading-snug text-slate-800">{item.title}</h3>
+                      <p className="text-sm text-slate-500 leading-relaxed mb-4">
+                        โปรเจกต์ใหม่ในกบินทร์บุรี กำลังเตรียมรายละเอียด
+                        ลงทะเบียนรับข้อมูลก่อนใคร
+                      </p>
+                      <div className="mt-auto">
+                        <Link href={item.href} className="btn-green w-full justify-center text-xs">
+                          เรียนรู้เพิ่มเติม
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                ) : (
+                  <article key={`${item.title}-${item.size}`} className="card-ref flex flex-col">
+                    <div className="relative h-44 overflow-hidden sm:h-48">
+                      <span className="absolute left-3 top-3 z-10 rounded-md bg-[#00A859] px-3 py-1 text-xs font-bold text-white shadow-sm">
+                        {item.province}
+                      </span>
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={item.imageAlt}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-300">
+                          <Ruler size={40} />
+                        </div>
+                      )}
+                      <div className="absolute inset-x-0 bottom-0 z-10 bg-[#001B48]/92 px-4 py-2.5">
+                        <div className="text-[11px] font-medium text-white/85">ค่าแนะนำสูงสุด</div>
+                        <div className="text-xl font-black leading-tight text-gold-400">{item.reward}</div>
+                      </div>
+                    </div>
+                    <div className="flex flex-1 flex-col p-4 pb-5">
+                      <h3 className="mb-3 text-base font-semibold leading-snug text-slate-800">{item.title}</h3>
+                      <div className="mb-3 flex flex-wrap gap-x-3 gap-y-2 border-y border-slate-100 py-3 text-xs text-slate-500">
+                        <span className="flex items-center gap-1">
+                          <Ruler size={13} />
+                          {item.size}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <MapPin size={13} />
+                          {item.loc}
+                        </span>
+                        <span>{item.status}</span>
+                      </div>
+                      {item.highlights.length > 0 && (
+                        <div className="mb-3 flex flex-wrap gap-1.5">
+                          {item.highlights.map((h) => (
+                            <span key={h} className="rounded bg-purple-50 px-2 py-0.5 text-[11px] font-medium text-purple-700">
+                              {h}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <div className="mt-auto flex flex-col gap-3 min-[360px]:flex-row min-[360px]:items-center min-[360px]:justify-between">
+                        <div className="min-w-0">
+                          <div className="text-xs text-slate-400">ราคา/ไร่</div>
+                          <div className="text-sm font-bold text-gold-500">{item.price}</div>
+                        </div>
+                        <Link href={item.href} className="btn-green w-full shrink-0 px-3 py-2 text-xs min-[360px]:w-auto">
+                          ดูรายละเอียด
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                )
+              )}
             </div>
           )}
         </div>
       </section>
 
       {/* ── 4. HOW IT WORKS + WHO CAN EARN ───────────────────────────────── */}
-      <section className="bg-[#eef2f9] py-14 px-4 sm:px-6 lg:px-8">
+      <section className="bg-[#eef2f9] px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
         <div className="container-xl">
           <div className="grid lg:grid-cols-2 gap-5">
 
             {/* Steps panel */}
-            <div className="bg-white rounded-[18px] border border-slate-100 shadow-[0_2px_8px_rgba(13,30,70,0.06)] p-7">
-              <h3 className="font-bold text-[22px] text-[#0a2a63] text-center mb-6">
+            <div className="rounded-[18px] border border-slate-100 bg-white p-5 shadow-[0_2px_8px_rgba(13,30,70,0.06)] sm:p-7">
+              <h3 className="mb-6 text-center text-xl font-bold text-[#0a2a63] sm:text-[22px]">
                 3 ขั้นตอนง่ายๆ เริ่มต้นสร้างรายได้
               </h3>
-              <div className="flex items-start justify-center">
+              <div className="flex items-start justify-center gap-1">
                 {howToEarnSteps.map((step, i) => (
                   <div key={step.num} className="flex items-start flex-1 min-w-0">
-                    <div className="flex flex-col items-center flex-1 min-w-0">
-                      <div className="w-11 h-11 rounded-full bg-[#0f3478] text-white flex items-center justify-center text-[19px] font-bold shrink-0 shadow-[0_8px_18px_rgba(15,52,120,0.32)] mb-2.5">
+                    <div className="flex min-w-0 flex-1 flex-col items-center">
+                      <div className="mb-2.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0f3478] text-lg font-bold text-white shadow-[0_8px_18px_rgba(15,52,120,0.32)] sm:h-11 sm:w-11 sm:text-[19px]">
                         {step.num}
                       </div>
                       <div className="text-center px-1">
-                        <div className="font-semibold text-slate-800 text-sm leading-snug whitespace-pre-line">
+                        <div className="whitespace-pre-line text-xs font-semibold leading-snug text-slate-800 sm:text-sm">
                           {step.title}
                         </div>
                       </div>
                     </div>
                     {i < howToEarnSteps.length - 1 && (
-                      <div className="flex items-start pt-3 shrink-0 px-1">
-                        <ArrowRight size={20} className="text-[#14409a] mt-1.5" />
+                      <div className="flex shrink-0 items-start px-0.5 pt-3 sm:px-1">
+                        <ArrowRight size={18} className="mt-1.5 text-[#14409a] sm:size-5" />
                       </div>
                     )}
                   </div>
@@ -524,11 +568,11 @@ export default async function HomePage() {
             </div>
 
             {/* Who can earn panel */}
-            <div className="bg-white rounded-[18px] border border-slate-100 shadow-[0_2px_8px_rgba(13,30,70,0.06)] p-7">
-              <h3 className="font-bold text-[22px] text-[#0a2a63] text-center mb-6">
+            <div className="rounded-[18px] border border-slate-100 bg-white p-5 shadow-[0_2px_8px_rgba(13,30,70,0.06)] sm:p-7">
+              <h3 className="mb-6 text-center text-xl font-bold text-[#0a2a63] sm:text-[22px]">
                 ใครๆ ก็สามารถสร้างรายได้จากที่ดิน
               </h3>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4 min-[390px]:grid-cols-3">
                 {earnerPersonas.map((p) => {
                   const Icon = p.Icon;
                   return (
@@ -536,7 +580,7 @@ export default async function HomePage() {
                       <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-[#0f3478]">
                         <Icon size={18} strokeWidth={1.8} />
                       </div>
-                      <div className="text-[13.5px] font-semibold text-slate-700 leading-snug">{p.label}</div>
+                      <div className="text-sm font-semibold leading-snug text-slate-700 sm:text-[13.5px]">{p.label}</div>
                     </div>
                   );
                 })}
@@ -552,32 +596,32 @@ export default async function HomePage() {
       </section>
 
       {/* ── 5. BUYER DEMAND ──────────────────────────────────────────────── */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="bg-white px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
         <div className="container-xl">
-          <div className="relative flex justify-center mb-7">
-            <h2 className="text-[28px] font-bold text-[#0a2a63] text-center">
+          <div className="mb-7 flex flex-col items-center gap-3 text-center sm:relative sm:block">
+            <h2 className="text-2xl font-bold text-[#0a2a63] sm:text-[28px]">
               ความต้องการที่ดิน <b className="text-[#2f9e44]">(Buyer กำลังหา)</b>
             </h2>
             <Link
               href="/buyer-demand"
-              className="absolute right-0 bottom-1 text-sm font-semibold text-blue-700 hover:underline"
+              className="text-sm font-semibold text-blue-700 hover:underline sm:absolute sm:right-0 sm:bottom-1"
             >
               ดูทั้งหมด ›
             </Link>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {demands.length > 0
               ? demands.slice(0, 4).map((d) => (
                   <Link
                     key={d.id}
                     href={`/buyer-demand/${d.slug}`}
-                    className="rounded-[18px] p-4 pb-5 transition-shadow hover:shadow-md"
+                    className="min-h-32 rounded-[18px] p-4 pb-5 transition-shadow hover:shadow-md"
                     style={{ background: "#fdf3e5", border: "1px solid #f1ddbd" }}
                   >
-                    <div className="flex items-center gap-1.5 font-bold text-[17px] text-[#0a2a63]">
+                    <div className="flex min-w-0 items-center gap-1.5 text-[17px] font-bold text-[#0a2a63]">
                       <MapPin size={16} className="text-[#2f9e44]" />
-                      {d.province?.name_th ?? "ทั่วไทย"}
+                      <span className="truncate">{d.province?.name_th ?? "ทั่วไทย"}</span>
                     </div>
                     <div className="text-sm font-semibold text-slate-800 mt-2 mb-1.5">
                       ต้องการที่ดิน{" "}
@@ -600,12 +644,12 @@ export default async function HomePage() {
               : fallbackDemands.map((d) => (
                   <div
                     key={d.province}
-                    className="rounded-[18px] p-4 pb-5"
+                    className="min-h-32 rounded-[18px] p-4 pb-5"
                     style={{ background: "#fdf3e5", border: "1px solid #f1ddbd" }}
                   >
-                    <div className="flex items-center gap-1.5 font-bold text-[17px] text-[#0a2a63]">
+                    <div className="flex min-w-0 items-center gap-1.5 text-[17px] font-bold text-[#0a2a63]">
                       <MapPin size={16} className="text-[#2f9e44]" />
-                      {d.province}
+                      <span className="truncate">{d.province}</span>
                     </div>
                     <div className="text-sm font-semibold text-slate-800 mt-2 mb-1.5">
                       ต้องการที่ดิน {d.size}
@@ -635,16 +679,16 @@ export default async function HomePage() {
       </section>
 
       {/* ── 6. TESTIMONIALS ──────────────────────────────────────────────── */}
-      <section className="bg-[#eef2f9] py-14 px-4 sm:px-6 lg:px-8">
+      <section className="bg-[#eef2f9] px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
         <div className="container-xl">
-          <div className="relative flex justify-center mb-7">
-            <h2 className="text-[28px] font-bold text-[#0a2a63] text-center">
+          <div className="mb-7 text-center">
+            <h2 className="text-2xl font-bold text-[#0a2a63] sm:text-[28px]">
               เสียงจากผู้แนะนำที่ดินของเรา{" "}
               <b className="text-[#2f9e44]">(ได้รับค่าตอบแทนจริง)</b>
             </h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {testimonials.map((t) => (
               <div
                 key={t.name}
@@ -677,11 +721,11 @@ export default async function HomePage() {
       </section>
 
       {/* ── 7. BOTTOM CTA + TRUST STRIP ─────────────────────────────────── */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="bg-white px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
         <div className="container-xl">
           {/* CTA box — navy 3-col card */}
           <div
-            className="relative overflow-hidden rounded-[26px] px-8 py-9 lg:px-10 grid grid-cols-1 lg:grid-cols-[1fr_auto_auto] gap-7 items-center shadow-[0_14px_36px_rgba(13,30,70,0.10)]"
+            className="relative grid grid-cols-1 items-center gap-7 overflow-hidden rounded-[26px] px-5 py-8 shadow-[0_14px_36px_rgba(13,30,70,0.10)] sm:px-8 sm:py-9 lg:grid-cols-[1fr_auto_auto] lg:px-10"
             style={{ background: "linear-gradient(120deg, #0f3478, #071d4a)" }}
           >
             {/* green glow decoration */}
@@ -694,8 +738,8 @@ export default async function HomePage() {
             />
 
             {/* Text */}
-            <div className="text-white text-center lg:text-left relative z-10">
-              <h2 className="text-xl lg:text-[26px] font-bold leading-snug">
+            <div className="relative z-10 text-center text-white lg:text-left">
+              <h2 className="text-xl font-bold leading-snug lg:text-[26px]">
                 รู้จักที่ดินดี อย่าปล่อย Connection ให้เสียเปล่า
                 <br />
                 มาร่วมสร้างรายได้ไปกับ{" "}
@@ -704,12 +748,12 @@ export default async function HomePage() {
             </div>
 
             {/* Button + note */}
-            <div className="flex flex-col items-center gap-2 relative z-10">
+            <div className="relative z-10 flex flex-col items-center gap-2">
               <Link
                 href={LINE_OA}
                 target="_blank"
                 rel="noopener"
-                className="btn-green px-8 py-4 text-base ring-2 ring-[#33c477]/50"
+                className="btn-green w-full px-6 py-4 text-base ring-2 ring-[#33c477]/50 sm:w-auto sm:px-8"
               >
                 {LINE_ICON}
                 เข้าร่วมฟรีทันที
@@ -718,8 +762,8 @@ export default async function HomePage() {
             </div>
 
             {/* QR card */}
-            <div className="hidden sm:flex items-center gap-3 relative z-10">
-              <div className="w-[92px] h-[92px] rounded-xl bg-white p-2 flex items-center justify-center shrink-0">
+            <div className="relative z-10 hidden items-center gap-3 sm:flex">
+              <div className="flex h-[92px] w-[92px] shrink-0 items-center justify-center rounded-xl bg-white p-2">
                 <img
                   src="/images/line-qr.png"
                   alt="LINE Official QR code"
@@ -744,8 +788,8 @@ export default async function HomePage() {
             {trustItems.map((t) => {
               const Icon = t.Icon;
               return (
-                <div key={t.label} className="flex items-center gap-2.5 justify-center">
-                  <div className="w-[38px] h-[38px] shrink-0 text-[#0f3478]">
+                <div key={t.label} className="flex items-center justify-center gap-2.5">
+                  <div className="h-[38px] w-[38px] shrink-0 text-[#0f3478]">
                     <Icon size={38} strokeWidth={1.8} />
                   </div>
                   <div className="text-sm font-semibold text-slate-800 leading-tight whitespace-pre-line">

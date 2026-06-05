@@ -45,36 +45,36 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-brand-500 px-6 py-3 font-bold text-white transition-colors hover:bg-brand-600 active:bg-brand-700;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-brand-500 px-6 py-3 font-bold text-white transition-colors hover:bg-brand-600 active:bg-brand-700;
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg border-2 border-brand-500 px-6 py-3 font-bold text-brand-600 transition-colors hover:bg-brand-50;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border-2 border-brand-500 px-6 py-3 font-bold text-brand-600 transition-colors hover:bg-brand-50;
   }
 
   /* Primary green CTA — ref style */
   .btn-green {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-[#00A859] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#00924d];
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#00A859] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#00924d];
   }
 
   /* LINE brand green */
   .btn-line {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-[#06C755] px-5 py-2.5 font-bold text-white transition-colors hover:bg-[#05a847];
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#06C755] px-5 py-2.5 font-bold text-white transition-colors hover:bg-[#05a847];
   }
 
   /* Facebook brand blue */
   .btn-facebook {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-[#1877F2] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#166FE5] active:scale-[0.98];
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#1877F2] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#166FE5] active:scale-[0.98];
   }
 
   /* Secondary white button on dark bg — ref style */
   .btn-white {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-bold text-[#001B48] transition-colors hover:bg-slate-50;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-bold text-[#001B48] transition-colors hover:bg-slate-50;
   }
 
   /* Ghost login button — ref style */
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-brand-600 bg-white px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-brand-600 bg-white px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50;
   }
 
   .card {
@@ -87,11 +87,11 @@
 
   .hero-banner {
     @apply relative isolate overflow-hidden bg-sky-100 shadow-[0_22px_58px_rgba(4,16,44,0.18)];
-    @apply h-70 sm:h-96 md:h-112 lg:h-136 xl:h-144;
+    @apply h-88 sm:h-96 md:h-112 lg:h-136 xl:h-144;
   }
 
   .hero-mobile-scrim {
-    @apply pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-linear-to-t from-[#071f58]/92 via-[#071f58]/45 to-transparent sm:h-28 md:hidden;
+    @apply pointer-events-none absolute inset-0 z-10 bg-linear-to-t from-[#071f58]/95 via-[#071f58]/72 to-[#071f58]/10 md:hidden;
   }
 
   .hero-mobile-commission {
@@ -150,7 +150,7 @@
   }
 
   .input {
-    @apply w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition;
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-800 placeholder-slate-400 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-brand-400;
   }
 
   .label {

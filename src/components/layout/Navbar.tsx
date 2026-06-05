@@ -43,7 +43,7 @@ function UserMenu({ onClose }: { onClose?: () => void }) {
     <div className="relative">
       <button
         onClick={() => setMenuOpen(!menuOpen)}
-        className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors"
+        className="flex min-h-11 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100"
         aria-label="เมนูผู้ใช้"
       >
         {avatarUrl ? (
@@ -63,10 +63,10 @@ function UserMenu({ onClose }: { onClose?: () => void }) {
       {menuOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setMenuOpen(false)} />
-          <div className="absolute right-0 top-full mt-1 z-50 w-48 rounded-xl border border-slate-100 bg-white py-1 shadow-lg">
+          <div className="absolute right-0 top-full z-50 mt-1 w-48 rounded-xl border border-slate-100 bg-white py-1 shadow-lg">
             <Link
               href="/profile"
-              className="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50"
+              className="flex min-h-11 items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50"
               onClick={() => { setMenuOpen(false); onClose?.(); }}
             >
               <User size={15} />
@@ -75,7 +75,7 @@ function UserMenu({ onClose }: { onClose?: () => void }) {
             <hr className="my-1 border-slate-100" />
             <button
               onClick={handleLogout}
-              className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50"
+              className="flex min-h-11 w-full items-center gap-2 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50"
             >
               <LogOut size={15} />
               ออกจากระบบ
@@ -102,7 +102,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 border-b border-slate-100 shadow-[0_1px_8px_rgba(4,16,44,0.07)] backdrop-blur-md">
-      <div className="container-xl flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
+      <div className="container-xl flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
           <img
@@ -121,7 +121,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="px-3 py-2 text-sm font-medium text-slate-700 hover:text-brand-600 rounded-lg hover:bg-brand-50 transition-colors"
+            className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-brand-50 hover:text-brand-600"
             >
               {link.label}
             </Link>
@@ -152,9 +152,10 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+          className="flex min-h-11 min-w-11 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 lg:hidden"
           onClick={() => setOpen(!open)}
           aria-label="เมนู"
+          aria-expanded={open}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -162,23 +163,23 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="lg:hidden border-t border-slate-100 bg-white pb-4 px-4">
+        <div className="border-t border-slate-100 bg-white px-4 pb-4 lg:hidden">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="block py-3 text-sm font-medium text-slate-700 border-b border-slate-50"
+              className="flex min-h-11 items-center border-b border-slate-50 py-3 text-base font-medium text-slate-700"
               onClick={() => setOpen(false)}
             >
               {link.label}
             </Link>
           ))}
-          <div className="flex gap-2 mt-4">
+          <div className="mt-4 grid gap-2 min-[380px]:grid-cols-2">
             {!loading && (
               user ? (
                 <button
                   onClick={handleMobileLogout}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-red-600 border border-red-200 rounded-xl hover:bg-red-50"
+                  className="flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-red-200 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50"
                 >
                   <LogOut size={14} />
                   ออกจากระบบ
@@ -186,7 +187,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/login"
-                  className="flex-1 py-2.5 text-sm font-medium text-center text-slate-700 border border-slate-200 rounded-xl hover:bg-slate-50"
+                  className="flex min-h-11 items-center justify-center rounded-xl border border-slate-200 py-2.5 text-center text-sm font-medium text-slate-700 hover:bg-slate-50"
                   onClick={() => setOpen(false)}
                 >
                   เข้าสู่ระบบ
@@ -197,7 +198,7 @@ export default function Navbar() {
               href={LINE_OA}
               target="_blank"
               rel="noopener"
-              className="flex-1 btn-line text-sm py-2.5"
+              className="btn-line justify-center py-2.5 text-sm"
               onClick={() => setOpen(false)}
             >
               LINE Official

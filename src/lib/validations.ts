@@ -46,6 +46,7 @@ export const ownerLeadSchema = z.object({
   asking_price: z.number().positive().optional(),
   deed_type: z.string().optional(),
   notes: z.string().optional(),
+  referral_code: z.string().optional(),
   consent_pdpa: consentPdpa,
   source: z.string().optional(),
 });
@@ -69,3 +70,14 @@ export const uploadConfirmSchema = z.object({
 export type BuyerLeadInput = z.infer<typeof buyerLeadSchema>;
 export type PartnerLeadInput = z.infer<typeof partnerLeadSchema>;
 export type OwnerLeadInput = z.infer<typeof ownerLeadSchema>;
+
+/**
+ * Strips common formatting characters and normalises the +66 country-code prefix
+ * so users can type 081-234-5678 or +6681234567 and still pass the regex.
+ */
+export function normalizePhone(raw: string): string {
+  let p = raw.replace(/[\s\-().]/g, "");
+  if (p.startsWith("+66")) p = "0" + p.slice(3);
+  else if (/^66\d{9}$/.test(p)) p = "0" + p.slice(2);
+  return p;
+}

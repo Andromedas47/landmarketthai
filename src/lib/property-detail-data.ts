@@ -1,0 +1,150 @@
+export interface PropertyDetailImage {
+  src: string;
+  alt: string;
+}
+
+export interface PropertyDetail {
+  slug: string;
+  title: string;
+  shortTitle: string;
+  location: string;
+  size: string;
+  zoning: string;
+  pricePerRai: string;
+  referralReward: string;
+  frontage: string;
+  access: string;
+  status: string;
+  nearby: string[];
+  heroImage: PropertyDetailImage;
+  keyHighlights: string[];
+  facts: Array<{
+    label: string;
+    value: string;
+  }>;
+  highlightCards: Array<{
+    title: string;
+    description: string;
+  }>;
+  gallery: PropertyDetailImage[];
+}
+
+export const propertyDetails: PropertyDetail[] = [
+  {
+    slug: "109-rai-eec-rayong",
+    title: "ที่ดินอุตสาหกรรม EEC ระยอง 109 ไร่ ใกล้ WHA และ BYD",
+    shortTitle: "109 ไร่ EEC ระยอง",
+    location: "นิคมพัฒนา, ระยอง",
+    size: "109 ไร่ 2 งาน 52 ตร.ว.",
+    zoning: "ผังสีม่วง",
+    pricePerRai: "2.75 ล้านบาท/ไร่",
+    referralReward: "ค่าแนะนำสูงสุด 4,000,000 บาท",
+    frontage: "ประมาณ 240 เมตร",
+    access: "เข้าออกได้ 2 ทาง",
+    status: "เปิดรับสอบถาม",
+    nearby: ["WHA", "BYD"],
+    heroImage: {
+      src: "/images/listings/109-rai-home-thumbnail.png",
+      alt: "ภาพโดรนที่ดินอุตสาหกรรม 109 ไร่ EEC ระยอง",
+    },
+    keyHighlights: [
+      "พื้นที่ 109 ไร่ 2 งาน 52 ตร.ว.",
+      "ผังสีม่วง เหมาะสำหรับโรงงานและคลังสินค้า",
+      "หน้ากว้างประมาณ 240 เมตร",
+      "ใกล้ WHA และ BYD ในโซน EEC ระยอง",
+    ],
+    facts: [
+      { label: "ขนาดที่ดิน", value: "109 ไร่ 2 งาน 52 ตร.ว." },
+      { label: "ทำเล", value: "นิคมพัฒนา, ระยอง" },
+      { label: "ผังเมือง", value: "ผังสีม่วง" },
+      { label: "หน้ากว้าง", value: "ประมาณ 240 เมตร" },
+      { label: "ทางเข้าออก", value: "เข้าออกได้ 2 ทาง" },
+      { label: "สถานะ", value: "เปิดรับสอบถาม" },
+    ],
+    highlightCards: [
+      {
+        title: "เหมาะสำหรับอุตสาหกรรม",
+        description:
+          "ที่ดินผังสีม่วงในพื้นที่ EEC เหมาะสำหรับโรงงาน คลังสินค้า และการลงทุนระยะยาว",
+      },
+      {
+        title: "การเดินทางและโลจิสติกส์",
+        description:
+          "เข้าออกได้ 2 ทาง หน้ากว้างประมาณ 240 เมตร รองรับการขนส่งและรถบรรทุก",
+      },
+      {
+        title: "ศักยภาพทำเล",
+        description: "อยู่ใกล้ WHA และ BYD เหมาะกับผู้ซื้อที่ต้องการทำเลอุตสาหกรรมในระยอง",
+      },
+    ],
+    gallery: [
+      {
+        src: "/images/listings/109-rai-home-thumbnail.png",
+        alt: "ภาพโดรนที่ดินอุตสาหกรรม 109 ไร่ EEC ระยอง",
+      },
+    ],
+  },
+  {
+    slug: "37-rai-eec-rayong",
+    title: "ที่ดินอุตสาหกรรม EEC ระยอง 37 ไร่ ติดถนน 2026",
+    shortTitle: "37 ไร่ EEC ระยอง",
+    location: "ระยอง",
+    size: "37 ไร่",
+    zoning: "ผังสีม่วง",
+    pricePerRai: "2.3 ล้านบาท/ไร่",
+    referralReward: "ค่าแนะนำสูงสุด 1,200,000 บาท",
+    frontage: "ประมาณ 240 เมตร",
+    access: "ติดถนน 2026",
+    status: "เปิดรับสอบถาม",
+    nearby: ["ด้านหลังติดแหล่งน้ำ"],
+    heroImage: {
+      src: "/images/listings/37-rai-home-thumbnail.png",
+      alt: "ภาพโดรนที่ดินอุตสาหกรรม 37 ไร่ EEC ระยอง",
+    },
+    keyHighlights: [
+      "พื้นที่ 37 ไร่",
+      "ผังสีม่วง เหมาะสำหรับอุตสาหกรรม",
+      "หน้ากว้างประมาณ 240 เมตร",
+      "ติดถนน 2026 เข้าออกสะดวก",
+      "ด้านหลังติดแหล่งน้ำ",
+    ],
+    facts: [
+      { label: "ขนาดที่ดิน", value: "37 ไร่" },
+      { label: "ทำเล", value: "ระยอง" },
+      { label: "ผังเมือง", value: "ผังสีม่วง" },
+      { label: "หน้ากว้าง", value: "ประมาณ 240 เมตร" },
+      { label: "ทางเข้าออก", value: "ติดถนน 2026" },
+      { label: "สถานะ", value: "เปิดรับสอบถาม" },
+    ],
+    highlightCards: [
+      {
+        title: "เหมาะสำหรับอุตสาหกรรม",
+        description:
+          "ที่ดินผังสีม่วงในระยอง EEC เหมาะสำหรับโรงงาน คลังสินค้า และธุรกิจที่ต้องการพื้นที่อุตสาหกรรม",
+      },
+      {
+        title: "เดินทางสะดวก",
+        description: "ติดถนน 2026 พร้อมหน้ากว้างประมาณ 240 เมตร",
+      },
+      {
+        title: "จุดเด่นของแปลง",
+        description:
+          "พื้นที่ขนาดเหมาะสมสำหรับผู้ซื้อที่ต้องการเริ่มโครงการอุตสาหกรรมในพื้นที่ EEC ระยอง",
+      },
+    ],
+    gallery: [
+      {
+        src: "/images/listings/37-rai-home-thumbnail.png",
+        alt: "ภาพโดรนที่ดินอุตสาหกรรม 37 ไร่ EEC ระยอง",
+      },
+    ],
+  },
+];
+
+export function getPropertyDetail(slug: string): PropertyDetail | undefined {
+  return propertyDetails.find((property) => property.slug === slug);
+}
+
+export function propertyHref(slug: string): string {
+  return `/property/${slug}`;
+}
