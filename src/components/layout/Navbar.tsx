@@ -146,7 +146,7 @@ export default function Navbar() {
             className="btn-line text-sm px-4 py-2"
           >
             <LineIcon size={16} />
-            LINE Official
+            เพิ่ม LINE OA
           </Link>
         </div>
 
@@ -201,7 +201,7 @@ export default function Navbar() {
               className="btn-line justify-center py-2.5 text-sm"
               onClick={() => setOpen(false)}
             >
-              LINE Official
+              เพิ่ม LINE OA
             </Link>
           </div>
         </div>

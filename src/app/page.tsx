@@ -5,7 +5,7 @@ import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight, MapPin, Ruler,
   BadgeDollarSign, BarChart3, Smartphone, Wallet, Target, Users,
-  Shield, Search, Calendar, Clock, CheckCircle,
+  Shield, Search, Calendar, Clock,
   Home, Wrench, Briefcase, Globe, BarChart2,
 } from "lucide-react";
 import StatStrip from "@/components/ui/StatStrip";
@@ -23,7 +23,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "LandmarketThai – ที่ดินอุตสาหกรรม EEC ทั่วไทย | รับค่าแนะนำสูงสุดหลายล้าน",
   description:
-    "เปลี่ยน Connection เป็นรายได้ ไม่ต้องลงทุน ไม่ต้องสต็อก แนะนำที่ดินอุตสาหกรรม EEC Rayong Chonburi รับค่าคอมสูงสุดหลายล้านบาท",
+    "เปลี่ยนคอนเนกชันเป็นรายได้ ไม่ต้องลงทุน ไม่ต้องสต็อก แนะนำที่ดินอุตสาหกรรม EEC ระยอง ชลบุรี รับค่าคอมสูงสุดหลายล้านบาท",
 };
 
 const LINE_OA = process.env.NEXT_PUBLIC_LINE_OA_URL ?? "https://lin.ee/8p064f7";
@@ -52,7 +52,7 @@ const howToEarnSteps = [
   {
     num: "2",
     title: "แนะนำที่ดิน\nจากแพลตฟอร์ม",
-    desc: "ส่งลีดผ่าน LINE หรือแชร์ referral code ทีมเราดูแลทั้งหมด",
+    desc: "ส่งลีดผ่าน LINE หรือแชร์รหัสแนะนำ ทีมเราดูแลทั้งหมด",
   },
   {
     num: "3",
@@ -68,33 +68,6 @@ const earnerPersonas: { Icon: LucideIcon; label: string }[] = [
   { Icon: BarChart2,  label: "นักขาย" },
   { Icon: Briefcase,  label: "พนักงานบริษัท" },
   { Icon: Globe,      label: "ฟรีแลนซ์ / แม่บ้าน" },
-];
-
-const testimonials = [
-  {
-    name: "คุณสมชาย ว.",
-    province: "ระยอง",
-    payoutLabel: "2,400,000 บาท",
-    text: "แนะนำที่ดินติดถนนใหญ่ 304 ได้รับค่าแนะนำ 2.4 ล้านบาท",
-  },
-  {
-    name: "คุณวรรณา น.",
-    province: "ชลบุรี",
-    payoutLabel: "850,000 บาท",
-    text: "ส่งข้อมูลที่ดินนิคมพัฒนา 60 ไร่ ผ่าน LINE ได้รับค่าแนะนำ 850,000 บาท",
-  },
-  {
-    name: "คุณกณพ อ.",
-    province: "สมุทรปราการ",
-    payoutLabel: "4,000,000 บาท",
-    text: "ได้ค่าคอมรวม 4 ล้านบาท แนะนำเพื่อนๆ แล้ว 3 คนครับ",
-  },
-  {
-    name: "คุณกิตติพัทธ์ ร.",
-    province: "ระยอง",
-    payoutLabel: "1,200,000 บาท",
-    text: "รายได้เสริมที่เห็นผลจริง เพราะมีทีมผู้เชี่ยวชาญช่วยปิดดีลตลอด",
-  },
 ];
 
 const trustItems: { Icon: LucideIcon; label: string }[] = [
@@ -178,7 +151,7 @@ function getHomepageListingHref(land: Land) {
 const fallbackDemands = [
   { province: "ระยอง",         type: "อุตสาหกรรม",  size: "50–100 ไร่", note: "ใกล้นิคมอุตสาหกรรม สำหรับโรงงานผลิต",         ago: "2 ชม. ที่แล้ว" },
   { province: "ชลบุรี",        type: "โลจิสติกส์",  size: "20–50 ไร่",  note: "ใกล้ท่าเรือแหลมฉบัง สำหรับคลังสินค้า",         ago: "4 ชม. ที่แล้ว" },
-  { province: "สมุทรปราการ",  type: "Data Center", size: "30–80 ไร่",  note: "บางนา-เทพารักษ์ สำหรับ Data Center",              ago: "1 วัน ที่แล้ว" },
+  { province: "สมุทรปราการ",  type: "ศูนย์ข้อมูล", size: "30–80 ไร่",  note: "บางนา-เทพารักษ์ สำหรับศูนย์ข้อมูล",              ago: "1 วัน ที่แล้ว" },
   { province: "อยุธยา",        type: "อุตสาหกรรม",  size: "100+ ไร่",   note: "ใกล้นิคมบางปะอิน สำหรับโรงงาน",                 ago: "1 วัน ที่แล้ว" },
 ];
 
@@ -294,7 +267,7 @@ export default async function HomePage() {
               <div className="flex h-24 w-24 items-center justify-center rounded-lg bg-white p-1.5 shadow-[0_10px_26px_rgba(15,52,120,0.12)] ring-1 ring-slate-200 lg:h-32 lg:w-32 lg:p-2 xl:h-36 xl:w-36">
                 <img
                   src="/images/line-qr.png"
-                  alt="LINE Official QR code"
+                  alt="คิวอาร์โค้ด LINE OA"
                   className="h-full w-full rounded-lg object-contain"
                 />
               </div>
@@ -312,7 +285,7 @@ export default async function HomePage() {
                   href={FACEBOOK_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Facebook"
+                  aria-label="เฟซบุ๊ก"
                   className="btn-facebook w-full justify-center py-2 lg:py-2.5"
                 >
                   <FacebookIcon size={18} />
@@ -600,7 +573,7 @@ export default async function HomePage() {
         <div className="container-xl">
           <div className="mb-7 flex flex-col items-center gap-3 text-center sm:relative sm:block">
             <h2 className="text-2xl font-bold text-[#0a2a63] sm:text-[28px]">
-              ความต้องการที่ดิน <b className="text-[#2f9e44]">(Buyer กำลังหา)</b>
+              ความต้องการที่ดิน <b className="text-[#2f9e44]">(ผู้ซื้อกำลังหา)</b>
             </h2>
             <Link
               href="/buyer-demand"
@@ -678,49 +651,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 6. TESTIMONIALS ──────────────────────────────────────────────── */}
-      <section className="bg-[#eef2f9] px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
-        <div className="container-xl">
-          <div className="mb-7 text-center">
-            <h2 className="text-2xl font-bold text-[#0a2a63] sm:text-[28px]">
-              เสียงจากผู้แนะนำที่ดินของเรา{" "}
-              <b className="text-[#2f9e44]">(ได้รับค่าตอบแทนจริง)</b>
-            </h2>
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {testimonials.map((t) => (
-              <div
-                key={t.name}
-                className="bg-white rounded-[18px] overflow-hidden border border-slate-100 shadow-[0_2px_8px_rgba(13,30,70,0.06)]"
-              >
-                <div
-                  className="h-58 relative flex items-center justify-center"
-                  style={{
-                    background:
-                      "repeating-linear-gradient(45deg, #e3e9f2 0 11px, #edf1f7 11px 22px)",
-                  }}
-                >
-                  <span className="text-[10px] font-mono text-slate-500 bg-white/90 rounded px-2 py-1">
-                    PLACEHOLDER_TESTIMONIAL_PHOTO
-                  </span>
-                </div>
-                <div className="p-4 pb-5">
-                  <p className="text-sm text-slate-700 leading-relaxed min-h-15.5">
-                    &ldquo;{t.text}&rdquo;
-                  </p>
-                  <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-slate-100 text-sm text-[#2a8a3c] font-semibold">
-                    <CheckCircle size={16} strokeWidth={2.2} />
-                    ได้รับค่าตอบแทนแล้ว
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 7. BOTTOM CTA + TRUST STRIP ─────────────────────────────────── */}
+      {/* ── 6. BOTTOM CTA + TRUST STRIP ─────────────────────────────────── */}
       <section className="bg-white px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
         <div className="container-xl">
           {/* CTA box — navy 3-col card */}
@@ -740,7 +671,7 @@ export default async function HomePage() {
             {/* Text */}
             <div className="relative z-10 text-center text-white lg:text-left">
               <h2 className="text-xl font-bold leading-snug lg:text-[26px]">
-                รู้จักที่ดินดี อย่าปล่อย Connection ให้เสียเปล่า
+                รู้จักที่ดินดี อย่าปล่อยคอนเนกชันให้เสียเปล่า
                 <br />
                 มาร่วมสร้างรายได้ไปกับ{" "}
                 <b className="text-yellow-300">ตลาดที่ดินไทย.com</b>
@@ -766,7 +697,7 @@ export default async function HomePage() {
               <div className="flex h-[92px] w-[92px] shrink-0 items-center justify-center rounded-xl bg-white p-2">
                 <img
                   src="/images/line-qr.png"
-                  alt="LINE Official QR code"
+                  alt="คิวอาร์โค้ด LINE OA"
                   className="h-full w-full rounded-lg object-contain"
                 />
               </div>
@@ -774,7 +705,7 @@ export default async function HomePage() {
                 <small className="text-white font-semibold text-sm leading-snug block">
                   สแกนเพิ่มเพื่อน
                   <br />
-                  ใน LINE Official
+                  ใน LINE OA
                 </small>
                 <div className="w-8 h-8 rounded-lg bg-[#06c755] flex items-center justify-center text-white mt-1.5">
                   {LINE_ICON}

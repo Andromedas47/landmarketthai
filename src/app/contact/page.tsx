@@ -21,8 +21,8 @@ const contactItems = [
   {
     icon: <Phone size={20} />,
     label: "โทรศัพท์ (ตามการนัดหมาย)",
-    value: "080-xxx-xxxx",
-    href: "tel:080xxxxxxx",
+    value: "นัดหมายผ่าน LINE OA ก่อนโทร",
+    href: null,
     note: "สำหรับผู้ที่ได้รับการติดต่อจากทีมงานแล้ว หรือต้องการนัดหมายโดยตรง",
   },
   {

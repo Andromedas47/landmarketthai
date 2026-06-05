@@ -15,7 +15,7 @@ const topTypes = [
   { name: "EEC",               slug: "eec" },
   { name: "โรงงาน",            slug: "factory" },
   { name: "คลังสินค้า",        slug: "warehouse" },
-  { name: "Data Center",        slug: "data-center" },
+  { name: "ศูนย์ข้อมูล",        slug: "data-center" },
 ];
 
 const policyLinks = [
@@ -100,7 +100,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/become-partner" className="hover:text-brand-400 transition-colors">สมัครพาร์ทเนอร์</Link></li>
               <li><Link href="/how-it-works"   className="hover:text-brand-400 transition-colors">วิธีรับค่าแนะนำ</Link></li>
-              <li><Link href="/buyer-demand"    className="hover:text-brand-400 transition-colors">Buyer กำลังหา</Link></li>
+              <li><Link href="/buyer-demand"    className="hover:text-brand-400 transition-colors">ผู้ซื้อกำลังหา</Link></li>
               <li><Link href="/blog"            className="hover:text-brand-400 transition-colors">บทความ</Link></li>
               {policyLinks.map((l) => (
                 <li key={l.href}>
@@ -130,7 +130,7 @@ export default function Footer() {
               href={process.env.NEXT_PUBLIC_FACEBOOK_URL ?? "https://facebook.com/landmarketthai"}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Facebook"
+              aria-label="เฟซบุ๊ก"
               className="text-slate-500 hover:text-white transition-colors"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -142,7 +142,7 @@ export default function Footer() {
               href={LINE_OA}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LINE"
+              aria-label="LINE OA"
               className="text-slate-500 hover:text-white transition-colors"
             >
               <LineIcon size={18} />

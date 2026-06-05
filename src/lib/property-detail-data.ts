@@ -79,8 +79,36 @@ export const propertyDetails: PropertyDetail[] = [
     ],
     gallery: [
       {
-        src: "/images/listings/109-rai-home-thumbnail.png",
-        alt: "ภาพโดรนที่ดินอุตสาหกรรม 109 ไร่ EEC ระยอง",
+        src: "/images/listings/109-rai-gallery/01-drone-aerial.png",
+        alt: "ภาพโดรนมุมสูงที่ดิน 109 ไร่ EEC ระยอง",
+      },
+      {
+        src: "/images/listings/109-rai-gallery/02-drone-boundary.png",
+        alt: "ภาพโดรนแสดงขอบเขตแปลงที่ดิน 109 ไร่",
+      },
+      {
+        src: "/images/listings/109-rai-gallery/03-roadside-view.png",
+        alt: "ภาพถนนหน้าแปลงที่ดิน 109 ไร่ EEC ระยอง",
+      },
+      {
+        src: "/images/listings/109-rai-gallery/04-boundary-map.png",
+        alt: "แผนที่ขอบเขตและขนาดพื้นที่ 109 ไร่ 2 งาน 52 ตร.ว.",
+      },
+      {
+        src: "/images/listings/109-rai-gallery/05-zoning-map.png",
+        alt: "แผนที่ผังสีม่วงและระยะขอบเขตแปลง 109 ไร่",
+      },
+      {
+        src: "/images/listings/109-rai-gallery/06-overview.png",
+        alt: "ภาพรวมที่ดิน 109 ไร่ ผังสีม่วง EEC ระยอง ราคา 2.75 ล้าน/ไร่",
+      },
+      {
+        src: "/images/listings/109-rai-gallery/07-access-highlights.png",
+        alt: "จุดเด่นแปลง 109 ไร่ หน้ากว้าง 240 เมตร เข้าออก 2 ทาง ใกล้ BYD",
+      },
+      {
+        src: "/images/listings/109-rai-gallery/08-for-sale-sign.png",
+        alt: "ป้ายขายที่ดิน EEC 109 ไร่ ระยอง หน้ากว้าง 240 เมตร",
       },
     ],
   },
@@ -134,8 +162,28 @@ export const propertyDetails: PropertyDetail[] = [
     ],
     gallery: [
       {
-        src: "/images/listings/37-rai-home-thumbnail.png",
-        alt: "ภาพโดรนที่ดินอุตสาหกรรม 37 ไร่ EEC ระยอง",
+        src: "/images/listings/37-rai-gallery/01-roadside-view.png",
+        alt: "ภาพถนนหน้าแปลงที่ดิน 37 ไร่ ติดถนน 2026",
+      },
+      {
+        src: "/images/listings/37-rai-gallery/02-roadside-trench.png",
+        alt: "ภาพหน้าแปลงที่ดิน 37 ไร่ ระยะริมถนน",
+      },
+      {
+        src: "/images/listings/37-rai-gallery/03-site-prep.png",
+        alt: "ภาพพื้นที่เตรียมแปลงที่ดิน 37 ไร่ EEC ระยอง",
+      },
+      {
+        src: "/images/listings/37-rai-gallery/04-location-map.png",
+        alt: "แผนที่ตำแหน่งแปลงที่ดิน 37 ไร่ ติดถนน 2026",
+      },
+      {
+        src: "/images/listings/37-rai-gallery/05-boundary-map.png",
+        alt: "แผนที่ขอบเขตและระยะรอบแปลงที่ดิน 37 ไร่",
+      },
+      {
+        src: "/images/listings/37-rai-gallery/06-boundary-outline.png",
+        alt: "แผนที่แสดงขอบเขตแปลง 37 ไร่ พร้อมระยะทางรอบแปลง",
       },
     ],
   },
