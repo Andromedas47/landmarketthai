@@ -3,6 +3,12 @@ export interface PropertyDetailImage {
   alt: string;
 }
 
+export interface PropertyMapEmbed {
+  embedUrl: string;
+  directionsUrl: string;
+  description: string;
+}
+
 export interface PropertyDetail {
   slug: string;
   title: string;
@@ -27,6 +33,7 @@ export interface PropertyDetail {
     description: string;
   }>;
   gallery: PropertyDetailImage[];
+  mapEmbed?: PropertyMapEmbed;
 }
 
 export const propertyDetails: PropertyDetail[] = [
@@ -111,6 +118,13 @@ export const propertyDetails: PropertyDetail[] = [
         alt: "ป้ายขายที่ดิน EEC 109 ไร่ ระยอง หน้ากว้าง 240 เมตร",
       },
     ],
+    mapEmbed: {
+      embedUrl:
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.176!2d101.1035175!3d12.8964329!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3102e9004c2d1859%3A0x9818cef515e4a131!2z4Lie4Li34LmJ4LiZ4LiX4Li14LmIIDEwOSAtMiAtIDUyIOC5hOC4o-C5iCDguJnguLTguITguKHguJ7guLHguJLguJnguLI!5e0!3m2!1sth!2sth!4v1749186300000",
+      directionsUrl: "https://maps.app.goo.gl/J3quUCkfN9Yi7G8U6?g_st=ic",
+      description:
+        "ที่ดินตั้งอยู่ในโซนอุตสาหกรรม EEC พื้นที่นิคมพัฒนา จังหวัดระยอง ใกล้ WHA Industrial Estate และโรงงาน BYD เดินทางสะดวกด้วยเส้นทางหลักในพื้นที่ EEC",
+    },
   },
   {
     slug: "37-rai-eec-rayong",
@@ -186,6 +200,13 @@ export const propertyDetails: PropertyDetail[] = [
         alt: "แผนที่แสดงขอบเขตแปลง 37 ไร่ พร้อมระยะทางรอบแปลง",
       },
     ],
+    mapEmbed: {
+      embedUrl:
+        "https://maps.google.com/maps?q=12.8626284,101.0948946&hl=th&z=17&output=embed",
+      directionsUrl: "https://maps.app.goo.gl/PLjRadLVYJzFvtqa8?g_st=il",
+      description:
+        "ที่ดินตั้งอยู่ติดถนน 2026 ในพื้นที่ EEC จังหวัดระยอง เข้าถึงง่าย หน้ากว้างประมาณ 240 เมตร ด้านหลังติดแหล่งน้ำธรรมชาติ เหมาะสำหรับโครงการอุตสาหกรรมขนาดกลาง",
+    },
   },
 ];
 

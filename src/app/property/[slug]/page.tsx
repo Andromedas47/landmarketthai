@@ -6,6 +6,7 @@ import {
   BadgeDollarSign,
   CalendarDays,
   CheckCircle,
+  ExternalLink,
   Factory,
   Handshake,
   MapPin,
@@ -149,6 +150,40 @@ export default async function PropertyDetailPage({
                 })}
               </div>
             </section>
+
+            {property.mapEmbed && (
+              <section>
+                <div className="mb-5 flex items-center gap-2">
+                  <MapPin size={20} className="text-brand-600" />
+                  <h2 className="text-xl font-bold text-slate-900">พิกัดและทำเลที่ตั้ง</h2>
+                </div>
+                <p className="mb-4 text-sm leading-relaxed text-slate-600">
+                  {property.mapEmbed.description}
+                </p>
+                <div className="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+                  <iframe
+                    src={property.mapEmbed.embedUrl}
+                    className="h-[300px] w-full sm:h-[420px]"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title={`แผนที่ ${property.title}`}
+                  />
+                </div>
+                <div className="mt-4">
+                  <a
+                    href={property.mapEmbed.directionsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-outline inline-flex items-center gap-2 text-sm"
+                  >
+                    <ExternalLink size={15} />
+                    เปิดแผนที่ใน Google Maps
+                  </a>
+                </div>
+              </section>
+            )}
 
             <section>
               <div className="mb-5 flex items-center gap-2">
