@@ -17,9 +17,11 @@ interface Props {
     alt: string;
   };
   hrefOverride?: string;
+  soldOut?: boolean;
 }
 
-export default function ListingCard({ land, imageOverride, hrefOverride }: Props) {
+export default function ListingCard({ land, imageOverride, hrefOverride, soldOut }: Props) {
+  const isSoldOut = soldOut ?? land.status === "sold";
   const coverImage = land.images?.find((img) => img.is_cover) ?? land.images?.[0];
   const image = imageOverride ?? (coverImage
     ? {
@@ -57,6 +59,14 @@ export default function ListingCard({ land, imageOverride, hrefOverride }: Props
             <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40">
               <span className="rounded-full bg-black/60 px-3 py-1 text-sm font-semibold text-white">
                 จองแล้ว
+              </span>
+            </div>
+          )}
+
+          {isSoldOut && (
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/50">
+              <span className="rounded-md bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-lg">
+                Sold out
               </span>
             </div>
           )}

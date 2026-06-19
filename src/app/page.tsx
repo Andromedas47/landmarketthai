@@ -94,6 +94,7 @@ const sampleListings = [
     imageAlt: "ภาพโดรนที่ดินอุตสาหกรรม 109 ไร่ ระยอง",
     href: propertyHref("109-rai-eec-rayong"),
     comingSoon: false as const,
+    soldOut: true as const,
   },
   {
     province: "ระยอง",
@@ -146,6 +147,10 @@ function getHomepageListingHref(land: Land) {
   if (land.size_rai >= 100 && land.size_rai <= 120) return propertyHref("109-rai-eec-rayong");
   if (land.size_rai >= 35 && land.size_rai <= 40) return propertyHref("37-rai-eec-rayong");
   return undefined;
+}
+
+function isHomepageSoldOutListing(land: Land) {
+  return land.slug === "109-rai-eec-rayong" || (land.size_rai >= 100 && land.size_rai <= 120);
 }
 
 const fallbackDemands = [
@@ -387,6 +392,7 @@ export default async function HomePage() {
                   land={land}
                   imageOverride={getHomepageListingImage(land)}
                   hrefOverride={getHomepageListingHref(land)}
+                  soldOut={isHomepageSoldOutListing(land)}
                 />
               ))}
             </div>
@@ -452,6 +458,13 @@ export default async function HomePage() {
                       ) : (
                         <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-300">
                           <Ruler size={40} />
+                        </div>
+                      )}
+                      {"soldOut" in item && item.soldOut && (
+                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/50">
+                          <span className="rounded-md bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-lg">
+                            Sold out
+                          </span>
                         </div>
                       )}
                       <div className="absolute inset-x-0 bottom-0 z-10 bg-[#001B48]/92 px-4 py-2.5">
