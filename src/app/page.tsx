@@ -6,14 +6,15 @@ import {
   ArrowRight, MapPin, Ruler,
   BadgeDollarSign, BarChart3, Smartphone, Wallet, Target, Users,
   Shield, Search, Calendar, Clock,
-  Home, Wrench, Briefcase, Globe, BarChart2,
+  Wrench, Briefcase, Building2, Network,
 } from "lucide-react";
-import StatStrip from "@/components/ui/StatStrip";
+import TrustStrip from "@/components/ui/TrustStrip";
+import MobileStickyCta from "@/components/ui/MobileStickyCta";
 import ListingCard from "@/components/listings/ListingCard";
 import FacebookIcon from "@/components/ui/FacebookIcon";
 import LineIcon from "@/components/ui/LineIcon";
 import JsonLd from "@/components/seo/JsonLd";
-import { getFeaturedListings, getSiteStats, getActiveDemands } from "@/lib/supabase/queries";
+import { getFeaturedListings, getActiveDemands } from "@/lib/supabase/queries";
 import type { Land } from "@/lib/types/database";
 import { propertyHref } from "@/lib/property-detail-data";
 import { LAND_TYPE_LABELS } from "@/lib/utils";
@@ -21,9 +22,9 @@ import { LAND_TYPE_LABELS } from "@/lib/utils";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "LandmarketThai – ที่ดินอุตสาหกรรม EEC ทั่วไทย | รับค่าแนะนำสูงสุดหลายล้าน",
+  title: "LandmarketThai – ที่ดินอุตสาหกรรม EEC ทั่วไทย",
   description:
-    "เปลี่ยนคอนเนกชันเป็นรายได้ ไม่ต้องลงทุน ไม่ต้องสต็อก แนะนำที่ดินอุตสาหกรรม EEC ระยอง ชลบุรี รับค่าคอมสูงสุดหลายล้านบาท",
+    "แพลตฟอร์มที่ดินอุตสาหกรรม EEC ระยอง ชลบุรี ทีมงานช่วยดูแลข้อมูล นัดหมาย และการเจรจา สำหรับผู้แนะนำ เจ้าของที่ดิน และนักลงทุน",
 };
 
 const LINE_OA = process.env.NEXT_PUBLIC_LINE_OA_URL ?? "https://lin.ee/8p064f7";
@@ -56,18 +57,22 @@ const howToEarnSteps = [
   },
   {
     num: "3",
-    title: "จบดีล\nรับค่าแนะนำทันที",
-    desc: "ปิดดีลเมื่อไหร่ รับเงินทันที สูงสุดหลายล้านบาท",
+    title: "จบดีล\nรับค่าแนะนำ",
+    desc: "ปิดดีลเมื่อไหร่ รับเงินตามเงื่อนไขที่กำหนด",
   },
 ];
 
 const earnerPersonas: { Icon: LucideIcon; label: string }[] = [
-  { Icon: Home,       label: "คนรู้จักเจ้าของที่ดิน" },
-  { Icon: MapPin,     label: "คนในพื้นที่" },
-  { Icon: Wrench,     label: "ผู้รับเหมา / วิศวกร" },
-  { Icon: BarChart2,  label: "นักขาย" },
-  { Icon: Briefcase,  label: "พนักงานบริษัท" },
-  { Icon: Globe,      label: "ฟรีแลนซ์ / แม่บ้าน" },
+  { Icon: Building2, label: "นายหน้าอสังหาริมทรัพย์" },
+  { Icon: Network,   label: "คนมีเครือข่ายนักลงทุน" },
+  { Icon: Wrench,    label: "ผู้รับเหมาและผู้ประกอบการในพื้นที่" },
+  { Icon: Briefcase, label: "คนรู้จักเจ้าของโรงงานหรือธุรกิจ" },
+];
+
+const partnerBenefits: { Icon: LucideIcon; label: string }[] = [
+  { Icon: BadgeDollarSign, label: "ไม่ต้องลงทุน" },
+  { Icon: Target,          label: "ไม่ต้องปิดการขายเอง" },
+  { Icon: Users,           label: "ทีมงานช่วยดูแลข้อมูล นัดหมาย และการเจรจา" },
 ];
 
 const trustItems: { Icon: LucideIcon; label: string }[] = [
@@ -78,37 +83,37 @@ const trustItems: { Icon: LucideIcon; label: string }[] = [
   { Icon: Clock,        label: "ปิดดีลไว\nตรวจสอบ 100%" },
 ];
 
-const SEED_STATS = { total_partners: 4328, total_listings: 1290, total_deals: 84, total_payout_mb: 42.6 };
-
 const sampleListings = [
   {
     province: "ระยอง",
     title: "ที่ดินอุตสาหกรรม EEC ระยอง",
+    size: "37 ไร่",
+    loc: "นิคมพัฒนา ระยอง",
+    status: "ผังสีม่วงลาย",
+    price: "2.3 ล้านบาท/ไร่",
+    reward: "1.2 ล้านบาท*",
+    highlights: ["หน้ากว้าง ~240 ม.", "ถนนเข้าถึง ปี 2569"],
+    image: "/images/listings/37-rai-home-thumbnail.png",
+    imageAlt: "ภาพโดรนที่ดินอุตสาหกรรม 37 ไร่ ระยอง",
+    href: propertyHref("37-rai-eec-rayong"),
+    comingSoon: false as const,
+    featured: true as const,
+  },
+  {
+    province: "ระยอง",
+    title: "ที่ดินอุตสาหกรรม EEC ระยอง",
     size: "109 ไร่ 2 งาน 52 ตร.ว.",
-    loc: "ใกล้ WHA / BYD",
+    loc: "นิคมพัฒนา ระยอง",
     status: "ผังสีม่วง",
     price: "2.75 ล้านบาท/ไร่",
-    reward: "4,000,000 บาท",
+    reward: "4 ล้านบาท",
     highlights: ["หน้ากว้าง ~240 ม.", "ใกล้ WHA · BYD"],
     image: "/images/listings/109-rai-home-thumbnail.png",
     imageAlt: "ภาพโดรนที่ดินอุตสาหกรรม 109 ไร่ ระยอง",
     href: propertyHref("109-rai-eec-rayong"),
     comingSoon: false as const,
     soldOut: true as const,
-  },
-  {
-    province: "ระยอง",
-    title: "ที่ดินอุตสาหกรรม EEC ระยอง",
-    size: "37 ไร่",
-    loc: "ระยอง EEC",
-    status: "ผังสีม่วง",
-    price: "2.3 ล้านบาท/ไร่",
-    reward: "1,200,000 บาท",
-    highlights: ["หน้ากว้าง ~240 ม.", "ถนนเข้าถึง ปี 2569"],
-    image: "/images/listings/37-rai-home-thumbnail.png",
-    imageAlt: "ภาพโดรนที่ดินอุตสาหกรรม 37 ไร่ ระยอง",
-    href: propertyHref("37-rai-eec-rayong"),
-    comingSoon: false as const,
+    dealHistory: true as const,
   },
   {
     province: "กบินทร์บุรี",
@@ -153,6 +158,22 @@ function isHomepageSoldOutListing(land: Land) {
   return land.slug === "109-rai-eec-rayong" || (land.size_rai >= 100 && land.size_rai <= 120);
 }
 
+function isHomepageFeaturedListing(land: Land) {
+  return land.slug === "37-rai-eec-rayong" || (land.size_rai >= 35 && land.size_rai <= 40);
+}
+
+function homepageListingSortOrder(land: Land) {
+  if (isHomepageFeaturedListing(land)) return 0;
+  if (isHomepageSoldOutListing(land)) return 1;
+  return 2;
+}
+
+function sortHomepageListings(listings: Land[]) {
+  return [...listings].sort(
+    (a, b) => homepageListingSortOrder(a) - homepageListingSortOrder(b),
+  );
+}
+
 const fallbackDemands = [
   { province: "ระยอง",         type: "อุตสาหกรรม",  size: "50–100 ไร่", note: "ใกล้นิคมอุตสาหกรรม สำหรับโรงงานผลิต",         ago: "2 ชม. ที่แล้ว" },
   { province: "ชลบุรี",        type: "โลจิสติกส์",  size: "20–50 ไร่",  note: "ใกล้ท่าเรือแหลมฉบัง สำหรับคลังสินค้า",         ago: "4 ชม. ที่แล้ว" },
@@ -161,25 +182,19 @@ const fallbackDemands = [
 ];
 
 export default async function HomePage() {
-  const [featuredListings, rawStats, demands] = await Promise.all([
+  const [featuredListings, demands] = await Promise.all([
     getFeaturedListings(6).catch(() => []),
-    getSiteStats().catch(() => SEED_STATS),
     getActiveDemands(4).catch(() => []),
   ]);
 
-  const stats = {
-    total_partners:  Math.max(rawStats.total_partners,  SEED_STATS.total_partners),
-    total_listings:  Math.max(rawStats.total_listings,  SEED_STATS.total_listings),
-    total_deals:     Math.max(rawStats.total_deals,     SEED_STATS.total_deals),
-    total_payout_mb: Math.max(rawStats.total_payout_mb, SEED_STATS.total_payout_mb),
-  };
+  const sortedListings = sortHomepageListings(featuredListings);
 
   const orgSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "LandmarketThai",
     url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://landmarketthai.com",
-    description: "เครือข่ายที่ดินอุตสาหกรรมและ EEC ที่ใหญ่ที่สุดในไทย",
+    description: "แพลตฟอร์มที่ดินอุตสาหกรรมและ EEC",
     contactPoint: { "@type": "ContactPoint", contactType: "customer support", availableLanguage: "Thai" },
   };
 
@@ -197,70 +212,44 @@ export default async function HomePage() {
             className="block h-full w-full object-cover object-[center_43%]"
             fetchPriority="high"
           />
-          {/* ── Sales copy + offer — left overlay (md+) ── */}
-          <div className="absolute left-5 top-5 hidden w-[360px] md:block lg:left-8 lg:top-7 lg:w-[520px] xl:left-16 xl:top-8 xl:w-[600px]">
+          {/* ── Sales copy — left overlay (md+) ── */}
+          <div className="absolute left-5 top-5 hidden w-[360px] md:block lg:left-8 lg:top-7 lg:w-[520px] xl:left-16 xl:top-8 xl:w-[560px]">
             <div className="drop-shadow-[0_4px_12px_rgba(255,255,255,0.70)]">
-              <p className="text-xl font-black leading-tight text-[#06235f] lg:text-[2rem] xl:text-[2.55rem]">
-                เปลี่ยนความรู้ เป็นรายได้
-              </p>
-              <h1 className="mt-0 text-[3.25rem] font-black leading-[0.92] text-[#06377d] lg:text-[4.4rem] xl:text-[5.7rem]">
-                อาชีพเสริม
+              <h1 className="text-2xl font-black leading-tight text-[#06235f] lg:text-[2rem] xl:text-[2.35rem]">
+                มีคอนเนกชันนักลงทุนหรือเจ้าของโรงงาน?
               </h1>
-              <div className="mt-1.5 inline-flex rounded-lg bg-[#00A859] px-5 py-2 text-lg font-black text-white shadow-[0_10px_24px_rgba(0,168,89,0.24)] lg:mt-2 lg:px-8 lg:py-2.5 lg:text-2xl xl:text-[2rem]">
-                สร้างรายได้ไปกับที่ดิน
-              </div>
+              <p className="mt-2 text-sm font-semibold leading-relaxed text-[#0a2a63] lg:mt-3 lg:text-base xl:text-lg">
+                แนะนำที่ดินอุตสาหกรรม EEC กับเรา
+                <br />
+                ทีมงานช่วยดูแลข้อมูล การนัดหมาย และการเจรจาจนจบ
+              </p>
+              <p className="mt-2 text-xs font-medium text-[#0f3478]/80 lg:text-sm">
+                รับค่าตอบแทนตามเงื่อนไข เมื่อธุรกรรมสำเร็จ
+              </p>
             </div>
 
-            {/* 4 ล้านบาท — ref badge */}
-            <div className="commission-hero-badge relative mt-2.5 w-[300px] overflow-hidden rounded-[22px] lg:mt-3 lg:w-[390px] lg:rounded-[28px] xl:mt-4 xl:w-[440px]">
-              <div
-                className="absolute inset-0 rounded-[22px] lg:rounded-[28px]"
-                style={{
-                  background:
-                    "linear-gradient(145deg, #ffd84d 0%, #ffc329 45%, #e6a800 100%)",
-                }}
-              />
-              <div className="relative m-[2px] overflow-hidden rounded-[20px] bg-[#071f58] text-white lg:m-[3px] lg:rounded-[25px]">
-                <div
-                  className="absolute inset-0 opacity-95"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 18% 22%, rgba(255,211,84,0.35), transparent 34%), linear-gradient(145deg, #0f3478 0%, #071d4a 100%)",
-                  }}
-                />
-                <div className="relative">
-                  <div className="grid grid-cols-[82px_1fr] items-stretch lg:grid-cols-[108px_1fr] xl:grid-cols-[124px_1fr]">
-                    <div className="flex items-center justify-center border-r border-white/10 bg-[#051a4a]/40 px-2">
-                      <span className="commission-digit">4</span>
-                    </div>
-                    <div className="min-w-0 px-3 py-2.5 lg:px-5 lg:py-3.5 xl:px-6 xl:py-4">
-                      <div className="text-2xl font-black leading-none text-gold-400 lg:text-[2rem] xl:text-[2.55rem]">
-                        ล้านบาท*
-                      </div>
-                      <div className="mt-0.5 text-sm font-bold leading-tight text-white lg:mt-1 lg:text-[1.25rem] xl:text-[1.75rem]">
-                        ค่าคอมสูงสุด
-                      </div>
-                      <div className="mt-1.5 flex items-center gap-2 lg:mt-2.5 lg:gap-2.5">
-                        <span className="inline-flex rounded-md bg-gold-400 px-2.5 py-0.5 text-xs font-black text-[#001B48] lg:px-4 lg:py-1 lg:text-sm">
-                          จบดีล
-                        </span>
-                        <span className="text-[10px] font-medium text-blue-100/75 lg:text-xs">ต่อดีล</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="border-t border-white/10 bg-[#051536]/60 px-3 py-1.5 text-center text-[10px] font-semibold text-blue-100/90 lg:px-4 lg:py-2 lg:text-xs">
-                    ตลาดที่ดินไทย.com
-                  </div>
-                </div>
-              </div>
+            <div className="mt-4 flex flex-wrap gap-2 lg:mt-5">
+              <Link href="/land" className="btn-green px-4 py-2.5 text-sm">
+                ดูที่ดินพร้อมแนะนำ
+              </Link>
+              <Link href="/become-partner" className="btn-white px-4 py-2.5 text-sm ring-1 ring-white/60">
+                สมัครเป็นผู้แนะนำ
+              </Link>
             </div>
+            <Link
+              href="/submit-land"
+              className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#0f3478] underline-offset-2 hover:underline"
+            >
+              มีที่ดินต้องการขาย
+              <ArrowRight size={14} />
+            </Link>
           </div>
 
           {/* ── QR / LINE card — desktop only ── */}
           <div className="absolute right-5 top-5 hidden w-[176px] overflow-hidden rounded-xl bg-[#06235f] p-1.5 text-center text-brand-900 shadow-[0_20px_58px_rgba(4,16,44,0.30)] ring-1 ring-white/80 backdrop-blur-md lg:right-16 lg:top-8 lg:block lg:w-[216px] lg:p-2 xl:right-28 xl:top-10 xl:w-[248px] 2xl:right-32">
             <div className="px-3 pb-2 pt-1.5 text-white lg:px-4 lg:pb-3 lg:pt-2">
-              <p className="text-sm font-black leading-tight lg:text-lg xl:text-xl">เริ่มวันนี้!</p>
-              <p className="mt-0.5 text-xs font-black text-gold-400 lg:mt-1 lg:text-sm">สร้างรายได้ไม่จำกัด!</p>
+              <p className="text-sm font-black leading-tight lg:text-lg xl:text-xl">ติดต่อทีมงาน</p>
+              <p className="mt-0.5 text-xs font-semibold text-gold-400 lg:mt-1 lg:text-sm">สอบถามที่ดินและเงื่อนไขผู้แนะนำ</p>
             </div>
             <div className="flex flex-col items-center gap-2 rounded-xl bg-white px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] lg:gap-3.5 lg:px-4 lg:py-4 xl:px-5">
               <div>
@@ -299,42 +288,43 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* ── Mobile conversion copy — headline first, no QR ── */}
+          {/* ── Mobile conversion copy ── */}
           <div className="hero-mobile-scrim" aria-hidden />
           <div className="absolute inset-x-0 bottom-0 z-20 px-4 pb-5 pt-16 md:hidden">
             <div className="max-w-sm">
               <p className="text-xs font-bold tracking-wide text-gold-400">
-                LandmarketThai · เครือข่ายที่ดินอุตสาหกรรม
+                LandmarketThai · ที่ดินอุตสาหกรรม EEC
               </p>
-              <h1 className="mt-2 text-[2rem] font-black leading-[1.08] text-white drop-shadow-sm">
-                แนะนำที่ดิน
-                <br />
-                รับค่าแนะนำเมื่อปิดดีล
+              <h1 className="mt-2 text-[1.65rem] font-black leading-[1.12] text-white drop-shadow-sm">
+                มีคอนเนกชันนักลงทุนหรือเจ้าของโรงงาน?
               </h1>
               <p className="mt-2 max-w-[20rem] text-sm leading-relaxed text-blue-50">
-                รวมดีลที่ดินอุตสาหกรรม EEC พร้อมทีมช่วยดูแลลูกค้าและปิดการขาย
+                แนะนำที่ดินอุตสาหกรรม EEC กับเรา ทีมงานช่วยดูแลข้อมูล การนัดหมาย และการเจรจาจนจบ
+              </p>
+              <p className="mt-2 text-xs font-medium text-blue-100/85">
+                รับค่าตอบแทนตามเงื่อนไข เมื่อธุรกรรมสำเร็จ
               </p>
               <div className="mt-4 flex flex-col gap-2 min-[390px]:flex-row">
                 <Link
-                  href={LINE_OA}
-                  target="_blank"
-                  rel="noopener"
-                  className="btn-line justify-center px-4 text-sm"
+                  href="/land"
+                  className="btn-green justify-center px-4 text-sm"
                 >
-                  <LineIcon size={17} />
-                  เริ่มแนะนำที่ดิน
+                  ดูที่ดินพร้อมแนะนำ
                 </Link>
                 <Link
-                  href="#featured-listings"
+                  href="/become-partner"
                   className="btn-white justify-center px-4 text-sm"
                 >
-                  ดูที่ดินแนะนำ
+                  สมัครเป็นผู้แนะนำ
                 </Link>
               </div>
-              <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#071f58]/90 px-3 py-1.5 text-xs font-bold text-white ring-1 ring-white/15">
-                <span className="text-gold-400">สูงสุด 4 ล้านบาท*</span>
-                <span className="text-blue-100/80">ต่อดีล</span>
-              </div>
+              <Link
+                href="/submit-land"
+                className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-white underline-offset-2 hover:underline"
+              >
+                มีที่ดินต้องการขาย
+                <ArrowRight size={14} />
+              </Link>
             </div>
           </div>
         </div>
@@ -366,8 +356,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 2. STATS BAR ─────────────────────────────────────────────────── */}
-      <StatStrip stats={stats} />
+      {/* ── 2. TRUST STRIP ───────────────────────────────────────────────── */}
+      <TrustStrip />
 
       {/* ── 3. FEATURED LISTINGS ─────────────────────────────────────────── */}
       <section id="featured-listings" className="bg-white px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
@@ -384,15 +374,18 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          {featuredListings.length > 0 ? (
+          {sortedListings.length > 0 ? (
             <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-              {featuredListings.map((land) => (
+              {sortedListings.map((land) => (
                 <ListingCard
                   key={land.id}
                   land={land}
                   imageOverride={getHomepageListingImage(land)}
                   hrefOverride={getHomepageListingHref(land)}
                   soldOut={isHomepageSoldOutListing(land)}
+                  dealHistory={isHomepageSoldOutListing(land)}
+                  featured={isHomepageFeaturedListing(land)}
+                  ctaLabel="ดูรายละเอียดแปลง"
                 />
               ))}
             </div>
@@ -400,7 +393,7 @@ export default async function HomePage() {
             <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
               {sampleListings.map((item) =>
                 item.comingSoon ? (
-                  <article key={`${item.title}-${item.province}`} className="card-ref flex flex-col">
+                  <article key={`${item.title}-${item.province}`} className="card-ref flex flex-col opacity-90">
                     <div className="relative h-44 overflow-hidden sm:h-48">
                       <span className="absolute left-3 top-3 z-10 rounded-md bg-[#00A859] px-3 py-1 text-xs font-bold text-white shadow-sm">
                         {item.province}
@@ -442,11 +435,23 @@ export default async function HomePage() {
                     </div>
                   </article>
                 ) : (
-                  <article key={`${item.title}-${item.size}`} className="card-ref flex flex-col">
+                  <article
+                    key={`${item.title}-${item.size}`}
+                    className={`card-ref flex flex-col${
+                      "featured" in item && item.featured
+                        ? " ring-2 ring-[#00A859]/60 shadow-[0_8px_28px_rgba(0,168,89,0.14)]"
+                        : ""
+                    }`}
+                  >
                     <div className="relative h-44 overflow-hidden sm:h-48">
                       <span className="absolute left-3 top-3 z-10 rounded-md bg-[#00A859] px-3 py-1 text-xs font-bold text-white shadow-sm">
                         {item.province}
                       </span>
+                      {"featured" in item && item.featured && (
+                        <span className="absolute right-3 top-3 z-10 rounded-md bg-gold-400 px-2.5 py-1 text-[11px] font-black text-[#001B48] shadow-sm">
+                          เปิดรับแนะนำ
+                        </span>
+                      )}
                       {item.image ? (
                         <Image
                           src={item.image}
@@ -461,14 +466,23 @@ export default async function HomePage() {
                         </div>
                       )}
                       {"soldOut" in item && item.soldOut && (
-                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/50">
+                        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-1.5 bg-black/50">
                           <span className="rounded-md bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-lg">
-                            Sold out
+                            ปิดดีลแล้ว
                           </span>
+                          {"dealHistory" in item && item.dealHistory && (
+                            <span className="rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold text-slate-700">
+                              ดีลสำเร็จ – ไม่เปิดขายแล้ว
+                            </span>
+                          )}
                         </div>
                       )}
                       <div className="absolute inset-x-0 bottom-0 z-10 bg-[#001B48]/92 px-4 py-2.5">
-                        <div className="text-[11px] font-medium text-white/85">ค่าแนะนำสูงสุด</div>
+                        <div className="text-[11px] font-medium text-white/85">
+                          {"dealHistory" in item && item.dealHistory
+                            ? "ค่าตอบแทนผู้แนะนำ (ดีลสำเร็จ)"
+                            : "ค่าตอบแทนผู้แนะนำสูงสุด"}
+                        </div>
                         <div className="text-xl font-black leading-tight text-gold-400">{item.reward}</div>
                       </div>
                     </div>
@@ -499,8 +513,15 @@ export default async function HomePage() {
                           <div className="text-xs text-slate-400">ราคา/ไร่</div>
                           <div className="text-sm font-bold text-gold-500">{item.price}</div>
                         </div>
-                        <Link href={item.href} className="btn-green w-full shrink-0 px-3 py-2 text-xs min-[360px]:w-auto">
-                          ดูรายละเอียด
+                        <Link
+                          href={item.href}
+                          className={`w-full shrink-0 px-3 py-2 text-xs min-[360px]:w-auto ${
+                            "dealHistory" in item && item.dealHistory ? "btn-outline" : "btn-green"
+                          }`}
+                        >
+                          {"dealHistory" in item && item.dealHistory
+                            ? "ดูประวัติดีล"
+                            : "ดูรายละเอียดแปลง"}
                         </Link>
                       </div>
                     </div>
@@ -520,7 +541,7 @@ export default async function HomePage() {
             {/* Steps panel */}
             <div className="rounded-[18px] border border-slate-100 bg-white p-5 shadow-[0_2px_8px_rgba(13,30,70,0.06)] sm:p-7">
               <h3 className="mb-6 text-center text-xl font-bold text-[#0a2a63] sm:text-[22px]">
-                3 ขั้นตอนง่ายๆ เริ่มต้นสร้างรายได้
+                3 ขั้นตอน เริ่มแนะนำที่ดิน
               </h3>
               <div className="flex items-start justify-center gap-1">
                 {howToEarnSteps.map((step, i) => (
@@ -545,20 +566,20 @@ export default async function HomePage() {
               </div>
               <div className="mt-7 flex gap-3 flex-wrap justify-center">
                 <Link href="/become-partner" className="btn-green text-sm">
-                  สมัครฟรีทันที
+                  สมัครเป็นผู้แนะนำ
                 </Link>
                 <Link href="/how-it-works" className="btn-outline text-sm">
-                  ดูรายละเอียด
+                  รับ Sale Toolkit
                 </Link>
               </div>
             </div>
 
-            {/* Who can earn panel */}
+            {/* Who it's for panel */}
             <div className="rounded-[18px] border border-slate-100 bg-white p-5 shadow-[0_2px_8px_rgba(13,30,70,0.06)] sm:p-7">
               <h3 className="mb-6 text-center text-xl font-bold text-[#0a2a63] sm:text-[22px]">
-                ใครๆ ก็สามารถสร้างรายได้จากที่ดิน
+                เหมาะสำหรับใคร
               </h3>
-              <div className="grid grid-cols-2 gap-4 min-[390px]:grid-cols-3">
+              <div className="grid grid-cols-2 gap-4">
                 {earnerPersonas.map((p) => {
                   const Icon = p.Icon;
                   return (
@@ -571,9 +592,22 @@ export default async function HomePage() {
                   );
                 })}
               </div>
+              <div className="mt-6 grid gap-3 border-t border-slate-100 pt-5">
+                {partnerBenefits.map((b) => {
+                  const Icon = b.Icon;
+                  return (
+                    <div key={b.label} className="flex items-start gap-2.5">
+                      <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+                        <Icon size={16} strokeWidth={2} />
+                      </div>
+                      <span className="text-sm font-medium leading-snug text-slate-700">{b.label}</span>
+                    </div>
+                  );
+                })}
+              </div>
               <div className="mt-6">
                 <Link href="/become-partner" className="btn-green w-full justify-center text-sm">
-                  เข้าร่วมฟรีทันที — ไม่มีค่าใช้จ่าย
+                  เข้าร่วมเป็นผู้แนะนำ
                 </Link>
               </div>
             </div>
@@ -596,7 +630,12 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <p className="mx-auto mb-7 max-w-2xl text-center text-sm leading-relaxed text-slate-600 sm:text-base">
+            ทีมงานกำลังคัดเลือกที่ดินให้ผู้ซื้อและนักลงทุนตามเงื่อนไขด้านล่าง
+            หากมีที่ดินตรงหรือใกล้เคียง ส่งข้อมูลให้ทีมตรวจสอบได้
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {demands.length > 0
               ? demands.slice(0, 4).map((d) => (
                   <Link
@@ -647,19 +686,15 @@ export default async function HomePage() {
                   </div>
                 ))}
 
-            {/* CTA card */}
-            <div
-              className="flex flex-col items-center justify-center rounded-xl p-5 text-center text-white sm:col-span-2 lg:col-span-1"
-              style={{ background: "linear-gradient(150deg, #0f3478, #071d4a)" }}
-            >
-              <h3 className="mb-2 text-[21px] font-bold">ส่งที่ดินของคุณ</h3>
-              <p className="mb-4 text-sm leading-relaxed text-white/80">
-                ให้ตรงกับความต้องการ<br />เพื่อโอกาสปิดดีล
-              </p>
-              <Link href="/submit-land" className="btn-white text-sm">
-                ส่งข้อมูลที่ดินเลย
-              </Link>
-            </div>
+          </div>
+
+          <div className="mt-8 flex flex-col items-center gap-2 text-center">
+            <Link href="/submit-land" className="btn-green px-8 text-sm">
+              ส่งที่ดินให้ทีมประเมิน
+            </Link>
+            <p className="text-xs text-slate-500">
+              ใช้เวลาแจ้งข้อมูลเบื้องต้นไม่กี่นาที
+            </p>
           </div>
         </div>
       </section>
@@ -684,25 +719,21 @@ export default async function HomePage() {
             {/* Text */}
             <div className="relative z-10 text-center text-white lg:text-left">
               <h2 className="text-xl font-bold leading-snug lg:text-[26px]">
-                รู้จักที่ดินดี อย่าปล่อยคอนเนกชันให้เสียเปล่า
+                มีคอนเนกชันที่ดินอุตสาหกรรม?
                 <br />
-                มาร่วมสร้างรายได้ไปกับ{" "}
-                <b className="text-yellow-300">ตลาดที่ดินไทย.com</b>
+                ทีมงานช่วยดูแลข้อมูล นัดหมาย และการเจรจา
               </h2>
             </div>
 
             {/* Button + note */}
             <div className="relative z-10 flex flex-col items-center gap-2">
               <Link
-                href={LINE_OA}
-                target="_blank"
-                rel="noopener"
+                href="/become-partner"
                 className="btn-green w-full px-6 py-4 text-base ring-2 ring-[#33c477]/50 sm:w-auto sm:px-8"
               >
-                {LINE_ICON}
-                เข้าร่วมฟรีทันที
+                สมัครเป็นผู้แนะนำ
               </Link>
-              <small className="text-white/70 text-xs">ไม่มีค่าใช้จ่าย</small>
+              <small className="text-white/70 text-xs">รับค่าตอบแทนตามเงื่อนไข เมื่อธุรกรรมสำเร็จ</small>
             </div>
 
             {/* QR card */}
@@ -745,6 +776,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <MobileStickyCta />
     </>
   );
 }

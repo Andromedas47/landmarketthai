@@ -18,9 +18,20 @@ interface Props {
   };
   hrefOverride?: string;
   soldOut?: boolean;
+  dealHistory?: boolean;
+  featured?: boolean;
+  ctaLabel?: string;
 }
 
-export default function ListingCard({ land, imageOverride, hrefOverride, soldOut }: Props) {
+export default function ListingCard({
+  land,
+  imageOverride,
+  hrefOverride,
+  soldOut,
+  dealHistory,
+  featured,
+  ctaLabel = "ดูรายละเอียดแปลง",
+}: Props) {
   const isSoldOut = soldOut ?? land.status === "sold";
   const coverImage = land.images?.find((img) => img.is_cover) ?? land.images?.[0];
   const image = imageOverride ?? (coverImage
@@ -32,7 +43,11 @@ export default function ListingCard({ land, imageOverride, hrefOverride, soldOut
   const href = hrefOverride ?? listingHref(land.public_ref, land.slug);
 
   return (
-    <article className="card-ref group flex min-w-0 flex-col">
+    <article
+      className={`card-ref group flex min-w-0 flex-col${
+        featured ? " ring-2 ring-[#00A859]/60 shadow-[0_8px_28px_rgba(0,168,89,0.14)]" : ""
+      }`}
+    >
       <Link href={href} className="block">
         <div className="relative h-44 overflow-hidden bg-slate-100 sm:h-48">
           {image ? (
@@ -64,10 +79,15 @@ export default function ListingCard({ land, imageOverride, hrefOverride, soldOut
           )}
 
           {isSoldOut && (
-            <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/50">
+            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-1.5 bg-black/50">
               <span className="rounded-md bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-lg">
-                Sold out
+                {dealHistory ? "ปิดดีลแล้ว" : "Sold out"}
               </span>
+              {dealHistory && (
+                <span className="rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold text-slate-700">
+                  ดีลสำเร็จ – ไม่เปิดขายแล้ว
+                </span>
+              )}
             </div>
           )}
 
@@ -115,8 +135,13 @@ export default function ListingCard({ land, imageOverride, hrefOverride, soldOut
               {formatMoney(land.price_per_rai)} ฿
             </div>
           </div>
-          <Link href={href} className="btn-green w-full shrink-0 px-3 py-2 text-xs min-[360px]:w-auto">
-            ส่งต่อให้ลูกค้า
+          <Link
+            href={href}
+            className={`w-full shrink-0 px-3 py-2 text-xs min-[360px]:w-auto ${
+              dealHistory ? "btn-outline" : "btn-green"
+            }`}
+          >
+            {dealHistory ? "ดูประวัติดีล" : ctaLabel}
           </Link>
         </div>
       </div>
