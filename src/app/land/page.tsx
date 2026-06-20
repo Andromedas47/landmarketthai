@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import ListingGrid from "@/components/listings/ListingGrid";
+import ListingGridSkeleton from "@/components/listings/ListingGridSkeleton";
 import FilterBar from "@/components/listings/FilterBar";
 
 export const metadata: Metadata = {
@@ -29,7 +30,11 @@ export default function LandPage({
         </div>
       </div>
 
-      <Suspense fallback={<div className="section text-center text-slate-400">กำลังโหลด...</div>}>
+      <Suspense fallback={
+        <div className="container-xl section">
+          <ListingGridSkeleton />
+        </div>
+      }>
         <ListingGridWrapper searchParams={searchParams} />
       </Suspense>
     </div>

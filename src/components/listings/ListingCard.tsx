@@ -21,6 +21,9 @@ interface Props {
   dealHistory?: boolean;
   featured?: boolean;
   ctaLabel?: string;
+  metaTagLabel?: string;
+  rewardLabel?: string;
+  rewardSuffix?: string;
 }
 
 export default function ListingCard({
@@ -31,6 +34,9 @@ export default function ListingCard({
   dealHistory,
   featured,
   ctaLabel = "ดูรายละเอียดแปลง",
+  metaTagLabel,
+  rewardLabel,
+  rewardSuffix,
 }: Props) {
   const isSoldOut = soldOut ?? land.status === "sold";
   const coverImage = land.images?.find((img) => img.is_cover) ?? land.images?.[0];
@@ -70,6 +76,12 @@ export default function ListingCard({
             </span>
           )}
 
+          {featured && (
+            <span className="absolute right-3 top-3 z-10 rounded-md bg-gold-400 px-2.5 py-1 text-[11px] font-black text-[#001B48] shadow-sm">
+              เปิดรับแนะนำ
+            </span>
+          )}
+
           {land.status === "reserved" && (
             <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40">
               <span className="rounded-full bg-black/60 px-3 py-1 text-sm font-semibold text-white">
@@ -93,9 +105,11 @@ export default function ListingCard({
 
           {land.referral_reward_max ? (
             <div className="absolute inset-x-0 bottom-0 z-10 bg-[#001B48]/92 px-4 py-2.5">
-              <div className="text-[11px] font-medium text-white/85">ค่าคอมสูงสุด</div>
+              <div className="text-[11px] font-medium text-white/85">
+                {rewardLabel ?? "ค่าคอมสูงสุด"}
+              </div>
               <div className="text-xl font-black leading-tight text-gold-400">
-                {formatMoney(land.referral_reward_max)} บาท
+                {formatMoney(land.referral_reward_max)} บาท{rewardSuffix ?? ""}
               </div>
             </div>
           ) : null}
@@ -117,7 +131,12 @@ export default function ListingCard({
               <MapPin size={13} />
               <span className="truncate">{land.district ?? land.province?.name_th ?? ""}</span>
             </span>
-            {land.zoning ? (
+            {metaTagLabel ? (
+              <span className="flex min-w-0 items-center gap-1">
+                <Tag size={13} />
+                <span className="truncate">{metaTagLabel}</span>
+              </span>
+            ) : land.zoning ? (
               <span className="flex min-w-0 items-center gap-1">
                 <Tag size={13} />
                 <span className="truncate">{ZONING_LABELS[land.zoning]}</span>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { LAND_TYPE_LABELS } from "@/lib/utils";
 import type { LandType } from "@/lib/types/database";
 
@@ -20,17 +21,25 @@ interface Props {
 
 export default function FilterBar({ province, type }: Props) {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   function update(key: string, value: string) {
     const params = new URLSearchParams(window.location.search);
     if (value) params.set(key, value);
     else params.delete(key);
     params.delete("page");
-    router.push(`/land?${params.toString()}`);
+    startTransition(() => {
+      router.push(`/land?${params.toString()}`);
+    });
   }
 
   return (
-    <div className="flex flex-wrap gap-3 mb-8 pb-6 border-b border-slate-100">
+    <div
+      className={`mb-8 flex flex-wrap gap-3 border-b border-slate-100 pb-6 transition-opacity ${
+        isPending ? "pointer-events-none opacity-60" : ""
+      }`}
+      aria-busy={isPending}
+    >
       <select
         value={province ?? ""}
         onChange={(e) => update("province", e.target.value)}

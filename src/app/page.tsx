@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
-  ArrowRight, MapPin, Ruler,
+  ArrowRight, MapPin,
   BadgeDollarSign, BarChart3, Smartphone, Wallet, Target, Users,
   Shield, Search, Calendar, Clock,
   Wrench, Briefcase, Building2, Network,
@@ -15,8 +15,13 @@ import FacebookIcon from "@/components/ui/FacebookIcon";
 import LineIcon from "@/components/ui/LineIcon";
 import JsonLd from "@/components/seo/JsonLd";
 import { getFeaturedListings, getActiveDemands } from "@/lib/supabase/queries";
-import type { Land } from "@/lib/types/database";
-import { propertyHref } from "@/lib/property-detail-data";
+import {
+  SEED_109_RAI_LAND,
+  SEED_KABIN_COMING_SOON,
+  mergeWithSeedListings,
+  resolveListingPresentation,
+  sortSeedListings,
+} from "@/lib/seed-listings";
 import { LAND_TYPE_LABELS } from "@/lib/utils";
 
 export const revalidate = 3600;
@@ -83,97 +88,6 @@ const trustItems: { Icon: LucideIcon; label: string }[] = [
   { Icon: Clock,        label: "ปิดดีลไว\nตรวจสอบ 100%" },
 ];
 
-const sampleListings = [
-  {
-    province: "ระยอง",
-    title: "ที่ดินอุตสาหกรรม EEC ระยอง",
-    size: "37 ไร่",
-    loc: "นิคมพัฒนา ระยอง",
-    status: "ผังสีม่วงลาย",
-    price: "2.3 ล้านบาท/ไร่",
-    reward: "1.2 ล้านบาท*",
-    highlights: ["หน้ากว้าง ~240 ม.", "ถนนเข้าถึง ปี 2569"],
-    image: "/images/listings/37-rai-home-thumbnail.png",
-    imageAlt: "ภาพโดรนที่ดินอุตสาหกรรม 37 ไร่ ระยอง",
-    href: propertyHref("37-rai-eec-rayong"),
-    comingSoon: false as const,
-    featured: true as const,
-  },
-  {
-    province: "ระยอง",
-    title: "ที่ดินอุตสาหกรรม EEC ระยอง",
-    size: "109 ไร่ 2 งาน 52 ตร.ว.",
-    loc: "นิคมพัฒนา ระยอง",
-    status: "ผังสีม่วง",
-    price: "2.75 ล้านบาท/ไร่",
-    reward: "4 ล้านบาท",
-    highlights: ["หน้ากว้าง ~240 ม.", "ใกล้ WHA · BYD"],
-    image: "/images/listings/109-rai-home-thumbnail.png",
-    imageAlt: "ภาพโดรนที่ดินอุตสาหกรรม 109 ไร่ ระยอง",
-    href: propertyHref("109-rai-eec-rayong"),
-    comingSoon: false as const,
-    soldOut: true as const,
-    dealHistory: true as const,
-  },
-  {
-    province: "กบินทร์บุรี",
-    title: "ที่ดินอุตสาหกรรม 101 ไร่ กบินทร์บุรี",
-    size: "101 ไร่",
-    loc: "",
-    status: "",
-    price: "",
-    reward: "",
-    highlights: [] as string[],
-    image: "/images/listings/kabin-buri-101-rai-home-thumbnail.png",
-    imageAlt: "ภาพโดรนที่ดินอุตสาหกรรม 101 ไร่ กบินทร์บุรี",
-    href: "/become-partner",
-    comingSoon: true as const,
-  },
-];
-
-const homeListingImages = {
-  rayong109: {
-    src: "/images/listings/109-rai-home-thumbnail.png",
-    alt: "ภาพโดรนที่ดินอุตสาหกรรม 109 ไร่ ระยอง",
-  },
-  rayong37: {
-    src: "/images/listings/37-rai-home-thumbnail.png",
-    alt: "ภาพโดรนที่ดินอุตสาหกรรม 37 ไร่ ระยอง",
-  },
-};
-
-function getHomepageListingImage(land: Land) {
-  if (land.size_rai >= 100 && land.size_rai <= 120) return homeListingImages.rayong109;
-  if (land.size_rai >= 35 && land.size_rai <= 40) return homeListingImages.rayong37;
-  return undefined;
-}
-
-function getHomepageListingHref(land: Land) {
-  if (land.size_rai >= 100 && land.size_rai <= 120) return propertyHref("109-rai-eec-rayong");
-  if (land.size_rai >= 35 && land.size_rai <= 40) return propertyHref("37-rai-eec-rayong");
-  return undefined;
-}
-
-function isHomepageSoldOutListing(land: Land) {
-  return land.slug === "109-rai-eec-rayong" || (land.size_rai >= 100 && land.size_rai <= 120);
-}
-
-function isHomepageFeaturedListing(land: Land) {
-  return land.slug === "37-rai-eec-rayong" || (land.size_rai >= 35 && land.size_rai <= 40);
-}
-
-function homepageListingSortOrder(land: Land) {
-  if (isHomepageFeaturedListing(land)) return 0;
-  if (isHomepageSoldOutListing(land)) return 1;
-  return 2;
-}
-
-function sortHomepageListings(listings: Land[]) {
-  return [...listings].sort(
-    (a, b) => homepageListingSortOrder(a) - homepageListingSortOrder(b),
-  );
-}
-
 const fallbackDemands = [
   { province: "ระยอง",         type: "อุตสาหกรรม",  size: "50–100 ไร่", note: "ใกล้นิคมอุตสาหกรรม สำหรับโรงงานผลิต",         ago: "2 ชม. ที่แล้ว" },
   { province: "ชลบุรี",        type: "โลจิสติกส์",  size: "20–50 ไร่",  note: "ใกล้ท่าเรือแหลมฉบัง สำหรับคลังสินค้า",         ago: "4 ชม. ที่แล้ว" },
@@ -187,7 +101,8 @@ export default async function HomePage() {
     getActiveDemands(4).catch(() => []),
   ]);
 
-  const sortedListings = sortHomepageListings(featuredListings);
+  const sortedListings = sortSeedListings(mergeWithSeedListings(featuredListings));
+  const showHomepageExtras = featuredListings.length === 0;
 
   const orgSchema = {
     "@context": "https://schema.org",
@@ -374,162 +289,67 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          {sortedListings.length > 0 ? (
-            <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-              {sortedListings.map((land) => (
+          <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+            {sortedListings.map((land) => {
+              const presentation = resolveListingPresentation(land);
+              return (
                 <ListingCard
                   key={land.id}
                   land={land}
-                  imageOverride={getHomepageListingImage(land)}
-                  hrefOverride={getHomepageListingHref(land)}
-                  soldOut={isHomepageSoldOutListing(land)}
-                  dealHistory={isHomepageSoldOutListing(land)}
-                  featured={isHomepageFeaturedListing(land)}
                   ctaLabel="ดูรายละเอียดแปลง"
+                  {...presentation}
                 />
-              ))}
-            </div>
-          ) : (
-            <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-              {sampleListings.map((item) =>
-                item.comingSoon ? (
-                  <article key={`${item.title}-${item.province}`} className="card-ref flex flex-col opacity-90">
-                    <div className="relative h-44 overflow-hidden sm:h-48">
-                      <span className="absolute left-3 top-3 z-10 rounded-md bg-[#00A859] px-3 py-1 text-xs font-bold text-white shadow-sm">
-                        {item.province}
+              );
+            })}
+            {showHomepageExtras && (
+              <>
+                <ListingCard
+                  key={SEED_109_RAI_LAND.id}
+                  land={SEED_109_RAI_LAND}
+                  ctaLabel="ดูรายละเอียดแปลง"
+                  {...resolveListingPresentation(SEED_109_RAI_LAND)}
+                  rewardLabel="ค่าตอบแทนผู้แนะนำ (ดีลสำเร็จ)"
+                  rewardSuffix={undefined}
+                />
+                <article className="card-ref flex flex-col opacity-90">
+                  <div className="relative h-44 overflow-hidden sm:h-48">
+                    <span className="absolute left-3 top-3 z-10 rounded-md bg-[#00A859] px-3 py-1 text-xs font-bold text-white shadow-sm">
+                      {SEED_KABIN_COMING_SOON.province}
+                    </span>
+                    <Image
+                      src={SEED_KABIN_COMING_SOON.image}
+                      alt={SEED_KABIN_COMING_SOON.imageAlt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-slate-950/20" />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+                      <span className="rounded-full bg-gold-400 px-5 py-1.5 text-xs font-black text-[#001B48]">
+                        เร็วๆ นี้
                       </span>
-                      {item.image ? (
-                        <Image
-                          src={item.image}
-                          alt={item.imageAlt}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="object-cover"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center bg-slate-100 text-slate-300">
-                          <Ruler size={40} />
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-slate-950/20" />
-                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                        <span className="rounded-full bg-gold-400 px-5 py-1.5 text-xs font-black text-[#001B48]">
-                          เร็วๆ นี้
-                        </span>
-                        <p className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">
-                          กำลังเตรียมรายละเอียด
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col p-4 pb-5">
-                      <h3 className="mb-2 text-base font-semibold leading-snug text-slate-800">{item.title}</h3>
-                      <p className="text-sm text-slate-500 leading-relaxed mb-4">
-                        โปรเจกต์ใหม่ในกบินทร์บุรี กำลังเตรียมรายละเอียด
-                        ลงทะเบียนรับข้อมูลก่อนใคร
+                      <p className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">
+                        กำลังเตรียมรายละเอียด
                       </p>
-                      <div className="mt-auto">
-                        <Link href={item.href} className="btn-green w-full justify-center text-xs">
-                          เรียนรู้เพิ่มเติม
-                        </Link>
-                      </div>
                     </div>
-                  </article>
-                ) : (
-                  <article
-                    key={`${item.title}-${item.size}`}
-                    className={`card-ref flex flex-col${
-                      "featured" in item && item.featured
-                        ? " ring-2 ring-[#00A859]/60 shadow-[0_8px_28px_rgba(0,168,89,0.14)]"
-                        : ""
-                    }`}
-                  >
-                    <div className="relative h-44 overflow-hidden sm:h-48">
-                      <span className="absolute left-3 top-3 z-10 rounded-md bg-[#00A859] px-3 py-1 text-xs font-bold text-white shadow-sm">
-                        {item.province}
-                      </span>
-                      {"featured" in item && item.featured && (
-                        <span className="absolute right-3 top-3 z-10 rounded-md bg-gold-400 px-2.5 py-1 text-[11px] font-black text-[#001B48] shadow-sm">
-                          เปิดรับแนะนำ
-                        </span>
-                      )}
-                      {item.image ? (
-                        <Image
-                          src={item.image}
-                          alt={item.imageAlt}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="object-cover"
-                        />
-                      ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-300">
-                          <Ruler size={40} />
-                        </div>
-                      )}
-                      {"soldOut" in item && item.soldOut && (
-                        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-1.5 bg-black/50">
-                          <span className="rounded-md bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-lg">
-                            ปิดดีลแล้ว
-                          </span>
-                          {"dealHistory" in item && item.dealHistory && (
-                            <span className="rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold text-slate-700">
-                              ดีลสำเร็จ – ไม่เปิดขายแล้ว
-                            </span>
-                          )}
-                        </div>
-                      )}
-                      <div className="absolute inset-x-0 bottom-0 z-10 bg-[#001B48]/92 px-4 py-2.5">
-                        <div className="text-[11px] font-medium text-white/85">
-                          {"dealHistory" in item && item.dealHistory
-                            ? "ค่าตอบแทนผู้แนะนำ (ดีลสำเร็จ)"
-                            : "ค่าตอบแทนผู้แนะนำสูงสุด"}
-                        </div>
-                        <div className="text-xl font-black leading-tight text-gold-400">{item.reward}</div>
-                      </div>
+                  </div>
+                  <div className="flex flex-1 flex-col p-4 pb-5">
+                    <h3 className="mb-2 text-base font-semibold leading-snug text-slate-800">
+                      {SEED_KABIN_COMING_SOON.title}
+                    </h3>
+                    <p className="mb-4 text-sm leading-relaxed text-slate-500">
+                      {SEED_KABIN_COMING_SOON.description}
+                    </p>
+                    <div className="mt-auto">
+                      <Link href={SEED_KABIN_COMING_SOON.href} className="btn-green w-full justify-center text-xs">
+                        เรียนรู้เพิ่มเติม
+                      </Link>
                     </div>
-                    <div className="flex flex-1 flex-col p-4 pb-5">
-                      <h3 className="mb-3 text-base font-semibold leading-snug text-slate-800">{item.title}</h3>
-                      <div className="mb-3 flex flex-wrap gap-x-3 gap-y-2 border-y border-slate-100 py-3 text-xs text-slate-500">
-                        <span className="flex items-center gap-1">
-                          <Ruler size={13} />
-                          {item.size}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <MapPin size={13} />
-                          {item.loc}
-                        </span>
-                        <span>{item.status}</span>
-                      </div>
-                      {item.highlights.length > 0 && (
-                        <div className="mb-3 flex flex-wrap gap-1.5">
-                          {item.highlights.map((h) => (
-                            <span key={h} className="rounded bg-purple-50 px-2 py-0.5 text-[11px] font-medium text-purple-700">
-                              {h}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                      <div className="mt-auto flex flex-col gap-3 min-[360px]:flex-row min-[360px]:items-center min-[360px]:justify-between">
-                        <div className="min-w-0">
-                          <div className="text-xs text-slate-400">ราคา/ไร่</div>
-                          <div className="text-sm font-bold text-gold-500">{item.price}</div>
-                        </div>
-                        <Link
-                          href={item.href}
-                          className={`w-full shrink-0 px-3 py-2 text-xs min-[360px]:w-auto ${
-                            "dealHistory" in item && item.dealHistory ? "btn-outline" : "btn-green"
-                          }`}
-                        >
-                          {"dealHistory" in item && item.dealHistory
-                            ? "ดูประวัติดีล"
-                            : "ดูรายละเอียดแปลง"}
-                        </Link>
-                      </div>
-                    </div>
-                  </article>
-                )
-              )}
-            </div>
-          )}
+                  </div>
+                </article>
+              </>
+            )}
+          </div>
         </div>
       </section>
 

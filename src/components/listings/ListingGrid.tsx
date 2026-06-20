@@ -2,6 +2,10 @@ import Link from "next/link";
 import ListingCard from "./ListingCard";
 import LineButton from "@/components/ui/LineButton";
 import { getActiveListings } from "@/lib/supabase/queries";
+import {
+  mergeWithSeedListings,
+  resolveListingPresentation,
+} from "@/lib/seed-listings";
 import { slugToLandType } from "@/lib/utils";
 
 const PAGE_SIZE = 12;
@@ -16,23 +20,28 @@ export default async function ListingGrid({ provinceSlug, landType, page = 1 }: 
   const offset = (page - 1) * PAGE_SIZE;
   const type = landType ? slugToLandType(landType) : undefined;
 
-  const listings = await getActiveListings({
+  const dbListings = await getActiveListings({
     province_slug: provinceSlug,
     land_type: type ?? undefined,
     limit: PAGE_SIZE,
     offset,
   }).catch(() => []);
 
+  const listings = mergeWithSeedListings(dbListings, {
+    province_slug: provinceSlug,
+    land_type: type ?? undefined,
+  });
+
   if (listings.length === 0) {
     return (
-      <div className="text-center py-16 bg-slate-50 rounded-2xl">
-        <div className="text-4xl mb-4">🔍</div>
-        <h2 className="text-lg font-semibold text-slate-700 mb-2">ยังไม่มีที่ดินในเงื่อนไขนี้</h2>
-        <p className="text-slate-500 text-sm mb-6 max-w-sm mx-auto">
+      <div className="rounded-2xl bg-slate-50 py-16 text-center">
+        <div className="mb-4 text-4xl">🔍</div>
+        <h2 className="mb-2 text-lg font-semibold text-slate-700">ยังไม่มีที่ดินในเงื่อนไขนี้</h2>
+        <p className="mx-auto mb-6 max-w-sm text-sm text-slate-500">
           ทีมเราอาจมีที่ดินที่ยังไม่ได้ลงประกาศ ติดต่อผ่าน LINE เพื่อรับข้อมูลก่อนใคร
           หรือลงทะเบียนเพื่อรับแจ้งเตือนเมื่อมีที่ดินใหม่
         </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <div className="flex flex-col justify-center gap-3 sm:flex-row">
           <LineButton label="สอบถามที่ดินผ่าน LINE" />
           <Link href="/submit-land" className="btn-outline">
             ส่งที่ดินของคุณ
@@ -44,14 +53,21 @@ export default async function ListingGrid({ provinceSlug, landType, page = 1 }: 
 
   return (
     <div>
-      <div className="text-sm text-slate-500 mb-4">{listings.length} แปลง</div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {listings.map((land) => (
-          <ListingCard key={land.id} land={land} />
-        ))}
+      <div className="mb-4 text-sm text-slate-500">{listings.length} แปลง</div>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {listings.map((land) => {
+          const presentation = resolveListingPresentation(land);
+          return (
+            <ListingCard
+              key={land.id}
+              land={land}
+              ctaLabel="ดูรายละเอียดแปลง"
+              {...presentation}
+            />
+          );
+        })}
       </div>
 
-      {/* Pagination */}
       {(listings.length === PAGE_SIZE || page > 1) && (
         <div className="mt-10 flex justify-center gap-2">
           {page > 1 && (
