@@ -40,10 +40,6 @@ export interface PropertyDetail {
   gallery: PropertyDetailImage[];
   videos?: PropertyDetailVideo[];
   mapEmbed?: PropertyMapEmbed;
-  deeds?: Array<{
-    label: string;
-    area: string;
-  }>;
 }
 
 export const propertyDetails: PropertyDetail[] = [
@@ -312,21 +308,6 @@ export const propertyDetails: PropertyDetail[] = [
       description:
         "ที่ดินตั้งอยู่ ต.หนองกี่ อ.กบินทร์บุรี จ.ปราจีนบุรี ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง เข้าถึงโซนอุตสาหกรรมกบินทร์บุรีได้สะดวก",
     },
-    deeds: [
-      { label: "โฉนดเลขที่ 22791", area: "20 ไร่ 0 งาน 93 ตารางวา" },
-      { label: "โฉนดเลขที่ 22798", area: "13 ไร่ 3 งาน 85 ตารางวา" },
-      { label: "โฉนดเลขที่ 17009", area: "20 ไร่ 1 งาน 17 ตารางวา" },
-      { label: "โฉนดเลขที่ 22799", area: "5 ไร่ 0 งาน 38 ตารางวา" },
-      { label: "โฉนดเลขที่ 22872", area: "2 ไร่ 0 งาน 22 ตารางวา" },
-      { label: "โฉนดเลขที่ 22796", area: "13 ไร่ 3 งาน 93 ตารางวา" },
-      { label: "โฉนดเลขที่ 22797", area: "2 ไร่ 1 งาน 82 ตารางวา" },
-      { label: "โฉนดเลขที่ 17011", area: "6 ไร่ 0 งาน 21 ตารางวา" },
-      { label: "โฉนดเลขที่ 46383", area: "3 ไร่ 0 งาน 14 ตารางวา" },
-      { label: "โฉนดเลขที่ 46384", area: "2 ไร่ 2 งาน 38 ตารางวา" },
-      { label: "โฉนดเลขที่ 46385", area: "2 ไร่ 2 งาน 86 ตารางวา" },
-      { label: "โฉนดเลขที่ 22802", area: "5 ไร่ 3 งาน 0 ตารางวา" },
-      { label: "ภ.บ.ท.5 (จำนวน 2 แปลง)", area: "2 ไร่ 3 งาน 33 ตารางวา" },
-    ],
   },
 ];
 
