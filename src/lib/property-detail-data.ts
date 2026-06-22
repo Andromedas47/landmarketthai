@@ -303,8 +303,8 @@ export const propertyDetails: PropertyDetail[] = [
     ],
     mapEmbed: {
       embedUrl:
-        "https://maps.google.com/maps?q=13.9686,101.7133&hl=th&z=15&output=embed",
-      directionsUrl: "https://maps.google.com/?q=13.9686,101.7133",
+        "https://maps.google.com/maps?q=14.0417619,101.8310660&hl=th&z=15&output=embed",
+      directionsUrl: "https://maps.app.goo.gl/PNUTWFQ6jiVX2Yvd6?g_st=il",
       description:
         "ที่ดินตั้งอยู่ ต.หนองกี่ อ.กบินทร์บุรี จ.ปราจีนบุรี ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง เข้าถึงโซนอุตสาหกรรมกบินทร์บุรีได้สะดวก",
     },
