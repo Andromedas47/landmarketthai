@@ -222,7 +222,7 @@ export const propertyDetails: PropertyDetail[] = [
     size: "101 ไร่ 0 งาน 22 ตร.ว.",
     zoning: "พื้นที่อุตสาหกรรม",
     pricePerRai: "1.5 ล้านบาท/ไร่",
-    referralReward: "ค่าแนะนำสูงสุด 2,000,000 บาท",
+    referralReward: "ค่าแนะนำสูงสุด 2,275,000 บาท",
     frontage: "ประมาณ 700 เมตร",
     access: "ติดถนน อบต. ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง",
     status: "เปิดรับสอบถาม",

@@ -144,7 +144,7 @@ export const SEED_101_KABIN_LAND: Land = {
   frontage_m: 700,
   price_per_rai: 1_500_000,
   total_price: 151_590_000,
-  referral_reward_max: 2_000_000,
+  referral_reward_max: 2_275_000,
   is_eec: false,
   nearby_landmarks: ["ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง"],
   description: null,
