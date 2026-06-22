@@ -5,6 +5,7 @@ import {
   mergeWithSeedListings,
   filterSeedActiveListings,
   SEED_37_RAI_SLUG,
+  SEED_101_KABIN_SLUG,
   SEED_109_RAI_SLUG,
 } from "./seed-listings.ts";
 
@@ -50,6 +51,11 @@ test("non-matching province filter returns empty results", () => {
 test("sold 109-rai never appears in active /land results", () => {
   assert.ok(!slugs(filterSeedActiveListings()).includes(SEED_109_RAI_SLUG));
   assert.ok(!slugs(mergeWithSeedListings([])).includes(SEED_109_RAI_SLUG));
+});
+
+// 5. Active 101-rai Kabin Buri must appear in default /land results.
+test("default /land includes the 101-rai Kabin Buri seed when DB is empty", () => {
+  assert.ok(slugs(mergeWithSeedListings([])).includes(SEED_101_KABIN_SLUG));
 });
 
 // Real DB rows must be preserved alongside the seed fallback (single pipeline).

@@ -14,9 +14,11 @@ import {
   Send,
   ShieldCheck,
   Truck,
+  Video,
 } from "lucide-react";
 import LeadForm from "@/components/forms/LeadForm";
 import PropertyGallery from "@/components/properties/PropertyGallery";
+import PropertyVideos from "@/components/properties/PropertyVideos";
 import LineButton from "@/components/ui/LineButton";
 import {
   getPropertyDetail,
@@ -151,6 +153,29 @@ export default async function PropertyDetailPage({
               </div>
             </section>
 
+            {property.deeds && property.deeds.length > 0 && (
+              <section className="card p-4 sm:p-6">
+                <div className="mb-5 flex items-center gap-2">
+                  <ShieldCheck size={20} className="text-brand-600" />
+                  <h2 className="text-xl font-bold text-slate-900">รายละเอียดเอกสารสิทธิ์</h2>
+                </div>
+                <div className="divide-y divide-slate-100 rounded-xl border border-slate-100">
+                  {property.deeds.map((deed) => (
+                    <div
+                      key={deed.label}
+                      className="flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div className="text-sm font-semibold text-slate-800">{deed.label}</div>
+                      <div className="text-sm text-slate-600">{deed.area}</div>
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-4 text-sm font-semibold text-brand-700">
+                  รวมเนื้อที่ทั้งหมด {property.size}
+                </p>
+              </section>
+            )}
+
             {property.mapEmbed && (
               <section>
                 <div className="mb-5 flex items-center gap-2">
@@ -192,6 +217,16 @@ export default async function PropertyDetailPage({
               </div>
               <PropertyGallery images={property.gallery} title={property.title} />
             </section>
+
+            {property.videos && property.videos.length > 0 && (
+              <section>
+                <div className="mb-5 flex items-center gap-2">
+                  <Video size={20} className="text-brand-600" />
+                  <h2 className="text-xl font-bold text-slate-900">วิดีโอพื้นที่</h2>
+                </div>
+                <PropertyVideos videos={property.videos} />
+              </section>
+            )}
           </div>
 
           <aside className="min-w-0 lg:sticky lg:top-24 lg:self-start">

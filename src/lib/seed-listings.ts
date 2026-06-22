@@ -3,6 +3,7 @@ import { propertyHref } from "@/lib/property-detail-data";
 
 export const SEED_37_RAI_SLUG = "37-rai-eec-rayong";
 export const SEED_109_RAI_SLUG = "109-rai-eec-rayong";
+export const SEED_101_KABIN_SLUG = "101-rai-kabin-buri";
 
 const SEED_TIMESTAMP = "2026-01-01T00:00:00.000Z";
 
@@ -12,6 +13,16 @@ export const SEED_RAYONG_PROVINCE: Province = {
   name_en: "Rayong",
   slug: "rayong",
   region: "EEC",
+  lat: null,
+  lng: null,
+};
+
+export const SEED_PRACHIN_PROVINCE: Province = {
+  id: "seed-province-prachin-buri",
+  name_th: "ปราจีนบุรี",
+  name_en: "Prachin Buri",
+  slug: "prachin-buri",
+  region: "Central",
   lat: null,
   lng: null,
 };
@@ -106,7 +117,52 @@ export const SEED_109_RAI_LAND: Land = {
   ],
 };
 
-export const SEED_ACTIVE_LISTINGS: Land[] = [SEED_37_RAI_LAND];
+const SEED_101_KABIN_IMAGE = {
+  id: "seed-img-101-kabin-buri",
+  land_id: "seed-land-101-kabin-buri",
+  storage_key: "listings/kabin-buri-101-rai-home-thumbnail.png",
+  url_or_cdn_path: "/images/listings/kabin-buri-101-rai-home-thumbnail.png",
+  width: null,
+  height: null,
+  alt_th: "ภาพโดรนที่ดินอุตสาหกรรม 101 ไร่ กบินทร์บุรี",
+  sort_order: 0,
+  is_cover: true,
+  created_at: SEED_TIMESTAMP,
+};
+
+/** Active 101-rai Kabin Buri listing. */
+export const SEED_101_KABIN_LAND: Land = {
+  id: "seed-land-101-kabin-buri",
+  public_ref: 0,
+  title_th: "ที่ดินอุตสาหกรรม 101 ไร่ กบินทร์บุรี ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง",
+  slug: SEED_101_KABIN_SLUG,
+  province_id: SEED_PRACHIN_PROVINCE.id,
+  district: "อ.กบินทร์บุรี ต.หนองกี่",
+  land_type: "industrial",
+  size_rai: 101.06,
+  zoning: null,
+  frontage_m: 700,
+  price_per_rai: 1_500_000,
+  total_price: 151_590_000,
+  referral_reward_max: 2_000_000,
+  is_eec: false,
+  nearby_landmarks: ["ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง"],
+  description: null,
+  lat: null,
+  lng: null,
+  location_precision: "approx",
+  status: "active",
+  is_featured: true,
+  seo_title: null,
+  seo_description: null,
+  created_at: SEED_TIMESTAMP,
+  updated_at: SEED_TIMESTAMP,
+  deleted_at: null,
+  province: SEED_PRACHIN_PROVINCE,
+  images: [SEED_101_KABIN_IMAGE],
+};
+
+export const SEED_ACTIVE_LISTINGS: Land[] = [SEED_37_RAI_LAND, SEED_101_KABIN_LAND];
 
 export const SEED_SOLD_SLUGS = new Set<string>([SEED_109_RAI_SLUG]);
 
@@ -119,6 +175,10 @@ export const SEED_LISTING_IMAGES = {
     src: "/images/listings/109-rai-home-thumbnail.png",
     alt: "ภาพโดรนที่ดินอุตสาหกรรม 109 ไร่ ระยอง",
   },
+  kabin101: {
+    src: "/images/listings/kabin-buri-101-rai-home-thumbnail.png",
+    alt: "ภาพโดรนที่ดินอุตสาหกรรม 101 ไร่ กบินทร์บุรี",
+  },
 } as const;
 
 export const SEED_37_RAI_META = {
@@ -127,26 +187,71 @@ export const SEED_37_RAI_META = {
   rewardSuffix: "*",
 } as const;
 
-export interface HomepageComingSoonListing {
-  province: string;
-  title: string;
-  size: string;
-  image: string;
-  imageAlt: string;
-  href: string;
-  description: string;
+export const SEED_101_KABIN_META = {
+  rewardLabel: "ค่าตอบแทนผู้แนะนำสูงสุด",
+  rewardSuffix: "*",
+} as const;
+
+export function getSeedListingImage(land: Land) {
+  if (land.slug === SEED_37_RAI_SLUG) {
+    return SEED_LISTING_IMAGES.rayong37;
+  }
+  if (land.slug === SEED_109_RAI_SLUG) {
+    return SEED_LISTING_IMAGES.rayong109;
+  }
+  if (land.slug === SEED_101_KABIN_SLUG) {
+    return SEED_LISTING_IMAGES.kabin101;
+  }
+  return undefined;
 }
 
-export const SEED_KABIN_COMING_SOON: HomepageComingSoonListing = {
-  province: "กบินทร์บุรี",
-  title: "ที่ดินอุตสาหกรรม 101 ไร่ กบินทร์บุรี",
-  size: "101 ไร่",
-  image: "/images/listings/kabin-buri-101-rai-home-thumbnail.png",
-  imageAlt: "ภาพโดรนที่ดินอุตสาหกรรม 101 ไร่ กบินทร์บุรี",
-  href: "/become-partner",
-  description:
-    "โปรเจกต์ใหม่ในกบินทร์บุรี กำลังเตรียมรายละเอียด ลงทะเบียนรับข้อมูลก่อนใคร",
-};
+export function getSeedListingHref(land: Land): string | undefined {
+  if (land.slug === SEED_37_RAI_SLUG) {
+    return propertyHref(SEED_37_RAI_SLUG);
+  }
+  if (land.slug === SEED_109_RAI_SLUG) {
+    return propertyHref(SEED_109_RAI_SLUG);
+  }
+  if (land.slug === SEED_101_KABIN_SLUG) {
+    return propertyHref(SEED_101_KABIN_SLUG);
+  }
+  return undefined;
+}
+
+export function isSeedSoldOutListing(land: Land) {
+  return land.slug === SEED_109_RAI_SLUG || land.status === "sold";
+}
+
+export function isSeedFeaturedListing(land: Land) {
+  return (
+    land.slug === SEED_37_RAI_SLUG ||
+    land.slug === SEED_101_KABIN_SLUG
+  );
+}
+
+export function resolveListingPresentation(land: Land) {
+  const featured = isSeedFeaturedListing(land);
+  return {
+    imageOverride: getSeedListingImage(land),
+    hrefOverride: getSeedListingHref(land),
+    soldOut: isSeedSoldOutListing(land),
+    dealHistory: isSeedSoldOutListing(land),
+    featured,
+    metaTagLabel: land.slug === SEED_37_RAI_SLUG ? SEED_37_RAI_META.zoningLabel : undefined,
+    rewardLabel:
+      land.slug === SEED_37_RAI_SLUG
+        ? SEED_37_RAI_META.rewardLabel
+        : land.slug === SEED_101_KABIN_SLUG
+          ? SEED_101_KABIN_META.rewardLabel
+          : undefined,
+    rewardSuffix:
+      land.slug === SEED_37_RAI_SLUG
+        ? SEED_37_RAI_META.rewardSuffix
+        : land.slug === SEED_101_KABIN_SLUG
+          ? SEED_101_KABIN_META.rewardSuffix
+          : undefined,
+  };
+}
 
 export function matchesSeedListingFilters(
   land: Land,
@@ -186,41 +291,6 @@ export function mergeWithSeedListings(
   return [...dbListings, ...seedListings];
 }
 
-export function getSeedListingImage(land: Land) {
-  if (land.slug === SEED_37_RAI_SLUG || (land.size_rai >= 35 && land.size_rai <= 40)) {
-    return SEED_LISTING_IMAGES.rayong37;
-  }
-  if (land.slug === SEED_109_RAI_SLUG || (land.size_rai >= 100 && land.size_rai <= 120)) {
-    return SEED_LISTING_IMAGES.rayong109;
-  }
-  return undefined;
-}
-
-export function getSeedListingHref(land: Land): string | undefined {
-  if (land.slug === SEED_37_RAI_SLUG || (land.size_rai >= 35 && land.size_rai <= 40)) {
-    return propertyHref(SEED_37_RAI_SLUG);
-  }
-  if (land.slug === SEED_109_RAI_SLUG || (land.size_rai >= 100 && land.size_rai <= 120)) {
-    return propertyHref(SEED_109_RAI_SLUG);
-  }
-  return undefined;
-}
-
-export function isSeedSoldOutListing(land: Land) {
-  return (
-    land.slug === SEED_109_RAI_SLUG ||
-    land.status === "sold" ||
-    (land.size_rai >= 100 && land.size_rai <= 120)
-  );
-}
-
-export function isSeedFeaturedListing(land: Land) {
-  return (
-    land.slug === SEED_37_RAI_SLUG ||
-    (land.size_rai >= 35 && land.size_rai <= 40)
-  );
-}
-
 export function seedListingSortOrder(land: Land) {
   if (isSeedFeaturedListing(land)) return 0;
   if (isSeedSoldOutListing(land)) return 1;
@@ -229,17 +299,4 @@ export function seedListingSortOrder(land: Land) {
 
 export function sortSeedListings(listings: Land[]) {
   return [...listings].sort((a, b) => seedListingSortOrder(a) - seedListingSortOrder(b));
-}
-
-export function resolveListingPresentation(land: Land) {
-  return {
-    imageOverride: getSeedListingImage(land),
-    hrefOverride: getSeedListingHref(land),
-    soldOut: isSeedSoldOutListing(land),
-    dealHistory: isSeedSoldOutListing(land),
-    featured: isSeedFeaturedListing(land),
-    metaTagLabel: isSeedFeaturedListing(land) ? SEED_37_RAI_META.zoningLabel : undefined,
-    rewardLabel: isSeedFeaturedListing(land) ? SEED_37_RAI_META.rewardLabel : undefined,
-    rewardSuffix: isSeedFeaturedListing(land) ? SEED_37_RAI_META.rewardSuffix : undefined,
-  };
 }

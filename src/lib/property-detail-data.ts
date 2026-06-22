@@ -3,6 +3,11 @@ export interface PropertyDetailImage {
   alt: string;
 }
 
+export interface PropertyDetailVideo {
+  src: string;
+  title: string;
+}
+
 export interface PropertyMapEmbed {
   embedUrl: string;
   directionsUrl: string;
@@ -33,7 +38,12 @@ export interface PropertyDetail {
     description: string;
   }>;
   gallery: PropertyDetailImage[];
+  videos?: PropertyDetailVideo[];
   mapEmbed?: PropertyMapEmbed;
+  deeds?: Array<{
+    label: string;
+    area: string;
+  }>;
 }
 
 export const propertyDetails: PropertyDetail[] = [
@@ -207,6 +217,116 @@ export const propertyDetails: PropertyDetail[] = [
       description:
         "ที่ดินตั้งอยู่ติดถนน 2026 ในพื้นที่ EEC จังหวัดระยอง เข้าถึงง่าย หน้ากว้างประมาณ 240 เมตร ด้านหลังติดแหล่งน้ำธรรมชาติ เหมาะสำหรับโครงการอุตสาหกรรมขนาดกลาง",
     },
+  },
+  {
+    slug: "101-rai-kabin-buri",
+    title: "ที่ดินอุตสาหกรรม 101 ไร่ กบินทร์บุรี ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง",
+    shortTitle: "101 ไร่ กบินทร์บุรี",
+    location: "ต.หนองกี่, อ.กบินทร์บุรี, ปราจีนบุรี",
+    size: "101 ไร่ 0 งาน 22 ตร.ว.",
+    zoning: "พื้นที่อุตสาหกรรม",
+    pricePerRai: "1.5 ล้านบาท/ไร่",
+    referralReward: "ค่าแนะนำสูงสุด 2,000,000 บาท",
+    frontage: "ประมาณ 700 เมตร",
+    access: "ติดถนน อบต. ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง",
+    status: "เปิดรับสอบถาม",
+    nearby: ["สวนอุตสาหกรรมกวางตุ้ง"],
+    heroImage: {
+      src: "/images/listings/kabin-buri-101-rai-gallery/01-drone-roadside.png",
+      alt: "ภาพโดรนที่ดิน 101 ไร่ กบินทร์บุรี ติดถนนตรงข้ามสวนอุตสาหกรรมกวางตุ้ง",
+    },
+    keyHighlights: [
+      "พื้นที่รวม 101 ไร่ 0 งาน 22 ตร.ว.",
+      "ตั้งอยู่ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง ต.หนองกี่ อ.กบินทร์บุรี",
+      "หน้ากว้างติดถนน อบต. ประมาณ 700 เมตร",
+      "เอกสารสิทธิ์ครบ 13 ฉบับ (12 โฉนด + ภ.บ.ท.5 จำนวน 2 แปลง)",
+      "ราคา 1.5 ล้านบาท/ไร่ รวมประมาณ 151.5 ล้านบาท",
+    ],
+    facts: [
+      { label: "ขนาดที่ดิน", value: "101 ไร่ 0 งาน 22 ตร.ว." },
+      { label: "ทำเล", value: "ต.หนองกี่, อ.กบินทร์บุรี, ปราจีนบุรี" },
+      { label: "จุดสังเกต", value: "ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง" },
+      { label: "หน้ากว้าง", value: "ประมาณ 700 เมตร" },
+      { label: "ทางเข้าออก", value: "ติดถนน อบต." },
+      { label: "เอกสารสิทธิ์", value: "13 ฉบับ (12 โฉนด + ภ.บ.ท.5 จำนวน 2 แปลง)" },
+      { label: "ราคารวม (โดยประมาณ)", value: "151.5 ล้านบาท" },
+      { label: "สถานะ", value: "เปิดรับสอบถาม" },
+    ],
+    highlightCards: [
+      {
+        title: "ทำเลอุตสาหกรรมกบินทร์บุรี",
+        description:
+          "ที่ดินตั้งอยู่ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง ต.หนองกี่ อ.กบินทร์บุรี เหมาะสำหรับโรงงาน คลังสินค้า และธุรกิจที่ต้องการอยู่ใกล้โซนอุตสาหกรรม",
+      },
+      {
+        title: "เอกสารสิทธิ์ครบหลายฉบับ",
+        description:
+          "รวม 12 โฉนดและ ภ.บ.ท.5 จำนวน 2 แปลง รวมเนื้อที่ 101 ไร่ 0 งาน 22 ตารางวา สะดวกในการเจรจาและโอนกรรมสิทธิ์",
+      },
+      {
+        title: "เดินทางและโลจิสติกส์",
+        description:
+          "ติดถนน อบต. หน้ากว้างประมาณ 700 เมตร ตั้งอยู่ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง เข้าถึงโซนอุตสาหกรรมได้สะดวก",
+      },
+    ],
+    gallery: [
+      {
+        src: "/images/listings/kabin-buri-101-rai-gallery/01-drone-roadside.png",
+        alt: "ภาพโดรนที่ดิน 101 ไร่ กบินทร์บุรี ติดถนนตรงข้ามสวนอุตสาหกรรมกวางตุ้ง",
+      },
+      {
+        src: "/images/listings/kabin-buri-101-rai-gallery/02-drone-aerial.png",
+        alt: "ภาพโดรนมุมสูงที่ดิน 101 ไร่ กบินทร์บุรี ใกล้คลังสินค้าและโรงงาน",
+      },
+      {
+        src: "/images/listings/kabin-buri-101-rai-gallery/03-drone-overview.png",
+        alt: "ภาพโดรนแสดงภาพรวมที่ดิน 101 ไร่ กบินทร์บุรี และพื้นที่โดยรอบ",
+      },
+      {
+        src: "/images/listings/kabin-buri-101-rai-gallery/04-boundary-map.png",
+        alt: "แผนที่ขอบเขตแปลงที่ดิน 101 ไร่ แบ่ง 13 แปลง พร้อมเลขโฉนด",
+      },
+      {
+        src: "/images/listings/kabin-buri-101-rai-gallery/05-boundary-map-detail.png",
+        alt: "แผนที่ขอบเขตรายละเอียด 101 ไร่ 0 งาน 22 ตารางวา ต.หนองกี่ อ.กบินทร์บุรี",
+      },
+      {
+        src: "/images/listings/kabin-buri-101-rai-gallery/06-overview-flyer.png",
+        alt: "ภาพรวมที่ดิน 101 ไร่ กบินทร์บุรี ราคา 1.5 ล้าน/ไร่ ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง",
+      },
+    ],
+    videos: [
+      {
+        src: "/videos/listings/kabin-buri-101-rai/01-site-video.mp4",
+        title: "วิดีโอบินถ่ายที่ดิน 101 ไร่ กบินทร์บุรี (1)",
+      },
+      {
+        src: "/videos/listings/kabin-buri-101-rai/02-site-video.mp4",
+        title: "วิดีโอบินถ่ายที่ดิน 101 ไร่ กบินทร์บุรี (2)",
+      },
+    ],
+    mapEmbed: {
+      embedUrl:
+        "https://maps.google.com/maps?q=13.9686,101.7133&hl=th&z=15&output=embed",
+      directionsUrl: "https://maps.google.com/?q=13.9686,101.7133",
+      description:
+        "ที่ดินตั้งอยู่ ต.หนองกี่ อ.กบินทร์บุรี จ.ปราจีนบุรี ตรงข้ามสวนอุตสาหกรรมกวางตุ้ง เข้าถึงโซนอุตสาหกรรมกบินทร์บุรีได้สะดวก",
+    },
+    deeds: [
+      { label: "โฉนดเลขที่ 22791", area: "20 ไร่ 0 งาน 93 ตารางวา" },
+      { label: "โฉนดเลขที่ 22798", area: "13 ไร่ 3 งาน 85 ตารางวา" },
+      { label: "โฉนดเลขที่ 17009", area: "20 ไร่ 1 งาน 17 ตารางวา" },
+      { label: "โฉนดเลขที่ 22799", area: "5 ไร่ 0 งาน 38 ตารางวา" },
+      { label: "โฉนดเลขที่ 22872", area: "2 ไร่ 0 งาน 22 ตารางวา" },
+      { label: "โฉนดเลขที่ 22796", area: "13 ไร่ 3 งาน 93 ตารางวา" },
+      { label: "โฉนดเลขที่ 22797", area: "2 ไร่ 1 งาน 82 ตารางวา" },
+      { label: "โฉนดเลขที่ 17011", area: "6 ไร่ 0 งาน 21 ตารางวา" },
+      { label: "โฉนดเลขที่ 46383", area: "3 ไร่ 0 งาน 14 ตารางวา" },
+      { label: "โฉนดเลขที่ 46384", area: "2 ไร่ 2 งาน 38 ตารางวา" },
+      { label: "โฉนดเลขที่ 46385", area: "2 ไร่ 2 งาน 86 ตารางวา" },
+      { label: "โฉนดเลขที่ 22802", area: "5 ไร่ 3 งาน 0 ตารางวา" },
+      { label: "ภ.บ.ท.5 (จำนวน 2 แปลง)", area: "2 ไร่ 3 งาน 33 ตารางวา" },
+    ],
   },
 ];
 

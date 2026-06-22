@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -17,7 +16,6 @@ import JsonLd from "@/components/seo/JsonLd";
 import { getFeaturedListings, getActiveDemands } from "@/lib/supabase/queries";
 import {
   SEED_109_RAI_LAND,
-  SEED_KABIN_COMING_SOON,
   mergeWithSeedListings,
   resolveListingPresentation,
   sortSeedListings,
@@ -311,42 +309,6 @@ export default async function HomePage() {
                   rewardLabel="ค่าตอบแทนผู้แนะนำ (ดีลสำเร็จ)"
                   rewardSuffix={undefined}
                 />
-                <article className="card-ref flex flex-col opacity-90">
-                  <div className="relative h-44 overflow-hidden sm:h-48">
-                    <span className="absolute left-3 top-3 z-10 rounded-md bg-[#00A859] px-3 py-1 text-xs font-bold text-white shadow-sm">
-                      {SEED_KABIN_COMING_SOON.province}
-                    </span>
-                    <Image
-                      src={SEED_KABIN_COMING_SOON.image}
-                      alt={SEED_KABIN_COMING_SOON.imageAlt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-slate-950/20" />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                      <span className="rounded-full bg-gold-400 px-5 py-1.5 text-xs font-black text-[#001B48]">
-                        เร็วๆ นี้
-                      </span>
-                      <p className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">
-                        กำลังเตรียมรายละเอียด
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex flex-1 flex-col p-4 pb-5">
-                    <h3 className="mb-2 text-base font-semibold leading-snug text-slate-800">
-                      {SEED_KABIN_COMING_SOON.title}
-                    </h3>
-                    <p className="mb-4 text-sm leading-relaxed text-slate-500">
-                      {SEED_KABIN_COMING_SOON.description}
-                    </p>
-                    <div className="mt-auto">
-                      <Link href={SEED_KABIN_COMING_SOON.href} className="btn-green w-full justify-center text-xs">
-                        เรียนรู้เพิ่มเติม
-                      </Link>
-                    </div>
-                  </div>
-                </article>
               </>
             )}
           </div>
